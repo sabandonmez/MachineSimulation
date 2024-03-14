@@ -1,0 +1,66 @@
+﻿@model Machine
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Anasayfa</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Sol taraf -->
+            <div class="col-md-6">
+
+                <h3>@Model.MachineName</h3>
+                <form>
+                    <!-- Form öğeleri buraya -->
+                    <div class="form-group">
+                        <label for="sicaklik">Sıcaklık</label>
+                        <input type="text" class="form-control" id="sicaklik" placeholder="Sıcaklık">
+                    </div>
+                    <div class="form-group">
+                        <label for="hiz">Hız</label>
+                        <input type="text" class="form-control" id="hiz" placeholder="Hız">
+                    </div>
+                    <!-- Daha fazla form öğesi eklenebilir -->
+                </form>
+            </div>
+
+            <!-- Sağ taraf -->
+            <div class="col-md-6">
+                <h4>Makinanın çalışma aşamaları</h4>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Hazırlanıyor</div>
+                </div>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Çalışıyor</div>
+                </div>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Soğuyor</div>
+                </div>
+                <!-- Butonlar -->
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success">Çalıştır Butonu</button>
+                    <button type="button" class="btn btn-danger">Durdur Butonu</button>
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="Machine">
+                        <i class="fa-solid fa-house"></i>
+                        Makina Seç
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Machine>
+
+<div class="row my-3">
+
+    @foreach (Machine mchn in Model)
+    {
+        <partial name="_MachineCard" model="@mchn" />
+
+    }
+</div>

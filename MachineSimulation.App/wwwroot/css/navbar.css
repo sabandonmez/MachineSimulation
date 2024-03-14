@@ -1,0 +1,14 @@
+﻿.navbar {
+    display: flex; /* Flexbox kullanıyoruz */
+    justify-content: center; /* Yatayda ortala */
+    align-items: center; /* Dikeyde ortala */
+    height: 60px; /* Navbar yüksekliği */
+    background-color: #000080; /* Koyu mavi arkaplan rengi */
+    color: white;
+    margin: 0; /* Kenar boşluklarını kaldır */
+}
+.full-height {
+    height: 100%; /* Konteynırın yüksekliğini tam ekran yap */
+    display: flex; /* Flexbox kullanıyoruz */
+    flex-direction: column; /* İçerikleri sütun olarak düzenle */
+}

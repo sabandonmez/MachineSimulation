@@ -1,9 +1,26 @@
 ﻿<!-- _Navbar.cshtml -->
 <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
 <div class="full-height">
     <div class="navbar">
         <h1 id="navbar-title-home"></h1>
         <h3 id="navbar-title"></h3>
+        <span id="back-icon" style="display: none; cursor: pointer;">
+            <i class="fa-solid fa-chevron-left"></i>
+        </span>
     </div>
 </div>
+
+<script>
+    function showBackIconAndRedirect() {
+        var backIcon = document.getElementById('back-icon');
+        if (backIcon) {
+            backIcon.style.display = 'inline'; 
+            backIcon.onclick = function () { 
+                window.location.href = '/Machine/index'; 
+            };
+        }
+    }
+</script>

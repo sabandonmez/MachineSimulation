@@ -36,5 +36,6 @@ namespace MachineSimulation.DataAccess.Concrete
                 .HasForeignKey(op => op.ParameterId)
                 .OnDelete(DeleteBehavior.Restrict); 
         }
+     
     }
 }

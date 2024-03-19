@@ -38,5 +38,10 @@ namespace MachineSimulation.Services.Concrete
             return await _machineReadRepository.GetByIdAsync(id,false);
         }
 
+        public async Task UpdateMachine(Machine machine)
+        {
+             _machineWriteRepository.Update(machine);
+            await _machineWriteRepository.SaveAsync();
+        }
     }
 }

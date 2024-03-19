@@ -3,14 +3,16 @@
 <link rel="stylesheet" href="~/css/machine-card.css" asp-append-version="true" />
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 my-3">
     <div class="card">
-        <img src="/images/default.jpg" class="card-img-top" alt="...">
+        <img src="@Url.Content($"~/images/machines/{Model.ImageUrl}")"
+             onerror="this.onerror=null;this.src='@Url.Content("~/images/machines/defaultMachine.jpg")';"
+             class="card-img-top" alt="@Model.MachineName">
+
         <div class="card-body">
             <h5 class="card-title">@Model.MachineName</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-primary">
+            <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-warning">
                 Detay
             </a>
-            <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-success">
+            <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-danger">
                 Bağlan
             </button>
         </div>
@@ -29,13 +31,13 @@
             .then(data => {
                 if (data) {
                     if (action === 'ModbusConnect') {
-                        button.classList.remove('btn-success');
-                        button.classList.add('btn-danger');
-                        button.textContent = 'Kop';
-                        console.log("Bağlandınız");
-                    } else {
                         button.classList.remove('btn-danger');
                         button.classList.add('btn-success');
+                        button.textContent = 'Kop';
+                        console.log("Bağlandınız");
+                    } else {       
+                        button.classList.remove('btn-success');
+                        button.classList.add('btn-danger');
                         button.textContent = 'Bağlan';
                         console.log("Bağlantı kopartıldı");
                     }

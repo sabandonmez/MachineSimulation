@@ -30,6 +30,9 @@ namespace MachineSimulation.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MachineName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

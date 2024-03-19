@@ -5,6 +5,7 @@ using MachineSimulation.Entities.Concrete;
 using MachineSimulation.Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MachineSimulation.API.Controllers
 {
@@ -32,7 +33,13 @@ namespace MachineSimulation.API.Controllers
 
                 await _machineService.AddMachineAsync(machine);
 
-				return Ok(machine); 
+                if (machine.Id > 0) // Eğer bir Id atandıysa
+                {
+                    machine.ImageUrl = $"{machine.MachineName.Replace(" ", "")}.jpg";
+                    await _machineService.UpdateMachine(machine);
+                }
+
+                return Ok(machine); 
 			}
 
 			return BadRequest(ModelState); 

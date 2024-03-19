@@ -24,6 +24,7 @@ namespace MachineSimulation.Business.Concrete
         public async Task LogActionAsync(MachineLog logEntry)
         {
             await _machineLogWriteRepository.AddAsync(logEntry);
+            await _machineLogWriteRepository.SaveAsync();
         }
     }
 }

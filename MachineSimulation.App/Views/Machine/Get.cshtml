@@ -49,12 +49,18 @@
             updateNavbarTitle('@Html.Raw(Model.MachineName)');
         });
 
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updateNavbarTitle('@Html.Raw(Model.MachineName)');
+            showBackIconAndRedirect(); // Navbar'da geri dönme ikonunu aktif et
+        });
+
         function updateNavbarTitle(machineName) {
             var navbarTitle = document.getElementById('navbar-title');
             if (navbarTitle) {
                 navbarTitle.textContent = machineName;
             }
         }
+     
     </script>
 </body>
 </html>

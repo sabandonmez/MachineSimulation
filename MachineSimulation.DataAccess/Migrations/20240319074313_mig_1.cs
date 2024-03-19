@@ -10,6 +10,21 @@ namespace MachineSimulation.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "MachineLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MachineId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MachineLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Machines",
                 columns: table => new
                 {
@@ -17,7 +32,6 @@ namespace MachineSimulation.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MachineName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MachineType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<int>(type: "int", nullable: false),
                     ProductionCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -116,6 +130,9 @@ namespace MachineSimulation.DataAccess.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "MachineLogs");
+
             migrationBuilder.DropTable(
                 name: "OperationParameters");
 

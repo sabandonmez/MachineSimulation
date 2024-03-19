@@ -1,9 +1,11 @@
 ﻿using MachineSimulation.DataAccess.Abstract;
+using MachineSimulation.DataAccess.Abstract.MachineLogRepositories;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationRepositories;
 using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
 using MachineSimulation.DataAccess.Concrete;
+using MachineSimulation.DataAccess.Concrete.MachineLogRepositories;
 using MachineSimulation.DataAccess.Concrete.MachineRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationRepositories;
@@ -25,6 +27,8 @@ namespace MachineSimulation.DataAccess
             services.AddDbContext<MachineSimulationContext>(options => options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MachineSimDb;Trusted_Connection=true;"));
             services.AddScoped<IMachineReadRepository,MachineReadRepository>();
             services.AddScoped<IMachineWriteRepository, MachineWriteRepository>();
+            services.AddScoped<IMachineLogReadRepository,MachineLogReadRepository>();
+            services.AddScoped<IMachineLogWriteRepository, MachineLogWriteRepository>();
             services.AddScoped<IOperationReadRepository,OperationReadRepository>();
             services.AddScoped<IOperationWriteRepository,OperationWriteRepository>();
             services.AddScoped<IParameterReadRepository,ParameterReadRepository>();

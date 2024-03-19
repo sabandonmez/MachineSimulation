@@ -1,10 +1,23 @@
 ﻿@model IEnumerable<Machine>
 
-<div class="row my-3">
-
-    @foreach (Machine mchn in Model)
-    {
-        <partial name="_MachineCard" model="@mchn" />
-
-    }
+<div class="container">
+    <div class="row my-3">
+        @foreach (Machine mchn in Model)
+        {
+            <partial name="_MachineCard" model="@mchn" />
+        }
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        updateNavbarTitle();
+    });
+
+    function updateNavbarTitle() {
+        var navbarTitle = document.getElementById('navbar-title-home');
+        if (navbarTitle) {
+            navbarTitle.textContent = "Makina Seçiniz";
+        }
+    }
+</script>

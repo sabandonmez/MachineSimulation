@@ -10,10 +10,11 @@ namespace MachineSimulation.DataAccess.Concrete
 {
     public class MachineSimulationContext : DbContext
     {
-        DbSet<Machine> Machines { get; set; }
-        DbSet<Operation> Operations { get; set; }
-        DbSet<Parameter> Parameters { get; set; }
-        DbSet<OperationParameter> OperationParameters { get; set; }
+        public DbSet<Machine> Machines { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<Parameter> Parameters { get; set; }
+        public DbSet<OperationParameter> OperationParameters { get; set; }
+        public DbSet<MachineLog> MachineLogs { get; set; }
 
         public MachineSimulationContext(DbContextOptions options) : base(options)
         {

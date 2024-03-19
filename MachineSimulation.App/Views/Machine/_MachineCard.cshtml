@@ -1,28 +1,54 @@
 ﻿@model Machine
 
-<style>
-    .card {
-        width: 18rem;
-        border-radius: 20px; 
-    }
-    .card-img-top {
-        border-top-left-radius: 20px; 
-        border-top-right-radius: 20px; 
-    }
-</style>
-
-<div class="col-sm-12 col-md-4 col-xxl-3 my-4">
-
+<link rel="stylesheet" href="~/css/machine-card.css" asp-append-version="true" />
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 my-3">
     <div class="card">
         <img src="/images/default.jpg" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Model.MachineName</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-primary">
-                <i class="fa-solid fa-arrow-right"></i>
-                Go somewhere
+                Detay
             </a>
+            <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-success">
+                Bağlan
+            </button>
         </div>
     </div>
-
 </div>
+<script>
+    function toggleConnection(machineId) {
+        var button = document.getElementById('connect-btn-' + machineId);
+        var action = button.textContent.trim() === 'Bağlan' ? 'ModbusConnect' : 'ModbusDisconnect';
+
+        button.disabled = true; // butonu geçici olarak devre dışı bırak
+
+        // AJAX isteği ile backend metodunu çağır
+        fetch(`/Machine/${action}?machineId=${machineId}`, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    if (action === 'ModbusConnect') {
+                        button.classList.remove('btn-success');
+                        button.classList.add('btn-danger');
+                        button.textContent = 'Kop';
+                        console.log("Bağlandınız");
+                    } else {
+                        button.classList.remove('btn-danger');
+                        button.classList.add('btn-success');
+                        button.textContent = 'Bağlan';
+                        console.log("Bağlantı kopartıldı");
+                    }
+                } else {
+                    alert('İşlem başarısız.');
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu.');
+            })
+            .finally(() => {
+                button.disabled = false; // işlem bittiğinde butonu tekrar aktif hale getir
+            });
+    }
+</script>

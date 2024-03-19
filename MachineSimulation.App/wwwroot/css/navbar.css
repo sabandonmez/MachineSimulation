@@ -7,6 +7,14 @@
     color: white;
     margin: 0; /* Kenar boşluklarını kaldır */
 }
+.navbar h3 {
+        text-align: left; /* Metni sola hizalar */
+        position: absolute; /* h3 etiketini konumlandırmak için mutlak konumlandırmayı kullanır */
+        left: 0; /* Sol kenara sıfır piksel uzaklıkta olacak şekilde ayarlar */
+        top: 50%; /* Üst kenardan %50 uzaklıkta olacak şekilde ayarlar */
+        transform: translateY(-50%); /* Yatay eksende kendisinin yarısı kadar yukarı çeker */
+        margin-left:10px;
+}
 .full-height {
     height: 100%; /* Konteynırın yüksekliğini tam ekran yap */
     display: flex; /* Flexbox kullanıyoruz */

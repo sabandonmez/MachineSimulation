@@ -1,6 +1,7 @@
 using System.Reflection;
 using MachineSimulation.DataAccess;
 using MachineSimulation.Business;
+using MachineSimulation.Business.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddDataAccessServices();
 builder.Services.AddBusinessServices();
+builder.Services.AddSingleton<ModbusConnectionManager>();
 
 var app = builder.Build();
 

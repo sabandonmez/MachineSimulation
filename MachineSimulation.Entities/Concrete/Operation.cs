@@ -1,5 +1,4 @@
 ﻿using MachineSimulation.Core.EntitiesLayer;
-using MachineSimulation.Entities.Concrete.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

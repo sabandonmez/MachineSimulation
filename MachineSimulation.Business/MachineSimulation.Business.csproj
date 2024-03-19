@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyModbusTCP.NETCore" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MachineSimulation.DataAccess\MachineSimulation.DataAccess.csproj" />
   </ItemGroup>
 

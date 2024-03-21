@@ -17,6 +17,7 @@ namespace MachineSimulation.App.Controllers
 
 
         private ModbusClient _modbusClient;
+
         public MachineController(IMapper mapper, IMachineService machineService, IMachineLogService machineLogService, IModbusConnectionService modbusConnectionService)
         {
             Mapper = mapper;
@@ -104,9 +105,10 @@ namespace MachineSimulation.App.Controllers
 
 
 
-        public async Task<IActionResult> Get([FromRoute(Name = "id")] int id)
+        public IActionResult Get([FromRoute(Name = "id")] int id)
         {
-            var model = await _machineService.GetByIdMachineAsync(id);
+            var model =  _machineService.GetMachineDetails(id);
+            model.MachineLogs = _machineLogService.GetLogsForMachine(id);
             return View(model);
         }
 

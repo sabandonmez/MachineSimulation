@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240319120434_mig_1")]
+    [Migration("20240321062925_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,8 +85,9 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int>("MachineId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OperationTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("OperationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -109,7 +110,7 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int>("ParameterId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("ParameterValue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

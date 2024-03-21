@@ -47,7 +47,7 @@ namespace MachineSimulation.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MachineId = table.Column<int>(type: "int", nullable: false),
-                    OperationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    OperationName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +89,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OperationId = table.Column<int>(type: "int", nullable: false),
                     ParameterId = table.Column<int>(type: "int", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ParameterValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

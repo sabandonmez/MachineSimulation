@@ -1,5 +1,6 @@
 ﻿using MachineSimulation.Core.DataAccessLayer.EntityFramework;
 using MachineSimulation.Entities.Concrete;
+using MachineSimulation.Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace MachineSimulation.DataAccess.Abstract.MachineRepositories
 {
     public interface IMachineReadRepository : IReadRepository<Machine>
     {
+        public MachineDetailsDto GetMachineDetails(int machineId);
     }
 }

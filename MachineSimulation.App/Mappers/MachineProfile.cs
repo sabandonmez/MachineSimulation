@@ -10,6 +10,8 @@ namespace MachineSimulation.API.Mappers
 		{
 			CreateMap<MachineDto, Machine>();
 			CreateMap<Machine, MachineDto>();
+			CreateMap<MachineDetailsDto,Machine>();
+			CreateMap<Machine,MachineDetailsDto>();
 		}
 	}
 }

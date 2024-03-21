@@ -1,4 +1,5 @@
 ﻿using MachineSimulation.Entities.Concrete;
+using MachineSimulation.Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace MachineSimulation.Business.Abstract
         Task UpdateMachine(Machine machine);
         Task<IEnumerable<Machine>> GetAllMachinesAsync();
         Task<Machine> GetByIdMachineAsync(int id);
+        MachineDetailsDto GetMachineDetails(int machineId);
+
     }
 }

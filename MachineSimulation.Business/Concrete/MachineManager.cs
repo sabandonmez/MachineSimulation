@@ -1,6 +1,7 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
 using MachineSimulation.Entities.Concrete;
+using MachineSimulation.Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,11 @@ namespace MachineSimulation.Services.Concrete
         public async Task<Machine> GetByIdMachineAsync(int id)
         {
             return await _machineReadRepository.GetByIdAsync(id,false);
+        }
+
+        public MachineDetailsDto GetMachineDetails(int machineId)
+        {
+            return _machineReadRepository.GetMachineDetails(machineId);
         }
 
         public async Task UpdateMachine(Machine machine)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MachineSimulation.Business.Concrete
 {
-    public class MachineLogManager :IMachineLogService
+    public class MachineLogManager : IMachineLogService
     {
 
         private readonly IMachineLogReadRepository _machineLogReadRepository;
@@ -19,6 +19,12 @@ namespace MachineSimulation.Business.Concrete
         {
             _machineLogReadRepository = machineLogReadRepository;
             _machineLogWriteRepository = machineLogWriteRepository;
+        }
+
+        public IEnumerable<MachineLog> GetLogsForMachine(int machineId)
+        {
+            return _machineLogReadRepository.GetLogsForMachine(machineId);
+            
         }
 
         public async Task LogActionAsync(MachineLog logEntry)

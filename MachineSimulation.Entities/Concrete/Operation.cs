@@ -10,9 +10,11 @@ namespace MachineSimulation.Entities.Concrete
     public class Operation : BaseEntity
     {
         public int MachineId { get; set; }
-        public DateTime OperationTime { get; set; }   
+        public string OperationName { get; set; } // Örneğin: "Başlatma", "Duraklama", "Hazırlık" vs.
+
         public virtual Machine Machine { get; set; }
-        public virtual ICollection<OperationParameter> OperationParameters { get; set; } // Bir operasyon birden çok operasyon parametresine sahip olabilir.
+        public virtual ICollection<OperationParameter> OperationParameters { get; set; }
+   
 
     }
 }

@@ -12,5 +12,6 @@ namespace MachineSimulation.Business.Abstract
     public interface IMachineLogService
     {
         Task LogActionAsync(MachineLog logEntry);
+        IEnumerable<MachineLog> GetLogsForMachine(int machineId);
     }
 }

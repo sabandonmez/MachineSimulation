@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@model MachineDetailsDto
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leadyang CNC</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .row {
             align-items: start;
@@ -23,20 +26,38 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <h1>@Model.MachineName</h1>
-                <input class="form-control mb-2" placeholder="Sıcaklık">
-                <input class="form-control mb-2" placeholder="Hız">
+                <h2>Kalite Kriter Verisi</h2>
+                <div class="pb-5">
+                @foreach (var parameter in Model.Parameters)
+                {
+                    <div>
+                        <label>@parameter.ParameterName :</label>
+                    </div>
+                }
+                </div>
+
+                <div class="pt-5" style="width: 450px; height: 300px;">
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
+
             <div class="col-md-6">
-                <h2>İşlem Süreleri</h2>
-                <button id="hazirlikBaslat" class="btn btn-danger mb-2">Hazırlık Başlat</button>
-                <div>Süre: <span id="hazirlikSuresi">0</span>s</div>
-                <button id="uretimBaslatDurdur" class="btn btn-danger mb-2">Üretim</button>
-                <div>Süre: <span id="uretimSuresi">0</span>s</div>
-                <ul id="uretimSureleriListesi"></ul>
-                <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
-                <div id="toplamSuresi"></div>
-                <div>Adet: <span id="uretimAdeti">0</span></div>
+                <h2>Üretim Verisi</h2>
+                <div>
+                    <button id="hazirlikBaslat" class="btn btn-danger mb-2">Hazırlık Başlat</button>
+                    <button id="hazirlikBitir" class="btn btn-danger mb-2">Hazırlık Bitir</button>
+                </div>
+             
+                <div>
+                    <button id="uretimBaslatDurdur" class="btn btn-danger mb-2">Üretim Başlat</button>
+                    <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
+                </div>
+
+                <div class="container mt-5">
+                    <h2>Log Kayıtları</h2>
+                    <partial name="_MachineLogs" model="Model.MachineLogs" />
+
+                </div>
             </div>
         </div>
     </div>
@@ -62,5 +83,33 @@
         }
      
     </script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', // Çizgi grafiği için 'line' tipi kullanılır.
+            data: {
+                labels: ['Ocak', 'Şubat', 'Mart'], // X ekseni etiketleri
+                datasets: [{
+                    label: 'Ziyaretçi Sayısı',
+                    data: [50, 10, 70], // Y ekseni verileri
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // İlk veri noktasının arka plan rengi
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)', // İlk veri noktasının sınır rengi
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // Y ekseni 0'dan başlar
+                    }
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>

@@ -83,8 +83,9 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int>("MachineId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OperationTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("OperationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -107,7 +108,7 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int>("ParameterId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("ParameterValue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

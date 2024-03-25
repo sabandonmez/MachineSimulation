@@ -10,11 +10,11 @@
         <div class="card-body">
             
             <h5 class="card-title">@Model.MachineName</h5>
-            <div class="btn-group">
-                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
+            <div class="">
+                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn connect-orange-button btn-lg">
                 Detay
             </a>
-                <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-danger btn-lg">
+                <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn connect-pink-button btn-lg">
                 Bağlan
             </button>
             </div>
@@ -37,14 +37,14 @@
                     if (action === 'ModbusConnect') {
                         button.classList.remove('btn-danger');
                         button.classList.add('btn-success');
-                        card.style.background = '#28a745'; 
+                        card.style.background = '#27AE60';
                         button.textContent = 'Kop';
                         console.log("Bağlandınız");
                     } else {
                         button.classList.remove('btn-success');
                         button.classList.add('btn-danger');
                         // card.style.border = '6px solid #D40D12';  
-                        card.style.background = '#D40D12';
+                        card.style.background = '';
                         button.textContent = 'Bağlan';
                         console.log("Bağlantı kopartıldı");
                     }

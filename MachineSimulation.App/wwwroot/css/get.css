@@ -19,12 +19,7 @@ body {
 
 }
 
-.card-div {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 15px;
-    color: white !important;
-}
+
 .graph-card-blue {
     background: linear-gradient(to left, #56CCF2, #2F80ED); /* Mavi renk geçiþi */
 }
@@ -63,7 +58,7 @@ body {
 }
 
 .scrollable-logs {
-    max-height: 250px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
+    max-height: 350px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
 }
@@ -78,6 +73,12 @@ body {
     height: 15rem;
     flex: 0 0 auto;
     margin-right: 1rem; /* Grafik kartlarý arasýnda biraz boþluk */
+}
+.card-div {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    color: white !important;
 }
 
 @media (min-width: 576px) {
@@ -135,3 +136,19 @@ body {
 .scrollable-logs .table-hover tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.1) !important; /* Fareyle üzerine gelindiðinde */
 }
+
+
+
+/* CSS dosyanýz */
+.white-border-card {
+    border: 2px solid white; /* Çerçevenin kalýnlýðýný ve rengini belirler */
+    background-color:transparent;
+}
+
+    /* Arka plan rengi zaten mavi olduðu için beyaz çerçeveyi görebilmek için kartlarýn içine ve baþlýðýna da renk verebiliriz */
+    .white-border-card .card-header,
+    .white-border-card .card-body {
+        background-color: transparent !important; /* Mavi arka plan rengi */
+        border: 1px solid white;
+        color: white; /* Beyaz yazý rengi */
+    }

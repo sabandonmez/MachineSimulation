@@ -6,14 +6,29 @@
     transition: box-shadow 0.3s ease-in-out; /* Animasyon için geçiþ efekti */
 
 }
-.card-disconnect {
-    background-color: #2F80ED;
-    color: white;
+.card-img-top {
+    width: 100%; /* Bu, resmin geniþliðini her zaman kartýn geniþliðine sýðacak þekilde ayarlar. */
+    height: 500px; /* Bu, resmin orijinal yükseklik/geniþlik oranýný korumasýný saðlar. */
+    max-height: 200px; /* Bu, resmin maksimum yüksekliðini belirler. */
+    object-fit: contain; /* Bu, resmin belirtilen boyutlarý doldurmasýný ve gerekiyorsa kesilmesini saðlar. */
+
 }
 
-    .card:hover {
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.45); /* Üzerine gelindiðinde gölge efekti deðiþiyor */
-    }
+.card-disconnect {
+    background: linear-gradient(to left, #2F80ED,#56CCF2);
+    color: white;
+}
+.connect-orange-button {
+    background: linear-gradient(to left, #F2994A, #F2C94C); /* Turuncu renk geçiþi */
+
+}
+.connect-pink-button {
+    background: linear-gradient(to left, #E91E63, #AD1457); /* Parlak pembe'den koyu pembe'ye gradient */
+    color: white !important; /* Yazý rengini beyaza ayarlar */
+}
+.card:hover {
+   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.45); /* Üzerine gelindiðinde gölge efekti deðiþiyor */
+}
 
 .card-img-top {
     border-radius: 20px;

@@ -25,18 +25,26 @@
     
                     <!-- İlk içerik alanı -->
                     <div class="col-md-6">
+                <!-- View dosyanız -->
                 <div class="graph-card-blue card-div h-100">
-                            <h2>Kalite Kriter Verisi</h2>
-                            <div class="mb-5 ">
-                                @foreach (var parameter in Model.Parameters)
-                                {
-                                    <div>
-                                        <label>@parameter.ParameterName :</label>
+                    <h2>Kalite Kriter Verisi</h2>
+                    <div class="row">
+                        @foreach (var parameter in Model.Parameters)
+                        {
+                            <div class="col-md-6 mb-3">
+                                <div class="card white-border-card">
+                                    <div class="card-header">
+                                        @parameter.ParameterName
                                     </div>
-                                }
+                                    <div class="card-body">
+                                        <h5 class="card-title">123</h5>
+                                    </div>
+                                </div>
                             </div>
+                        }
+                    </div>
+                </div>
 
-                        </div>
                 <div class="card-div graph-card-orange mt-5 align-top">
                     <h2>Parametre Grafikleri</h2>
                     <div id="graphs-container"  class="graphs-property">

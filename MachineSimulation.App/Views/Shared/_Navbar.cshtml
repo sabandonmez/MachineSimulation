@@ -5,22 +5,28 @@
 
 <div class="full-height">
     <div class="navbar">
-        <h1 id="navbar-title-home"></h1>
-        <h3 id="navbar-title"></h3>
-        <span id="back-icon" style="display: none; cursor: pointer;">
+        <div class="">
+            <img class="logo" src="~/images/iletisim-yazilim.png" />
+        </div>
+        <h4 id="navbar-title-home">CoralReef Tablet Makina Entegrasyonu</h4>
+        <span id="back-icon">
             <i class="fa-solid fa-chevron-left"></i>
         </span>
     </div>
 </div>
 
 <script>
-    function showBackIconAndRedirect() {
-        var backIcon = document.getElementById('back-icon');
-        if (backIcon) {
-            backIcon.style.display = 'inline'; 
-            backIcon.onclick = function () { 
-                window.location.href = '/Machine/index'; 
-            };
-        }
+    // URL'i kontrol etmek için window.location.pathName kullanılır
+    var pathMatch = window.location.pathname.match(/\/Machine\/Get\/(\d+)/);
+    if (pathMatch) {
+        document.getElementById('back-icon').style.display = 'block';
+        document.getElementById('back-icon').addEventListener('click', function () {
+            window.location.href = '/';
+        });
+    } else {
+        document.getElementById('back-icon').style.display = 'none';
     }
+
+    
 </script>
+

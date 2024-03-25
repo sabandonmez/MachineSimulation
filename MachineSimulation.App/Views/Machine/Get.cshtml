@@ -5,111 +5,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leadyang CNC</title>
+    <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/get.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .row {
-            align-items: start;
-        }
-
-        #uretimSureleriListesi {
-            padding-left: 0;
-        }
-
-            #uretimSureleriListesi li {
-                list-style: none;
-            }
-    </style>
+  
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Kalite Kriter Verisi</h2>
-                <div class="pb-5">
-                @foreach (var parameter in Model.Parameters)
-                {
-                    <div>
-                        <label>@parameter.ParameterName :</label>
-                    </div>
-                }
-                </div>
+    <div class="mt-5">
+        <div class="pb-3">
+            <h3>@Model.MachineName</h3>
 
-                <div class="pt-5" style="width: 450px; height: 300px;">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <h2>Üretim Verisi</h2>
-                <div>
-                    <button id="hazirlikBaslat" class="btn btn-danger mb-2">Hazırlık Başlat</button>
-                    <button id="hazirlikBitir" class="btn btn-danger mb-2">Hazırlık Bitir</button>
-                </div>
-             
-                <div>
-                    <button id="uretimBaslatDurdur" class="btn btn-danger mb-2">Üretim Başlat</button>
-                    <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
-                </div>
-
-                <div class="container mt-5">
-                    <h2>Log Kayıtları</h2>
-                    <partial name="_MachineLogs" model="Model.MachineLogs" />
-
-                </div>
-            </div>
         </div>
-    </div>
+        <div class="row">
+            <!-- Sidebar Alanı -->
+           
 
+            <!-- Content Alanı -->
+    
+                    <!-- İlk içerik alanı -->
+                    <div class="col-md-6">
+                        <div class="white-div h-100">
+                            <h2>Kalite Kriter Verisi</h2>
+                            <div class="mb-5 ">
+                                @foreach (var parameter in Model.Parameters)
+                                {
+                                    <div>
+                                        <label>@parameter.ParameterName :</label>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+
+                <div class="white-div mt-5 align-top scrollable-parameter-graph">
+                    <h2>Parametre Grafikleri</h2>
+                    <div id="graphs-container">
+                        <!-- JavaScript ile dinamik olarak grafik canvas'ları buraya eklenecek -->
+                    </div>
+                </div>
+                    </div>
+
+                    <!-- İkinci içerik alanı -->
+                    <div class="col-md-6">
+                        <div class="white-div align-top">
+
+                            <h2>Üretim Verisi</h2>
+                            <div>
+                                <button id="hazirlikBaslat" class="btn btn-success mb-2">Hazırlık Başlat</button>
+                                <button id="hazirlikBitir" class="btn btn-danger mb-2">Hazırlık Bitir</button>
+                            </div>
+
+                            <div>
+                                <button id="uretimBaslatDurdur" class="btn btn-success mb-2">Üretim Başlat</button>
+                                <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
+                            </div>
+                        </div>
+                <div class="white-div mt-5 align-top scrollable-logs">
+                    <div class="container">
+                        <h2>Log Kayıtları</h2>
+                        <partial name="_OperationLogs" model="Model.OperationLogs" />
+                    </div>
+                </div>
+                    </div>
+             
+
+         
+        </div>
+
+        </div>
+            
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateNavbarTitle('@Html.Raw(Model.MachineName)');
-        });
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateNavbarTitle('@Html.Raw(Model.MachineName)');
-            showBackIconAndRedirect(); // Navbar'da geri dönme ikonunu aktif et
-        });
-
-        function updateNavbarTitle(machineName) {
-            var navbarTitle = document.getElementById('navbar-title');
-            if (navbarTitle) {
-                navbarTitle.textContent = machineName;
-            }
-        }
-     
-    </script>
-    <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line', // Çizgi grafiği için 'line' tipi kullanılır.
-            data: {
-                labels: ['Ocak', 'Şubat', 'Mart'], // X ekseni etiketleri
-                datasets: [{
-                    label: 'Ziyaretçi Sayısı',
-                    data: [50, 10, 70], // Y ekseni verileri
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)', // İlk veri noktasının arka plan rengi
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)', // İlk veri noktasının sınır rengi
-                    ],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true // Y ekseni 0'dan başlar
+            $(document).ready(function () {
+                var urlSegments = window.location.pathname.split('/');
+                var machineId = urlSegments[urlSegments.length - 1];
+                $.ajax({
+                    url: 'Machine/GetMachineParameters/' + machineId,
+                    type: 'GET',
+                    success: function (data) {
+                        var parametersData = {};
+                        data.forEach(function (param) {
+                            parametersData[param.parameterName] = param.parameterValue.map(Number);
+                        });
+                        createCharts(parametersData);
                     }
-                }
+                });
+            });
+
+            function createCharts(parametersData) {
+                $.each(parametersData, function (parameterName, values) {
+                    // Değerlerin her biri için X ekseninde bir etiket oluşturun.
+                    // Etiketler zaman veya ölçüm sırasına göre oluşturulabilir.
+                    // Örneğin: ['Ölçüm 1', 'Ölçüm 2', 'Ölçüm 3']
+                    var labels = values.map(function (_, index) {
+                        return 'Ölçüm ' + (index + 1);
+                    });
+
+                    var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-'); // Boşlukları '-' ile değiştir
+                    var canvasHtml = '<canvas id="' + canvasId + '"></canvas>';
+                    $('#graphs-container').append(canvasHtml);
+
+                    var ctx = document.getElementById(canvasId).getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels, // Ölçümler için dinamik etiketler
+                            datasets: [{
+                                label: parameterName,
+                                data: values, // Tüm değerleri Y ekseni üzerinde göster
+                                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                                borderColor: 'rgba(0, 123, 255, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
             }
-        });
-    </script>
+
+        </script>
+
+
+
 
 </body>
 </html>

@@ -12,5 +12,6 @@ namespace MachineSimulation.DataAccess.Abstract.MachineRepositories
     public interface IMachineReadRepository : IReadRepository<Machine>
     {
         public MachineDetailsDto GetMachineDetails(int machineId);
+        public List<ParameterDto> GetParameters(int machineId);
     }
 }

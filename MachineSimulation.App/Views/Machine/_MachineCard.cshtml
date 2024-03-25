@@ -8,24 +8,28 @@
              class="card-img-top" alt="@Model.MachineName">
 
         <div class="card-body">
+            
             <h5 class="card-title">@Model.MachineName</h5>
-            <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-warning">
+            <div class="btn-group">
+                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
                 Detay
             </a>
-            <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-danger">
+                <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn btn-danger btn-lg">
                 Bağlan
             </button>
+            </div>
         </div>
     </div>
 </div>
 <script>
     function toggleConnection(machineId) {
         var button = document.getElementById('connect-btn-' + machineId);
+        var card = button.closest('.card'); // Bu, 'card' sınıfına sahip en yakın üst öğeyi alır.
         var action = button.textContent.trim() === 'Bağlan' ? 'ModbusConnect' : 'ModbusDisconnect';
 
-        button.disabled = true; // butonu geçici olarak devre dışı bırak
+        button.disabled = true; // Butonu geçici olarak devre dışı bırak.
 
-        // AJAX isteği ile backend metodunu çağır
+        // AJAX isteği ile backend metodunu çağır.
         fetch(`/Machine/${action}?machineId=${machineId}`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
@@ -33,11 +37,13 @@
                     if (action === 'ModbusConnect') {
                         button.classList.remove('btn-danger');
                         button.classList.add('btn-success');
+                        card.style.border = '6px solid #28a745'; 
                         button.textContent = 'Kop';
                         console.log("Bağlandınız");
-                    } else {       
+                    } else {
                         button.classList.remove('btn-success');
                         button.classList.add('btn-danger');
+                        card.style.border = '6px solid #D40D12';  
                         button.textContent = 'Bağlan';
                         console.log("Bağlantı kopartıldı");
                     }
@@ -50,7 +56,8 @@
                 alert('Bir hata oluştu.');
             })
             .finally(() => {
-                button.disabled = false; // işlem bittiğinde butonu tekrar aktif hale getir
+                button.disabled = false; // İşlem bittiğinde butonu tekrar aktif hale getir.
             });
     }
+
 </script>

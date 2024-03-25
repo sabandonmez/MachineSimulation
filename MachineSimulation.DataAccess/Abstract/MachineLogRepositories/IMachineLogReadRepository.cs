@@ -12,6 +12,7 @@ namespace MachineSimulation.DataAccess.Abstract.MachineLogRepositories
     public interface IMachineLogReadRepository : IReadRepository<MachineLog>
     {
         public IEnumerable<MachineLog> GetLogsForMachine(int machineId);
+
     }
 
 }

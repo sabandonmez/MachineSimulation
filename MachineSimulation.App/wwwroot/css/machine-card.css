@@ -1,21 +1,32 @@
 .card {
     border-radius: 20px;
-    width: 100%;
     padding-top: 40px;
     padding-bottom: 40px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.35);
+    transition: box-shadow 0.3s ease-in-out; /* Animasyon için geçiþ efekti */
+    border: 6px solid #D40D12;
 }
+
+    .card:hover {
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.45); /* Üzerine gelindiðinde gölge efekti deðiþiyor */
+    }
 
 .card-img-top {
     border-radius: 20px;
-  
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
 
 .card-title {
-
-    font-size: 1.3rem; 
-    height: 3rem; 
-    overflow: hidden; 
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
+    font-size: 1.4rem;
+    height: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
+

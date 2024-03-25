@@ -28,6 +28,7 @@ namespace MachineSimulation.Business
             services.AddScoped<IParameterService, ParameterManager>();
             services.AddScoped<IOperationParameterService, OperationParameterManager>(); 
             services.AddScoped<IMachineLogService, MachineLogManager>();
+            services.AddScoped<IOperationLogService, OperationLogManager>();
             services.AddScoped<IModbusConnectionService, ModbusConnectionManager>();
 
         }

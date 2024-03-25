@@ -10,5 +10,7 @@ namespace MachineSimulation.Entities.DTOs
     {
         public string ParameterName { get; set; }
         public string ValueType { get; set; }
+
+        public List<string> ParameterValue { get; set; }
     }
 }

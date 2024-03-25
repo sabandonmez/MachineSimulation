@@ -1,0 +1,51 @@
+
+.row {
+    align-items: start;
+}
+
+#uretimSureleriListesi {
+    padding-left: 0;
+}
+
+    #uretimSureleriListesi li {
+        list-style: none;
+    }
+
+body {
+    background-color: #F5F5F5;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.white-div {
+    background-color: #FFF;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.align-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.h-100 {
+    height: 100%; /* Make div take full available vertical space */
+}
+
+.sidebar {
+   position:relative;
+   left:0px;
+}
+
+.scrollable-logs {
+    max-height: 250px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
+    overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
+    overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
+}
+.scrollable-parameter-graph {
+    max-height: 310px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
+    overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
+    overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
+}

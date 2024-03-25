@@ -44,6 +44,11 @@ namespace MachineSimulation.Services.Concrete
             return _machineReadRepository.GetMachineDetails(machineId);
         }
 
+        public List<ParameterDto> GetParameters(int machineId)
+        {
+            return _machineReadRepository.GetParameters(machineId);
+        }
+
         public async Task UpdateMachine(Machine machine)
         {
              _machineWriteRepository.Update(machine);

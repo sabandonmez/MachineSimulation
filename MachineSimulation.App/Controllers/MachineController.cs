@@ -4,6 +4,7 @@ using MachineSimulation.Business.Abstract;
 using MachineSimulation.Business.Concrete;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
 using MachineSimulation.Entities.Concrete;
+using MachineSimulation.Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MachineSimulation.App.Controllers
@@ -12,18 +13,20 @@ namespace MachineSimulation.App.Controllers
 	{
 		private readonly IMachineService _machineService;
         private readonly IMachineLogService _machineLogService;
+        private readonly IOperationLogService _operationLogService;
         public IMapper Mapper { get; }
         private readonly IModbusConnectionService _modbusConnectionService;
 
 
         private ModbusClient _modbusClient;
 
-        public MachineController(IMapper mapper, IMachineService machineService, IMachineLogService machineLogService, IModbusConnectionService modbusConnectionService)
+        public MachineController(IMapper mapper, IMachineService machineService, IMachineLogService machineLogService, IModbusConnectionService modbusConnectionService, IOperationLogService operationLogService)
         {
             Mapper = mapper;
             _machineService = machineService;
             _machineLogService = machineLogService;
             _modbusConnectionService = modbusConnectionService;
+            _operationLogService = operationLogService;
         }
         public async Task<IActionResult> Index()
         {
@@ -108,10 +111,22 @@ namespace MachineSimulation.App.Controllers
         public IActionResult Get([FromRoute(Name = "id")] int id)
         {
             var model =  _machineService.GetMachineDetails(id);
-            model.MachineLogs = _machineLogService.GetLogsForMachine(id);
+            model.OperationLogs = _operationLogService.GetOperationLogsWithNames(id);
             return View(model);
         }
 
+        [HttpGet("Machine/Get/Machine/GetMachineParameters/{id}")]
+        public IActionResult GetMachineParameters([FromRoute(Name = "id")] int id)
+        {
+            var model = _machineService.GetParameters(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(model);
+        }
 
 
     }

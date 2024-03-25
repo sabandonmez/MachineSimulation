@@ -1,23 +1,17 @@
 ﻿@model IEnumerable<Machine>
 
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <div class="container">
-    <div class="row my-3">
+    <div class="mt-5">
+        <h2 class="header-style">Makina Seçiniz</h2>
+    </div>
+    <!-- Kartların her biri için ayrı bir "col-md-4" div'i ekleyerek düzenleyin. -->
+    <div class="row my-3 justify-content-center">
         @foreach (Machine mchn in Model)
         {
-            <partial name="_MachineCard" model="@mchn" />
+            <div class="col-xs-12 col-sm-6 col-md-4 my-3">
+                <partial name="_MachineCard" model="@mchn" />
+            </div>
         }
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        updateNavbarTitle();
-    });
-
-    function updateNavbarTitle() {
-        var navbarTitle = document.getElementById('navbar-title-home');
-        if (navbarTitle) {
-            navbarTitle.textContent = "Makina Seçiniz";
-        }
-    }
-</script>

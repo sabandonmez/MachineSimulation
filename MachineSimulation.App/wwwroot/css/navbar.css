@@ -1,22 +1,32 @@
 ﻿.navbar {
-    display: flex; /* Flexbox kullanıyoruz */
-    justify-content: center; /* Yatayda ortala */
-    align-items: center; /* Dikeyde ortala */
-    height: 60px; /* Navbar yüksekliği */
-    background-color: #000080; /* Koyu mavi arkaplan rengi */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: #000080;
     color: white;
-    margin: 0; /* Kenar boşluklarını kaldır */
+    margin: 0;
+    width: 100%; /* Tam sayfa genişliği */
+    padding: 0 10px;
 }
-.navbar h3 {
-        text-align: left; /* Metni sola hizalar */
-        position: absolute; /* h3 etiketini konumlandırmak için mutlak konumlandırmayı kullanır */
-        left: 0; /* Sol kenara sıfır piksel uzaklıkta olacak şekilde ayarlar */
-        top: 50%; /* Üst kenardan %50 uzaklıkta olacak şekilde ayarlar */
-        transform: translateY(-50%); /* Yatay eksende kendisinin yarısı kadar yukarı çeker */
-        margin-left:10px;
+
+.logo {
+    max-width: 160px; /* Maksimum genişlik değeri */
+    max-height: 50px; /* Maksimum yükseklik değeri */
+    width: 100%; /* Genişliği, ebeveyn elemanına göre ayarla */
+    height: auto; /* Yüksekliği, genişliğe oranlı ayarla */
 }
-.full-height {
-    height: 100%; /* Konteynırın yüksekliğini tam ekran yap */
-    display: flex; /* Flexbox kullanıyoruz */
-    flex-direction: column; /* İçerikleri sütun olarak düzenle */
+
+
+    .navbar h4, .navbar h3 {
+        flex: 1; /* h4 ve h3 elemanlarının esnekliğini ve genişleyebilirliğini ayarlar */
+        text-align: center; /* Metni merkeze hizalar */
+        margin: 0; /* Kenar boşluklarını sıfırlar */
+    }
+
+#back-icon {
+    margin-left: auto; /* Geri ikonunu sağa hizalar */
+    cursor: pointer;
+    display: flex; /* İkonu görünür yapar */
+    align-items: center;
 }

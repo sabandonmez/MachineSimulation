@@ -15,6 +15,7 @@ namespace MachineSimulation.Business.Abstract
         Task<IEnumerable<Machine>> GetAllMachinesAsync();
         Task<Machine> GetByIdMachineAsync(int id);
         MachineDetailsDto GetMachineDetails(int machineId);
+        List<ParameterDto> GetParameters(int machineId);
 
     }
 }

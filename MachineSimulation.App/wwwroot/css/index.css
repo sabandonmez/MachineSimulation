@@ -1,0 +1,58 @@
+body{
+    padding:0;
+    margin:0;
+}
+/* index.css */
+
+/* Baþlýk için özel stili tanýmla */
+.header-style {
+    font-size: 1.7rem;
+    color: black;
+    margin-bottom: 1rem;
+    text-align: left; /* Merkeze almak için left yerine center kullanýn. */
+}
+
+/* Küçük cihazlar için genel stiller (mobil cihazlar, 600px altý) */
+.card {
+    width: 100%; /* Mobil cihazlarda kartlar tam geniþlikte olacak */
+    margin: 0.5rem; /* Kartlarýn etrafýnda küçük bir boþluk saðlar */
+}
+@media (min-width: 576px) {
+    .card {
+        width: 18rem; /* Ýki kartýn yan yana sýðmasý için */
+        margin: 0.5rem; /* Kartlar arasý boþluk */
+        
+    }
+}
+/* Küçük cihazlar (600px - 767px arasý) */
+@media (min-width: 600px) {
+    .card {
+        width: 18rem; /* Ýki kartýn yan yana sýðmasý için */
+      
+    }
+}
+
+/* Orta cihazlar (768px - 991px arasý, tipik tabletler) */
+@media (min-width: 768px) {
+    .card {
+        width: 14rem; /* Üç kartýn yan yana sýðmasý için */
+        
+    }
+}
+
+/* Büyük cihazlar (992px - 1199px arasý, küçük masaüstü ekranlar ve büyük tabletler) */
+@media (min-width: 992px) {
+    .card {
+        width: 18rem; /* Dört kartýn yan yana sýðmasý için */
+     
+    }
+}
+
+/* Çok büyük cihazlar (1200px ve daha büyük, büyük masaüstü ekranlar) */
+@media (min-width: 1200px) {
+    .card {
+        width: 22rem; /* Beþ kartýn yan yana sýðmasý için */
+       
+    }
+}
+

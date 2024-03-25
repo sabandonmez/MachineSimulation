@@ -15,7 +15,7 @@ namespace MachineSimulation.DataAccess.Concrete
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<OperationParameter> OperationParameters { get; set; }
         public DbSet<MachineLog> MachineLogs { get; set; }
-
+        public DbSet<OperationLog> OperationLogs { get; set; }
         public MachineSimulationContext(DbContextOptions options) : base(options)
         {
 

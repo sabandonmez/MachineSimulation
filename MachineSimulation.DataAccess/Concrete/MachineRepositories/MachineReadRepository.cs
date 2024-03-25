@@ -43,5 +43,23 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
 
             return machineDto;
         }
+
+        public List<ParameterDto> GetParameters(int machineId)
+        {
+            var parameters = _context.Parameters
+                                      .Where(p => p.MachineId == machineId)
+                                      .Select(p => new ParameterDto
+                                      {
+                                          ParameterName = p.ParameterName,
+                                          ValueType = p.ValueType,
+                                          ParameterValue = p.OperationParameters
+                                                            .Select(op => op.ParameterValue)
+                                                            .ToList()
+                                      })
+                                      .ToList();
+
+            return parameters;
+        }
+
     }
 }

@@ -14,6 +14,7 @@ namespace MachineSimulation.Entities.DTOs
         public int ProductionCount { get; set; }
         public string ImageUrl { get; set; }
         public IEnumerable<MachineLog> MachineLogs { get; set; }
+        public IEnumerable<OperationLogDto>  OperationLogs { get; set; }
         public List<ParameterDto> Parameters { get; set; }
     }
 }

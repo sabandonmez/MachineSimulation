@@ -1,12 +1,14 @@
 ﻿using MachineSimulation.DataAccess.Abstract;
 using MachineSimulation.DataAccess.Abstract.MachineLogRepositories;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
+using MachineSimulation.DataAccess.Abstract.OperationLogRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationRepositories;
 using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
 using MachineSimulation.DataAccess.Concrete;
 using MachineSimulation.DataAccess.Concrete.MachineLogRepositories;
 using MachineSimulation.DataAccess.Concrete.MachineRepositories;
+using MachineSimulation.DataAccess.Concrete.OperationLogRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationRepositories;
 using MachineSimulation.DataAccess.Concrete.ParameterRepositories;
@@ -31,6 +33,8 @@ namespace MachineSimulation.DataAccess
             services.AddScoped<IMachineLogWriteRepository, MachineLogWriteRepository>();
             services.AddScoped<IOperationReadRepository,OperationReadRepository>();
             services.AddScoped<IOperationWriteRepository,OperationWriteRepository>();
+            services.AddScoped<IOperationLogReadRepository, OperationLogReadRepository>();
+            services.AddScoped<IOperationLogWriteRepository, OperationLogWriteRepository>();
             services.AddScoped<IParameterReadRepository,ParameterReadRepository>();
             services.AddScoped<IParameterWriteRepository,ParameterWriteRepository>();
             services.AddScoped<IOperationParameterReadRepository,OperationParameterReadRepository>();

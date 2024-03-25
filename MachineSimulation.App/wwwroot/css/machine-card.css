@@ -4,7 +4,11 @@
     padding-bottom: 40px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.35);
     transition: box-shadow 0.3s ease-in-out; /* Animasyon için geçiþ efekti */
-    border: 6px solid #D40D12;
+
+}
+.card-disconnect {
+    background-color: #2F80ED;
+    color: white;
 }
 
     .card:hover {

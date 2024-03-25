@@ -19,13 +19,13 @@
         </div>
         <div class="row">
             <!-- Sidebar Alanı -->
-           
+     
 
             <!-- Content Alanı -->
     
                     <!-- İlk içerik alanı -->
                     <div class="col-md-6">
-                        <div class="white-div h-100">
+                <div class="graph-card-blue card-div h-100">
                             <h2>Kalite Kriter Verisi</h2>
                             <div class="mb-5 ">
                                 @foreach (var parameter in Model.Parameters)
@@ -37,18 +37,19 @@
                             </div>
 
                         </div>
-
-                <div class="white-div mt-5 align-top scrollable-parameter-graph">
+                <div class="card-div graph-card-orange mt-5 align-top">
                     <h2>Parametre Grafikleri</h2>
-                    <div id="graphs-container">
-                        <!-- JavaScript ile dinamik olarak grafik canvas'ları buraya eklenecek -->
+                    <div id="graphs-container"  class="graphs-property">
+                        <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
                     </div>
                 </div>
-                    </div>
+
+
+                </div>
 
                     <!-- İkinci içerik alanı -->
                     <div class="col-md-6">
-                        <div class="white-div align-top">
+                <div class="card-div graph-card-green align-top">
 
                             <h2>Üretim Verisi</h2>
                             <div>
@@ -61,7 +62,7 @@
                                 <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
                             </div>
                         </div>
-                <div class="white-div mt-5 align-top scrollable-logs">
+                <div class="card-div graph-card-pink mt-5 align-top scrollable-logs">
                     <div class="container">
                         <h2>Log Kayıtları</h2>
                         <partial name="_OperationLogs" model="Model.OperationLogs" />
@@ -95,42 +96,49 @@
                 });
             });
 
-            function createCharts(parametersData) {
-                $.each(parametersData, function (parameterName, values) {
-                    // Değerlerin her biri için X ekseninde bir etiket oluşturun.
-                    // Etiketler zaman veya ölçüm sırasına göre oluşturulabilir.
-                    // Örneğin: ['Ölçüm 1', 'Ölçüm 2', 'Ölçüm 3']
-                    var labels = values.map(function (_, index) {
-                        return 'Ölçüm ' + (index + 1);
-                    });
+        function createCharts(parametersData) {
+            var graphsContainer = $('#graphs-container');
+            graphsContainer.empty(); // Mevcut grafikleri temizle
 
-                    var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-'); // Boşlukları '-' ile değiştir
-                    var canvasHtml = '<canvas id="' + canvasId + '"></canvas>';
-                    $('#graphs-container').append(canvasHtml);
+            $.each(parametersData, function (parameterName, values) {
+                var labels = values.map(function (_, index) {
+                    return 'Ölçüm ' + (index + 1);
+                });
 
-                    var ctx = document.getElementById(canvasId).getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels, // Ölçümler için dinamik etiketler
-                            datasets: [{
-                                label: parameterName,
-                                data: values, // Tüm değerleri Y ekseni üzerinde göster
-                                backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                                borderColor: 'rgba(0, 123, 255, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
+                var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-');
+                var graphDiv = $('<div>', {
+                    class: 'graph-card',
+                    html: $('<canvas>', { id: canvasId })
+                });
+
+                graphsContainer.append(graphDiv);
+
+                var ctx = document.getElementById(canvasId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: parameterName,
+                            data: values,
+                            backgroundColor: 'orange',
+                            borderColor: 'black',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Bu ayar yükseklik/genişlik oranını korumaz
+                        scales: {
+                            y: {
+                                beginAtZero: true
                             }
                         }
-                    });
+                    }
                 });
-            }
+            });
+        }
+
 
         </script>
 

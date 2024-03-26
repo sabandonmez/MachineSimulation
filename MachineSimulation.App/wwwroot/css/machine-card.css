@@ -15,7 +15,7 @@
 }
 
 .card-disconnect {
-    background: linear-gradient(to left, #2F80ED,#56CCF2);
+    background: linear-gradient(to left, #06a7da,#56CCF2);
     color: white;
 }
 .connect-orange-button {
@@ -49,3 +49,12 @@
     text-overflow: ellipsis;
 }
 
+.button-container {
+    display: flex; /* Flexbox kullanarak iç elemanlarý yatay olarak hizalar */
+    align-items: center; /* Elemanlarý dikey olarak ortalar */
+    justify-content: space-between; /* Elemanlar arasýnda eþit boþluk býrakýr */
+}
+
+.detail-btn {
+    margin-right: 0.5rem;
+}

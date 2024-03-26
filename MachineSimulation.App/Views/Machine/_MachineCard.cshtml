@@ -11,25 +11,45 @@
             
             <h5 class="card-title">@Model.MachineName</h5>
             <div class="">
-                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn connect-orange-button btn-lg">
+                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn connect-orange-button btn-lg detail-btn">
                 Detay
             </a>
                 <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn connect-pink-button btn-lg">
                 Bağlan
             </button>
             </div>
+          
         </div>
     </div>
+    <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
+
 </div>
 <script>
+    function showNotification(message, color = 'gray', duration = 3000) {
+        const container = document.getElementById('notification-container');
+        const notification = document.createElement('div');
+
+        notification.style.background = color;
+        notification.style.color = 'white';
+        notification.style.padding = '10px';
+        notification.style.marginBottom = '5px';
+        notification.style.borderRadius = '5px';
+        notification.textContent = message;
+
+        container.appendChild(notification);
+
+        setTimeout(() => {
+            container.removeChild(notification);
+        }, duration);
+    }
+
     function toggleConnection(machineId) {
         var button = document.getElementById('connect-btn-' + machineId);
-        var card = button.closest('.card'); // Bu, 'card' sınıfına sahip en yakın üst öğeyi alır.
+        var card = button.closest('.card');
         var action = button.textContent.trim() === 'Bağlan' ? 'ModbusConnect' : 'ModbusDisconnect';
 
-        button.disabled = true; // Butonu geçici olarak devre dışı bırak.
+        button.disabled = true;
 
-        // AJAX isteği ile backend metodunu çağır.
         fetch(`/Machine/${action}?machineId=${machineId}`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
@@ -39,26 +59,24 @@
                         button.classList.add('btn-success');
                         card.style.background = '#27AE60';
                         button.textContent = 'Kop';
-                        console.log("Bağlandınız");
+                        showNotification(machineId + " Id ' sine sahip makina ile Bağlantı Başarılı.", '#27AE60');
                     } else {
                         button.classList.remove('btn-success');
                         button.classList.add('btn-danger');
-                        // card.style.border = '6px solid #D40D12';  
                         card.style.background = '';
                         button.textContent = 'Bağlan';
-                        console.log("Bağlantı kopartıldı");
+                        showNotification(machineId + " Id ' sine sahip makina ile Bağlantı Kopartıldı.", '#ab003f');
                     }
                 } else {
-                    alert('İşlem başarısız.');
+                    showNotification('İşlem başarısız.', 'purple');
                 }
             })
             .catch(error => {
                 console.error('Hata:', error);
-                alert('Bir hata oluştu.');
+                showNotification('Bir hata oluştu.', 'blue');
             })
             .finally(() => {
-                button.disabled = false; // İşlem bittiğinde butonu tekrar aktif hale getir.
+                button.disabled = false;
             });
     }
-
 </script>

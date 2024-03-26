@@ -1,5 +1,6 @@
 ﻿@model MachineDetailsDto
 
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -12,30 +13,29 @@
   
 </head>
 <body>
-    <div class="mt-5">
+    <div class="mt-3">
         <div class="pb-3">
             <h3>@Model.MachineName</h3>
 
         </div>
         <div class="row">
-            <!-- Sidebar Alanı -->
-     
-
             <!-- Content Alanı -->
     
                     <!-- İlk içerik alanı -->
                     <div class="col-md-6">
                 <!-- View dosyanız -->
-                <div class="graph-card-blue card-div h-100">
-                    <h2>Kalite Kriter Verisi</h2>
+                <div class="graph-card-blue card-div h-100 scrollable-quality-datas" >
+                    <h4>Kalite Kriter Verisi</h4>
+                    <hr class="line-for-cart"/>
                     <div class="row">
                         @foreach (var parameter in Model.Parameters)
                         {
-                            <div class="col-md-6 mb-3">
-                                <div class="card white-border-card">
-                                    <div class="card-header">
+                            <div class="col-md-4 mb-2">
+                                <div class="card white-border-card" style="text-align:center;align-content:center">
+                                    <div class="card-header" title="@parameter.ParameterName">
                                         @parameter.ParameterName
                                     </div>
+
                                     <div class="card-body">
                                         <h5 class="card-title">123</h5>
                                     </div>
@@ -45,8 +45,9 @@
                     </div>
                 </div>
 
-                <div class="card-div graph-card-orange mt-5 align-top">
-                    <h2>Parametre Grafikleri</h2>
+                <div class="card-div graph-card-green mt-4 align-top">
+                    <h4>Parametre Grafikleri</h4>
+                    <hr class="line-for-cart" />
                     <div id="graphs-container"  class="graphs-property">
                         <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
                     </div>
@@ -57,22 +58,42 @@
 
                     <!-- İkinci içerik alanı -->
                     <div class="col-md-6">
-                <div class="card-div graph-card-green align-top">
 
-                            <h2>Üretim Verisi</h2>
-                            <div>
-                                <button id="hazirlikBaslat" class="btn btn-success mb-2">Hazırlık Başlat</button>
-                                <button id="hazirlikBitir" class="btn btn-danger mb-2">Hazırlık Bitir</button>
-                            </div>
+                <div class="card-div graph-card-orange align-top scrollable-production-datas" style="height:330px;">
+                    <h4>Üretim Verisi</h4>
+                    <hr class="line-for-cart" />
 
-                            <div>
-                                <button id="uretimBaslatDurdur" class="btn btn-success mb-2">Üretim Başlat</button>
-                                <button id="uretimiDurdur" class="btn btn-danger mb-2">Üretimi Durdur</button>
-                            </div>
-                        </div>
-                <div class="card-div graph-card-pink mt-5 align-top scrollable-logs">
+                    <!-- Hazırlık bölümü -->
+                    <div class="d-flex align-items-center mb-2">
+                        <button id="hazirlikBaslat" class="btn btn-success">Hazırlık Başlat</button>
+                        <button id="hazirlikBitir" class="btn btn-danger ml-2">Hazırlık Bitir</button>
+                    </div>
+
+                    <!-- Üretim bölümü -->
+                    <div class="d-flex align-items-center mb-2">
+                        <button id="uretimBaslatDurdur" class="btn btn-success">Üretim Başlat</button>
+                        <button id="uretimiDurdur" class="btn btn-danger ml-2">Üretimi Durdur</button>
+                   
+                    </div>
+
+
+                    <div>
+                        <span id="hazirlikSuresiLabel" class="süre-label">Hazırlık Süresi: <span id="süre">0</span> </span>
+                    </div>
+
+                    <div>
+                        <span id="uretimSuresiLabel" class="süre-label">Üretim Süresi: <span id="üretimSüresi">0</span> </span>
+                    </div>
+                    <!-- Toplam süre -->
+                    <div>
+                        <span id="toplamSureLabel" class="süre-label">Toplam Üretim Süresi: <span id="toplamSure">0</span> </span>
+                    </div>
+                </div>
+
+                <div class="card-div graph-card-pink mt-4 align-top scrollable-logs">
                     <div class="container">
-                        <h2>Log Kayıtları</h2>
+                        <h4>Log Kayıtları</h4>
+                        <hr class="line-for-cart" /> 
                         <partial name="_OperationLogs" model="Model.OperationLogs" />
                     </div>
                 </div>
@@ -87,68 +108,168 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-            $(document).ready(function () {
-                var urlSegments = window.location.pathname.split('/');
-                var machineId = urlSegments[urlSegments.length - 1];
-                $.ajax({
-                    url: 'Machine/GetMachineParameters/' + machineId,
-                    type: 'GET',
-                    success: function (data) {
-                        var parametersData = {};
-                        data.forEach(function (param) {
-                            parametersData[param.parameterName] = param.parameterValue.map(Number);
-                        });
-                        createCharts(parametersData);
-                    }
-                });
+
+        <script>
+        $(document).ready(function () {
+            var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
+            var currentPage = 1; // Başlangıçta görüntülenecek sayfa
+            var parametersData = {}; // Parametre verileri burada saklanacak
+            var totalPages = 0; // Toplam sayfa sayısı, hesaplanacak
+
+            // Sayfalama için HTML elementleri
+            var paginationContainer = $('<div>', {
+                id: 'pagination-controls',
+                class: 'pagination-container' // Bu sınıfı CSS'te tanımlayacağız
             });
 
-        function createCharts(parametersData) {
-            var graphsContainer = $('#graphs-container');
-            graphsContainer.empty(); // Mevcut grafikleri temizle
+            var prevButton = $('<button>', {
+                html: '<i class="fa-solid fa-chevron-left"></i>',
+                click: function () { changePage(-1); },
+                class: 'pagination-button' // Bu sınıfı CSS'te tanımlayacağız
+            }).prop('disabled', currentPage === 1);
 
-            $.each(parametersData, function (parameterName, values) {
-                var labels = values.map(function (_, index) {
-                    return 'Ölçüm ' + (index + 1);
-                });
+            var nextButton = $('<button>', {
+                html: '<i class="fa-solid fa-chevron-right"></i>',
+                click: function () { changePage(1); },
+                class: 'pagination-button' // Bu sınıfı CSS'te tanımlayacağız
+            }).prop('disabled', currentPage === totalPages);
 
-                var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-');
-                var graphDiv = $('<div>', {
-                    class: 'graph-card',
-                    html: $('<canvas>', { id: canvasId })
-                });
+            paginationContainer.append(prevButton, nextButton);
+            $('.card-div.graph-card-green').append(paginationContainer);
 
-                graphsContainer.append(graphDiv);
+            function changePage(delta) {
+                currentPage += delta;
+                // Sayfa sınırlarını kontrol et
+                currentPage = Math.max(1, Math.min(currentPage, totalPages));
+                createCharts(currentPage);
+            }
 
-                var ctx = document.getElementById(canvasId).getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: parameterName,
-                            data: values,
-                            backgroundColor: 'orange',
-                            borderColor: 'black',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false, // Bu ayar yükseklik/genişlik oranını korumaz
-                        scales: {
-                            y: {
-                                beginAtZero: true
+            function createCharts(page) {
+                var graphsContainer = $('#graphs-container');
+                graphsContainer.empty(); // Mevcut grafikleri temizle
+
+                // Hangi grafiklerin gösterileceğini belirle
+                var startIndex = (page - 1) * graphsPerPage;
+                var endIndex = startIndex + graphsPerPage;
+                var parameterNames = Object.keys(parametersData).slice(startIndex, endIndex);
+
+                $.each(parameterNames, function (_, parameterName) {
+                    var values = parametersData[parameterName];
+                    var labels = values.map(function (_, index) {
+                        return 'Ölçüm ' + (index + 1);
+                    });
+
+                    var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-');
+                    var graphDiv = $('<div>', {
+                        class: 'graph-card',
+                        html: $('<canvas>', { id: canvasId })
+                    });
+
+                    graphsContainer.append(graphDiv);
+
+                    var ctx = document.getElementById(canvasId).getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: parameterName,
+                                data: values,
+                                backgroundColor: 'rgba(0, 128, 0, 0.5)',
+                                borderColor: 'green',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false, // Bu ayar yükseklik/genişlik oranını korumaz
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
                             }
                         }
-                    }
+                    });
                 });
-            });
-        }
 
+                // Toplam sayfa sayısını güncelle
+                totalPages = Math.ceil(Object.keys(parametersData).length / graphsPerPage);
+                // Sayfalama kontrollerinin görünürlüğünü güncelle
+                prevButton.prop('disabled', currentPage === 1);
+                nextButton.prop('disabled', currentPage === totalPages);
+            }
+
+            // Veri yükleme işlemi
+            var urlSegments = window.location.pathname.split('/');
+            var machineId = urlSegments[urlSegments.length - 1];
+            $.ajax({
+                url: 'Machine/GetMachineParameters/' + machineId,
+                type: 'GET',
+                success: function (data) {
+                    data.forEach(function (param) {
+                        parametersData[param.parameterName] = param.parameterValue.map(Number);
+                    });
+                    totalPages = Math.ceil(Object.keys(parametersData).length / graphsPerPage);
+                    createCharts(currentPage);
+                }
+            });
+        });
 
         </script>
+    <script>
+        $(document).ready(function () {
+            var hazirlikTimer, uretimTimer;
+            var hazirlikSuresi = 0, uretimSuresi = 0, toplamSure = 0;
+            var hazirlikSuresiEklendi = false;  // Hazırlık süresinin eklenip eklenmediğini kontrol eder
+
+            $('#hazirlikBaslat').click(function () {
+                hazirlikSuresi = 0;
+                $(this).prop('disabled', true);
+                $('#hazirlikBitir').prop('disabled', false);
+                hazirlikTimer = setInterval(function () {
+                    hazirlikSuresi++;
+                    $('#süre').text(hazirlikSuresi );
+                }, 1000);
+            });
+
+            $('#hazirlikBitir').click(function () {
+                clearInterval(hazirlikTimer);
+                $(this).prop('disabled', true);
+            });
+
+            $('#uretimBaslatDurdur').click(function () {
+                if ($(this).text() === "Üretim Başlat") {
+                    uretimSuresi = 0;
+                    $(this).prop('disabled', true);
+                    $('#uretimiDurdur').prop('disabled', false);
+                    uretimTimer = setInterval(function () {
+                        uretimSuresi++;
+                        $('#üretimSüresi').text(uretimSuresi );
+                    }, 1000);
+                }
+            });
+
+            $('#uretimiDurdur').click(function () {
+                clearInterval(uretimTimer);
+                $('#uretimBaslatDurdur').prop('disabled', false);
+                $(this).prop('disabled', true);
+                // Üretim süresini toplam süreye ekle
+                toplamSure += uretimSuresi;
+                // Hazırlık süresini sadece bir kez toplam süreye ekle
+                if (!hazirlikSuresiEklendi) {
+                    toplamSure += hazirlikSuresi;
+                    hazirlikSuresiEklendi = true;
+                }
+                $('#toplamSure').text(toplamSure + " saniye");
+            });
+
+            // Başlangıçta butonları uygun duruma getir
+            $('#hazirlikBitir').prop('disabled', true);
+            $('#uretimiDurdur').prop('disabled', true);
+            $('#uretimBaslatDurdur').prop('disabled', false);
+        });
+
+    </script>
 
 
 

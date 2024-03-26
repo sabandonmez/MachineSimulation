@@ -35,7 +35,7 @@ body{
 /* Orta cihazlar (768px - 991px arasý, tipik tabletler) */
 @media (min-width: 768px) {
     .card {
-        width: 14rem; /* Üç kartýn yan yana sýðmasý için */
+        width: 14.1rem; /* Üç kartýn yan yana sýðmasý için */
         
     }
 }

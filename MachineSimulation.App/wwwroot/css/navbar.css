@@ -1,13 +1,28 @@
-﻿.navbar {
+﻿body {
+    box-sizing: border-box;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 60px;
     background-color: #000080;
     color: white;
-    margin: 0;
-    width: 100%; /* Tam sayfa genişliği */
-    padding: 0 10px;
+    padding-left:1rem;
+}
+
+
+#navbar-title-home {
+    flex-grow: 1; /* Başlığın mevcut alanı doldurmasını sağlar */
+    text-align: center;
+}
+
+#back-icon {
+    /* İkon için ekstra stiller buraya eklenebilir */
+    display: none; /* JavaScript ile kontrol edilecek */
 }
 
 .logo {
@@ -18,15 +33,11 @@
 }
 
 
-    .navbar h4, .navbar h3 {
-        flex: 1; /* h4 ve h3 elemanlarının esnekliğini ve genişleyebilirliğini ayarlar */
-        text-align: center; /* Metni merkeze hizalar */
-        margin: 0; /* Kenar boşluklarını sıfırlar */
-    }
-
 #back-icon {
     margin-left: auto; /* Geri ikonunu sağa hizalar */
     cursor: pointer;
-    display: flex; /* İkonu görünür yapar */
     align-items: center;
+    margin-left: auto; /* Sağa hizalama */
 }
+
+

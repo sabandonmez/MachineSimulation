@@ -42,7 +42,7 @@ namespace MachineSimulation.App.Controllers
             try
             {
                 
-                    string ipAddress = "192.168.0.232";
+                    string ipAddress = "192.168.0.231";
                     int port = 502;
                     int slaveId = 1;
                 var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, (byte)slaveId);

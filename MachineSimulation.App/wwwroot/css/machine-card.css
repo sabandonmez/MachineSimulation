@@ -15,16 +15,20 @@
 }
 
 .card-disconnect {
-    background: linear-gradient(to left, #06a7da,#56CCF2);
+    background: linear-gradient(to right, #f5ab35,#f8dd8c);
     color: white;
 }
 .connect-orange-button {
-    background: linear-gradient(to left, #F2994A, #F2C94C); /* Turuncu renk geçiþi */
+    background: linear-gradient(to left, #4bb9e9, #1c76c1); /* Turuncu renk geçiþi */
+    color:white;
 
 }
 .connect-pink-button {
     background: linear-gradient(to left, #E91E63, #AD1457); /* Parlak pembe'den koyu pembe'ye gradient */
-    color: white !important; /* Yazý rengini beyaza ayarlar */
+    color: white ; /* Yazý rengini beyaza ayarlar */
+}
+.connect-pink-button:hover {
+    color: black; /* Yazý rengini beyaza ayarlar */
 }
 .card:hover {
    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.45); /* Üzerine gelindiðinde gölge efekti deðiþiyor */
@@ -47,6 +51,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color:white !important;
 }
 
 .button-container {

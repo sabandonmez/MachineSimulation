@@ -1,4 +1,8 @@
 
+:root {
+    --buton-yesil: #009540;
+    --buton-kirmizi:#c81f1f;
+}
 .row {
     align-items: start;
 }
@@ -21,7 +25,7 @@ body {
 
 
 .graph-card-blue {
-    background: linear-gradient(to right, #1349d5, #4a7edb);
+    background: linear-gradient(to right, #1349d5, #6f99e4);
     
 }
 
@@ -51,23 +55,27 @@ body {
 
 
 .scrollable-logs {
-    max-height: 331.8px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
+    height: 347.8px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
+    border: 1px solid #AD1457;
 }
 .scrollable-quality-datas {
     max-height: 200.4px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
+    border: 1px solid #F2994A;
 }
 
 .scrollable-production-datas {
     max-height: 200.4px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
+    border: 1px solid #1349d5;
 }
 
 .graphs-property {
+    margin-top: 30px;
     overflow-x: auto;
     display: flex;
     background-color: white;
@@ -75,37 +83,36 @@ body {
 }
 
 .graph-card {
+
    max-width: 31.5rem;
     height: 15rem;
     flex: 0 0 auto;
 }
-.card-div {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 15px;
-    color: white !important;
-}
+
+
 
 /* Log Kayýtlarý Tablosu için özel stiller */
-.scrollable-logs .table thead th {
-    color: white !important; /* Baþlýk satýrý metin rengi */
+.table-div {
+    background-color: white;
+    border-radius: 20px;
+    padding: 2rem;
 }
 
 .scrollable-logs .table tbody tr td {
-    color: white !important; /* Veri satýrý metin rengi */
+    color: black !important;
 }
 
-.scrollable-logs .table tbody tr {
-    border-color: white !important; /* Sýnýrlarýn rengi */
+.scrollable-logs .table thead th {
+    color: black !important;
 }
 
 .scrollable-logs .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(255, 255, 255, 0.30) !important; /* Her diðer satýr için daha belirgin bir renk */
+    background-color: rgba(255, 255, 255, 0.40) !important; /* Her diðer satýr için daha belirgin bir renk */
 }
 
 /* Fareyle üzerine gelindiðinde stiller */
 .scrollable-logs .table-hover tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important; /* Fareyle üzerine gelindiðinde daha belirgin bir renk */
+    background-color: rgba(255, 255, 255, 0.20) !important; /* Fareyle üzerine gelindiðinde daha belirgin bir renk */
 }
 
 
@@ -119,29 +126,32 @@ body {
     width: 100%; /* Tam geniþlik kullanýn */
 }
 
+
+
 .white-border-card {
     border: 2px solid white;
-    background-color: transparent;
+    background-color: white;
+    border-radius: 20px;
 }
     .white-border-card .card-header {
         background-color: transparent !important;
-        border: 1px solid white;
-        color: white;
-        white-space: nowrap; /* Baþlýðý tek satýrda tut */
+        color: black;
         overflow: hidden; /* Ýçerik kutunun dýþýna taþtýðýnda gizle */
         text-overflow: ellipsis; /* Taþan içeriði üç nokta ile göster */
-        height: 2.6rem; /* Baþlýk yüksekliðini sabitle */
+        min-height: 2.6rem; /* Baþlýk yüksekliðini sabitle */
         cursor: help; /* Üzerine gelindiðinde imleci 'help' ikonu yapar */
     }
 
     .white-border-card .card-body {
         background-color: transparent !important;
-        border: 1px solid white;
-        color: white;
+        border: 2px solid white;
+        border-radius: 0px 0px 20px 20px;
+        color: black;
         /* Card body için yükseklik ayarý gerekiyorsa */
         min-height: 5rem; /* Ýçerik alanýnýn minimum yüksekliðini ayarlayýn */
     }
     .white-border-card .card-header:hover:after {
+       
         content: attr(title); 
     position: absolute;
     padding: 4px 8px;
@@ -161,7 +171,7 @@ body {
 
 .pagination-container {
     position: absolute;
-    top: 265px;
+    top: 280px;
     right: 30px;
     display: flex;
     align-items: center;
@@ -180,14 +190,134 @@ body {
 }
 
     .pagination-button:disabled {
-        color: #ccc; /* Devre dýþý buton rengi */
+        color: #ccc;
     }
 
     .pagination-button:not(:disabled):hover {
-        color: #aad; /* Fareyle üzerine gelindiðinde renk */
+        color: #aad; 
     }
 
+/*kartlarýn baþlýk ayarlarý BAÞLANGIÇ*/
+.kalite-card-div {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    color: white !important;
+}
+.kalite-card {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin-bottom: -1.5rem;
+    background-color: transparent;
+    padding-left: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.kalite-card-title {
+    position: sticky;
+  
+    top: 0;
+    z-index: 3;
+    background: linear-gradient(to right, #F2994A, #F2C94C);
+    padding: 10px 10px;
+    margin-left: -20px;
+    box-sizing: border-box;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.card-div {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    color: white !important;
+}
+.parametre-card {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: transparent;
+    padding-left: 20px;
+    margin-left: -20px;
+    margin-bottom: -1.5rem;
+    margin-right: -20px;
+}
+.parametre-card-title {
+    position: sticky;
+    top: 0;
+    padding: 10px 10px;
+    margin-left: -20px;
+    box-sizing: border-box;
+    border-radius: 20px 20px 0px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: linear-gradient(to left, #6FCF97, #27AE60); /* Yeþil renk geçiþi */
+}
+.uretim-card-div {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    color: white !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.uretim-card {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: transparent;
+    padding-left: 20px;
+    margin-left: -20px;
+    margin-bottom: -1.5rem;
+    margin-right: -20px;
+}
+.uretim-card-title {
+    top: 0;
+    background: linear-gradient(to right, #1349d5, #6f99e4);
+    padding: 10px 10px;
+    box-sizing: border-box;
+    margin-left: -20px;
+    position: sticky;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
+.log-card-div {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    color: white !important;
+}
+.log-card {
+    position: sticky;
+    top: 0;
+    margin-right: -40px;
+    margin-left: -40px;
+}
+.log-card-title {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to left, #E91E63, #AD1457);
+    padding: 10px 10px;
+    padding-left: 20px;
+}
+
+
+/*kartlarýn baþlýk ayarlarý BÝTÝÞ*/
 @media (min-width: 576px) {
     .graph-card {
         width: 32rem; /* Ýki kartýn yan yana sýðmasý için */
@@ -222,4 +352,56 @@ body {
     .graph-card {
         width: 32.2rem; /* Beþ kartýn yan yana sýðmasý için */
     }
+}
+
+.hazirlik-bolumu, .uretim-bolumu {
+    color: #333;
+    display: flex;
+    justify-content: space-evenly; /* Ýki ana elementi kenarlara yerleþtir */
+    align-items: flex-start; /* Üst kenara hizala */
+}
+
+.buton-grubu {
+    display: flex;
+    flex-direction: column; /* Butonlarý dikey hale getir */
+    align-items: flex-start; /* Sol kenara hizala */
+    background-color: blue;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    margin: 0rem 1rem;
+    background-color: white;
+    border: 1px solid #C0C0C0;
+    
+    border-radius: 20px;
+}
+
+.sure-label-grubu {
+    display: flex;
+    flex-direction: column; /* Etiketleri dikey hale getir */
+    align-items: start; /* Sað kenara hizala */
+    background-color: white;
+    border: 1px solid #C0C0C0;
+
+    border-radius: 20px;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+}
+
+.btn-green, .btn-red {
+    width: 100%; /* Buton geniþliðini tam yap */
+    margin-bottom: 8px; /* Butonlar arasý boþluk */
+    color: white;
+    border-radius: 20px;
+}
+
+.btn-green {
+    background-color:var(--buton-yesil) !important;
+    
+    
+}
+.btn-red {
+    background-color:var(--buton-kirmizi)!important;
 }

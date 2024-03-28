@@ -1,6 +1,5 @@
 ﻿@model MachineDetailsDto
 
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -24,29 +23,44 @@
                     <!-- İlk içerik alanı -->
                     <div class="col-md-6">
                 <!-- View dosyanız -->
-                <div class="graph-card-blue card-div h-100 scrollable-quality-datas" >
-                    <h4>Kalite Kriter Verisi</h4>
-                    <hr class="line-for-cart"/>
+                <div class="graph-card-orange kalite-card-div h-100 scrollable-quality-datas">
+                    <div class="kalite-card">
+                        <h4 class="kalite-card-title">
+                            Kalite Kriter Verisi
+                        </h4>
+                    </div>
+
+                    <hr class="line-for-cart" />
                     <div class="row">
                         @foreach (var parameter in Model.Parameters)
                         {
-                            <div class="col-md-4 mb-2">
+                            <div class="col-md-6 mb-2">
+                                
                                 <div class="card white-border-card" style="text-align:center;align-content:center">
                                     <div class="card-header" title="@parameter.ParameterName">
-                                        @parameter.ParameterName
+                                        <h6>@parameter.ParameterName</h6>
                                     </div>
-
+                                    
                                     <div class="card-body">
-                                        <h5 class="card-title">123</h5>
+                                        <h4 class="card-title">123</h4>
                                     </div>
                                 </div>
                             </div>
+
                         }
                     </div>
                 </div>
 
                 <div class="card-div graph-card-green mt-4 align-top">
-                    <h4>Parametre Grafikleri</h4>
+                 
+                    <div class="parametre-card ">
+                        <h4 class="parametre-card-title">
+                            Parametre Grafikleri
+                        </h4>
+                    </div>
+                        
+                 
+                 
                     <hr class="line-for-cart" />
                     <div id="graphs-container"  class="graphs-property">
                         <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
@@ -59,40 +73,65 @@
                     <!-- İkinci içerik alanı -->
                     <div class="col-md-6">
 
-                <div class="card-div graph-card-orange align-top scrollable-production-datas" style="height:330px;">
-                    <h4>Üretim Verisi</h4>
+
+                <div class="uretim-card-div graph-card-blue align-top scrollable-production-datas">
+
+                    <div class="uretim-card">
+                        <h4 class="uretim-card-title">
+                            Üretim Verisi
+                        </h4>
+                    </div>
+
                     <hr class="line-for-cart" />
 
                     <!-- Hazırlık bölümü -->
-                    <div class="d-flex align-items-center mb-2">
-                        <button id="hazirlikBaslat" class="btn btn-success">Hazırlık Başlat</button>
-                        <button id="hazirlikBitir" class="btn btn-danger ml-2">Hazırlık Bitir</button>
+                    <div class="hazirlik-bolumu">
+                        <div class="buton-grubu">
+                            <button id="hazirlikBaslat" class="btn btn-green">Hazırlık Başlat</button>
+                            <button id="hazirlikBitir" class="btn btn-red">Hazırlık Bitir</button>
+                        </div>
+                        <div class="sure-label-grubu">
+                            <span id="hazirlikSuresiLabel" class="süre-label">Hazırlık Süresi: <span id="sure">0</span></span>
+                        </div>
                     </div>
+
+                    <hr />
 
                     <!-- Üretim bölümü -->
-                    <div class="d-flex align-items-center mb-2">
-                        <button id="uretimBaslatDurdur" class="btn btn-success">Üretim Başlat</button>
-                        <button id="uretimiDurdur" class="btn btn-danger ml-2">Üretimi Durdur</button>
-                   
+                    <div class="uretim-bolumu">
+                        <div class="buton-grubu">
+                            <button id="uretimBaslatDurdur" class="btn btn-green">Üretim Başlat</button>
+                            <button id="uretimiDurdur" class="btn btn-red">Üretimi Durdur</button>
+                        </div>
+                        <div class="sure-label-grubu">
+                            <span id="uretimSuresiLabel" class="süre-label">Üretim Süresi: <span id="üretimSüresi">0</span></span>
+              
+                            <div id="uretimSuresiListesi">Üretim Süreleri: </div>
+                        </div>
                     </div>
-
-
-                    <div>
-                        <span id="hazirlikSuresiLabel" class="süre-label">Hazırlık Süresi: <span id="süre">0</span> </span>
-                    </div>
-
-                    <div>
-                        <span id="uretimSuresiLabel" class="süre-label">Üretim Süresi: <span id="üretimSüresi">0</span> </span>
-                    </div>
+                    <hr />
                     <!-- Toplam süre -->
-                    <div>
-                        <span id="toplamSureLabel" class="süre-label">Toplam Üretim Süresi: <span id="toplamSure">0</span> </span>
+                    <div class="d-flex flex-column align-items-center">
+                        <span id="toplamSureLabel" class="sure-label mb-1">Toplam Üretim Süresi: <span id="toplamSure">0</span></span>
+                        
                     </div>
+
                 </div>
 
-                <div class="card-div graph-card-pink mt-4 align-top scrollable-logs">
+
+
+                
+
+
+
+                <div class="log-card-div graph-card-pink mt-4 align-top scrollable-logs">
                     <div class="container">
-                        <h4>Log Kayıtları</h4>
+                        <div class="log-card ">
+                            <h4 class="log-card-title">
+                                Log Kayıtları
+                            </h4>
+                        </div>
+
                         <hr class="line-for-cart" /> 
                         <partial name="_OperationLogs" model="Model.OperationLogs" />
                     </div>
@@ -220,7 +259,8 @@
         $(document).ready(function () {
             var hazirlikTimer, uretimTimer;
             var hazirlikSuresi = 0, uretimSuresi = 0, toplamSure = 0;
-            var hazirlikSuresiEklendi = false;  // Hazırlık süresinin eklenip eklenmediğini kontrol eder
+            var hazirlikSuresiEklendi = false;
+            var uretimSuresiListesi = [];  // Üretim sürelerini saklamak için bir liste
 
             $('#hazirlikBaslat').click(function () {
                 hazirlikSuresi = 0;
@@ -228,46 +268,46 @@
                 $('#hazirlikBitir').prop('disabled', false);
                 hazirlikTimer = setInterval(function () {
                     hazirlikSuresi++;
-                    $('#süre').text(hazirlikSuresi );
+                    $('#sure').text(hazirlikSuresi);  // Hazırlık süresini güncelle
                 }, 1000);
             });
 
             $('#hazirlikBitir').click(function () {
                 clearInterval(hazirlikTimer);
+                $('#hazirlikBaslat').prop('disabled', false);  // Bu butonun tekrar etkinleştirilmesi gerekiyor.
                 $(this).prop('disabled', true);
+                toplamSure += hazirlikSuresi;
+                hazirlikSuresi = 0;
+                $('#sure').text(hazirlikSuresi);  // Hazırlık süresini sıfırla
+                $('#toplamSure').text(toplamSure + " saniye");
             });
-
             $('#uretimBaslatDurdur').click(function () {
-                if ($(this).text() === "Üretim Başlat") {
-                    uretimSuresi = 0;
-                    $(this).prop('disabled', true);
-                    $('#uretimiDurdur').prop('disabled', false);
-                    uretimTimer = setInterval(function () {
-                        uretimSuresi++;
-                        $('#üretimSüresi').text(uretimSuresi );
-                    }, 1000);
-                }
+                uretimSuresi = 0;
+                $(this).prop('disabled', true);
+                $('#uretimiDurdur').prop('disabled', false);
+                uretimTimer = setInterval(function () {
+                    uretimSuresi++;
+                    $('#üretimSüresi').text(uretimSuresi);
+                }, 1000);
             });
 
             $('#uretimiDurdur').click(function () {
                 clearInterval(uretimTimer);
                 $('#uretimBaslatDurdur').prop('disabled', false);
                 $(this).prop('disabled', true);
-                // Üretim süresini toplam süreye ekle
+                uretimSuresiListesi.push(uretimSuresi);  // Üretim süresini listeye ekle
                 toplamSure += uretimSuresi;
-                // Hazırlık süresini sadece bir kez toplam süreye ekle
-                if (!hazirlikSuresiEklendi) {
-                    toplamSure += hazirlikSuresi;
-                    hazirlikSuresiEklendi = true;
-                }
+                uretimSuresi = 0;
+                $('#üretimSüresi').text(uretimSuresi);
                 $('#toplamSure').text(toplamSure + " saniye");
+                $('#uretimSuresiListesi').text('Üretim Süreleri: ' + uretimSuresiListesi.join(', '));  // Listeyi göster
             });
 
             // Başlangıçta butonları uygun duruma getir
             $('#hazirlikBitir').prop('disabled', true);
             $('#uretimiDurdur').prop('disabled', true);
-            $('#uretimBaslatDurdur').prop('disabled', false);
         });
+
 
     </script>
 

@@ -40,10 +40,11 @@
                                     <div class="card-header" title="@parameter.ParameterName">
                                         <h6>@parameter.ParameterName</h6>
                                     </div>
-                                    
+
                                     <div class="card-body">
-                                        <h4 class="card-title">123</h4>
+                                        <h4 class="card-title" data-parameter-name="@parameter.ParameterName">0</h4>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -57,10 +58,7 @@
                         <h4 class="parametre-card-title">
                             Parametre Grafikleri
                         </h4>
-                    </div>
-                        
-                 
-                 
+                    </div> 
                     <hr class="line-for-cart" />
                     <div id="graphs-container"  class="graphs-property">
                         <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
@@ -100,7 +98,7 @@
                     <!-- Üretim bölümü -->
                     <div class="uretim-bolumu">
                         <div class="buton-grubu">
-                            <button id="uretimBaslatDurdur" class="btn btn-green">Üretim Başlat</button>
+                            <button id="uretimBaslat" class="btn btn-green">Üretim Başlat</button>
                             <button id="uretimiDurdur" class="btn btn-red">Üretimi Durdur</button>
                         </div>
                         <div class="sure-label-grubu">
@@ -149,12 +147,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
+        var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
+        var currentPage = 1; // Başlangıçta görüntülenecek sayfa
+        var parametersData = {}; // Parametre verileri burada saklanacak
+        var totalPages = 0; // Toplam sayfa sayısı, hesaplanacak
         $(document).ready(function () {
-            var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
-            var currentPage = 1; // Başlangıçta görüntülenecek sayfa
-            var parametersData = {}; // Parametre verileri burada saklanacak
-            var totalPages = 0; // Toplam sayfa sayısı, hesaplanacak
-
+     
             // Sayfalama için HTML elementleri
             var paginationContainer = $('<div>', {
                 id: 'pagination-controls',
@@ -238,9 +236,15 @@
                 nextButton.prop('disabled', currentPage === totalPages);
             }
 
+            function getMachineIdFromUrl() {
+                var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+                var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+                return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
+            }
+
             // Veri yükleme işlemi
-            var urlSegments = window.location.pathname.split('/');
-            var machineId = urlSegments[urlSegments.length - 1];
+         
+            var machineId = getMachineIdFromUrl();
             $.ajax({
                 url: 'Machine/GetMachineParameters/' + machineId,
                 type: 'GET',
@@ -252,7 +256,64 @@
                     createCharts(currentPage);
                 }
             });
+
+
+            //Grafik Parametreleri Reload yapma:
+
+            function reloadGraphs() {
+                var machineId = getMachineIdFromUrl();
+                $.ajax({
+                    url: 'Machine/GetMachineParameters/' + machineId,
+                    type: 'GET',
+                    cache: false,
+                    success: function (data) {
+                        // Mevcut grafik verilerini temizle
+                        parametersData = {};
+                        data.forEach(function (param) {
+                            parametersData[param.parameterName] = param.parameterValue.map(Number);
+                        });
+                        totalPages = Math.ceil(Object.keys(parametersData).length / graphsPerPage);
+                        createCharts(currentPage);
+                    }
+                });
+            }
+
+
+
+            document.getElementById('uretimBaslat').addEventListener('click', function () {
+                var machineId = getMachineIdFromUrl(); // Makine ID'nizi buraya girin.
+
+                fetch(`/start/${machineId}`, {
+                    method: 'POST'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        for (const key in data.parameters) {
+                            if (data.parameters.hasOwnProperty(key)) {
+                                const value = data.parameters[key];
+                                const parameterElement = document.querySelector(`.card-body h4[data-parameter-name="${key}"]`);
+                                if (parameterElement) {
+                                    parameterElement.textContent = value;
+                                }
+                            }
+                        }
+                        reloadGraphs();
+                    })
+                    .catch(error => {
+                        console.log('Üretimi başlatırken bir hata oluştu:', error); // Hata mesajı
+                    });
+            });
+
+
         });
+
+
+        
 
         </script>
     <script>
@@ -262,6 +323,64 @@
             var hazirlikSuresiEklendi = false;
             var uretimSuresiListesi = [];  // Üretim sürelerini saklamak için bir liste
 
+            function getMachineIdFromUrl() {
+                var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+                var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+                return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
+            }
+
+
+            function updateLogRecords() {
+                var machineId = getMachineIdFromUrl();
+                $.ajax({
+                    url: '/machine/getLogs/' + machineId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (logs) {
+                        var operationNames = {
+                            1: 'Hazırlık Başlat',
+                            2: 'Hazırlık Bitir',
+                            3: 'Üretim Başlat',
+                            4: 'Üretimi Durdur',
+                        };
+
+                        var logsHtml = logs.map(function (log) {
+                            var operationName = operationNames[log.operationId] || 'Bilinmeyen İşlem';
+                            return '<tr><td>' + operationName + '</td><td>' + new Date(log.timestamp).toLocaleString() + '</td></tr>';
+                        }).join('');
+                        $('tbody').html(logsHtml);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Log kayıtları güncellenirken hata oluştu: ', error);
+                    }
+                });
+            }
+
+
+
+
+            function sendLog(action) {
+                $.ajax({
+                    url: '/machine/logoperation', 
+                    type: 'POST',
+                    data: JSON.stringify({
+                        MachineId: getMachineIdFromUrl(), 
+                        OperationId: action === 'Hazırlık Başlat' ? 1 : (action === 'Hazırlık Bitir' ? 2 : (action === 'Üretim Başlat' ? 3 : 4)),
+                        Timestamp: new Date().toISOString() 
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                       
+                        updateLogRecords();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error); 
+                    }
+                });
+            }
+
+
             $('#hazirlikBaslat').click(function () {
                 hazirlikSuresi = 0;
                 $(this).prop('disabled', true);
@@ -270,6 +389,8 @@
                     hazirlikSuresi++;
                     $('#sure').text(hazirlikSuresi);  // Hazırlık süresini güncelle
                 }, 1000);
+                sendLog('Hazırlık Başlat');
+                
             });
 
             $('#hazirlikBitir').click(function () {
@@ -280,8 +401,10 @@
                 hazirlikSuresi = 0;
                 $('#sure').text(hazirlikSuresi);  // Hazırlık süresini sıfırla
                 $('#toplamSure').text(toplamSure + " saniye");
+                sendLog('Hazırlık Bitir');
+               
             });
-            $('#uretimBaslatDurdur').click(function () {
+            $('#uretimBaslat').click(function () {
                 uretimSuresi = 0;
                 $(this).prop('disabled', true);
                 $('#uretimiDurdur').prop('disabled', false);
@@ -289,11 +412,13 @@
                     uretimSuresi++;
                     $('#üretimSüresi').text(uretimSuresi);
                 }, 1000);
+                sendLog('Üretim Başlat');
+            
             });
 
             $('#uretimiDurdur').click(function () {
                 clearInterval(uretimTimer);
-                $('#uretimBaslatDurdur').prop('disabled', false);
+                $('#uretimBaslat').prop('disabled', false);
                 $(this).prop('disabled', true);
                 uretimSuresiListesi.push(uretimSuresi);  // Üretim süresini listeye ekle
                 toplamSure += uretimSuresi;
@@ -301,6 +426,8 @@
                 $('#üretimSüresi').text(uretimSuresi);
                 $('#toplamSure').text(toplamSure + " saniye");
                 $('#uretimSuresiListesi').text('Üretim Süreleri: ' + uretimSuresiListesi.join(', '));  // Listeyi göster
+                sendLog('Üretim Bitir');
+              
             });
 
             // Başlangıçta butonları uygun duruma getir
@@ -311,8 +438,7 @@
 
     </script>
 
-
-
+   
 
 </body>
 </html>

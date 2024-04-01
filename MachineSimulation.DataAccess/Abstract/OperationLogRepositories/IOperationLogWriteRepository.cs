@@ -10,5 +10,6 @@ namespace MachineSimulation.DataAccess.Abstract.OperationLogRepositories
 {
     public interface IOperationLogWriteRepository: IWriteRepository<OperationLog>
     {
+        Task AddOperationLogAsync(OperationLog log);
     }
 }

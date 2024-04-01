@@ -21,6 +21,8 @@ namespace MachineSimulation.Business.Concrete
             _machineLogWriteRepository = machineLogWriteRepository;
         }
 
+       
+
         public IEnumerable<MachineLog> GetLogsForMachine(int machineId)
         {
             return _machineLogReadRepository.GetLogsForMachine(machineId);

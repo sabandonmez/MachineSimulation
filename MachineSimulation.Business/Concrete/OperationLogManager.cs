@@ -21,6 +21,11 @@ namespace MachineSimulation.Business.Concrete
             _operationLogWriteRepository = operationLogWriteRepository;
         }
 
+        public async Task AddOperationLogAsync(OperationLog log)
+        {
+            await _operationLogWriteRepository.AddOperationLogAsync(log);
+        }
+
         public IEnumerable<OperationLog> GetLogsForMachine(int machineId)
         {
             return _operationogReadRepository.GetLogsForMachine(machineId);

@@ -13,5 +13,6 @@ namespace MachineSimulation.Business.Abstract
         Task LogActionAsync(OperationLog logEntry);
         IEnumerable<OperationLog> GetLogsForMachine(int machineId);
         IEnumerable<OperationLogDto> GetOperationLogsWithNames(int machineId);
+        Task AddOperationLogAsync(OperationLog log);
     }
 }

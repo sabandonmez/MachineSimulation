@@ -11,8 +11,17 @@ namespace MachineSimulation.DataAccess.Concrete.ParameterRepositories
 {
     public class ParameterReadRepository : ReadRepository<Parameter>, IParameterReadRepository
     {
+        private readonly MachineSimulationContext _context;
         public ParameterReadRepository(MachineSimulationContext context) : base(context)
         {
+            _context = context;
+        }
+
+        public IEnumerable<Parameter> GetParametersForMachine(int machineId)
+        {
+            return _context.Parameters
+                .Where(p => p.MachineId == machineId)
+                .ToList();
         }
     }
 }

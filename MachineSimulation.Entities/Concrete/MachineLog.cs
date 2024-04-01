@@ -13,4 +13,4 @@ namespace MachineSimulation.Entities.Concrete
         public string Action { get; set; } // "Bağlandı" veya "Kopartıldı"
         public DateTime Timestamp { get; set; }
     }
-}
+}   

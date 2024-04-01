@@ -11,8 +11,16 @@ namespace MachineSimulation.DataAccess.Concrete.OperationLogRepositories
 {
     public class OperationLogWriteRepository : WriteRepository<OperationLog>, IOperationLogWriteRepository
     {
+        private readonly MachineSimulationContext _context;
         public OperationLogWriteRepository(MachineSimulationContext context) : base(context)
         {
+            _context = context;
+        }
+
+        public async Task AddOperationLogAsync(OperationLog log)
+        {
+            await _context.OperationLogs.AddAsync(log);
+            await _context.SaveChangesAsync();
         }
     }
 }

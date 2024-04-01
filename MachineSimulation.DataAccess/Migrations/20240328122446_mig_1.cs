@@ -41,6 +41,21 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperationLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MachineId = table.Column<int>(type: "int", nullable: false),
+                    OperationId = table.Column<int>(type: "int", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Operations",
                 columns: table => new
                 {
@@ -133,6 +148,9 @@ namespace MachineSimulation.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MachineLogs");
+
+            migrationBuilder.DropTable(
+                name: "OperationLogs");
 
             migrationBuilder.DropTable(
                 name: "OperationParameters");

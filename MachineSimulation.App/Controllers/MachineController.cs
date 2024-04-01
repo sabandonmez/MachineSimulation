@@ -107,7 +107,7 @@ namespace MachineSimulation.App.Controllers
         }
 
 
-
+        [HttpGet]
         public IActionResult Get([FromRoute(Name = "id")] int id)
         {
             var model =  _machineService.GetMachineDetails(id);
@@ -128,6 +128,27 @@ namespace MachineSimulation.App.Controllers
             return Ok(model);
         }
 
+        [HttpGet("machine/getLogs/{machineId}")]
+        public IActionResult GetLogs(int machineId)
+        {
+            var logs = _operationLogService.GetLogsForMachine(machineId);
+            return Json(logs);
+        }
+
+
+        [HttpPost]
+        [Route("/machine/logoperation")]
+        public async Task<IActionResult> LogOperation([FromBody] OperationLog operationLog)
+        {
+            if (operationLog == null)
+            {
+                return BadRequest("Operation log cannot be null.");
+            }
+
+            await _operationLogService.AddOperationLogAsync(operationLog);
+
+            return Ok(new { message = "Log recorded successfully." });
+        }
 
     }
 }

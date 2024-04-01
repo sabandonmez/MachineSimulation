@@ -20,11 +20,6 @@
     text-align: center;
 }
 
-#back-icon {
-    /* İkon için ekstra stiller buraya eklenebilir */
-    display: none; /* JavaScript ile kontrol edilecek */
-}
-
 .logo {
     max-width: 160px; /* Maksimum genişlik değeri */
     max-height: 50px; /* Maksimum yükseklik değeri */
@@ -37,7 +32,83 @@
     margin-left: auto; /* Geri ikonunu sağa hizalar */
     cursor: pointer;
     align-items: center;
-    margin-left: auto; /* Sağa hizalama */
+    float: right;
+    margin-right: 20px; /* Saat ve geri ok simgesi arasında boşluk bırak */
+    display: none;
 }
 
+.clock {
+    float: right; /* Saati sola hizala */
+    margin-right: 1.5rem;
+    font-weight:500;
+    font-size: 20px; /* Saatin font boyutu */
+}
 
+/* ... Diğer stilleriniz ... */
+
+/* Tablet boyutları için media sorgusu */
+@media (min-width: 980px) {
+    .navbar img.logo {
+        width: 200px; /* Logonun boyutunu biraz daha büyüt */
+        height: auto; /* Yüksekliği otomatik ayarla */
+    }
+
+    .navbar h4.navbar-title {
+        font-size: 2.1rem; /* Başlık font boyutunu büyüt */
+        margin: 0 10px; /* Sağdan ve soldan biraz marj ekle */
+    }
+
+    .clock {
+        font-size: 20px; /* Saat font boyutunu büyüt */
+        margin-right: 3rem;
+    }
+
+    #back-icon {
+        font-size: 20px; /* Geri ikonu boyutunu büyüt */
+        margin-right: 10px; /* Saat ile arasında biraz daha boşluk bırak */
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .navbar img.logo {
+        width: 9rem; /* Logonun boyutunu biraz daha büyüt */
+        height: auto; /* Yüksekliği otomatik ayarla */
+    }
+
+    .navbar h4.navbar-title {
+        align-items:center;
+        justify-content:center;
+        font-size: 1.6rem; /* Başlık font boyutunu büyüt */
+        margin: 0 10px; /* Sağdan ve soldan biraz marj ekle */
+    }
+
+    .clock {
+        font-size: 20px; /* Saat font boyutunu büyüt */
+    }
+
+    #back-icon {
+        font-size: 20px; /* Geri ikonu boyutunu büyüt */
+        margin-right: 10px; /* Saat ile arasında biraz daha boşluk bırak */
+    }
+}
+
+/* Daha küçük cihazlar için media sorgusu */
+@media (max-width: 767px) {
+    .navbar img.logo {
+        width: 150px; /* Küçük cihaz için logonun boyutunu biraz büyüt */
+        height: auto; /* Yüksekliği otomatik ayarla */
+    }
+
+    .navbar h4.navbar-title {
+        font-size: 1.7rem; /* Küçük cihaz için başlık font boyutunu biraz büyüt */
+        margin: 0 10px; /* Sağdan ve soldan biraz marj ekle */
+    }
+
+    .clock {
+        font-size: 18px; /* Küçük cihaz için saat font boyutunu biraz büyüt */
+    }
+
+    #back-icon {
+        font-size: 18px; /* Küçük cihaz için geri ikonu boyutunu biraz büyüt */
+        margin-right: 10px; /* Saat ile arasında biraz daha boşluk bırak */
+    }
+}

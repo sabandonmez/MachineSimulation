@@ -58,20 +58,20 @@ body {
     height: 347.8px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
-    border: 1px solid #AD1457;
+    border: 2px solid #AD1457;
 }
 .scrollable-quality-datas {
     max-height: 200.4px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
-    border: 1px solid #F2994A;
+    border: 2px solid #F2994A;
 }
 
 .scrollable-production-datas {
     max-height: 200.4px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
-    border: 1px solid #1349d5;
+    border: 2px solid #1349d5;
 }
 
 .graphs-property {
@@ -126,7 +126,14 @@ body {
     width: 100%; /* Tam geniþlik kullanýn */
 }
 
-
+.line-for-uretim-cart {
+    margin-top: 0.5rem; /* Üst boþluðu azaltýn */
+    margin-bottom: 0.4rem; /* Alt boþluðu azaltýn */
+    border: 0; /* Varsayýlan kenar çizgisini kaldýrýn */
+    height: 1px; /* Çizgi yüksekliðini belirleyin */
+    background-color: transparent; /* Çizgi rengini beyaza ayarlayýn */
+    width: 100%; /* Tam geniþlik kullanýn */
+}
 
 .white-border-card {
     border: 2px solid white;
@@ -171,8 +178,8 @@ body {
 
 .pagination-container {
     position: absolute;
-    top: 280px;
-    right: 30px;
+    top: 80px;
+    right: 35px;
     display: flex;
     align-items: center;
     background-color: white;
@@ -284,7 +291,7 @@ body {
 }
 .uretim-card-title {
     top: 0;
-    background: linear-gradient(to right, #1349d5, #6f99e4);
+    background: linear-gradient(to left, #E91E63, #AD1457);
     padding: 10px 10px;
     box-sizing: border-box;
     margin-left: -20px;
@@ -311,7 +318,8 @@ body {
 .log-card-title {
     position: sticky;
     top: 0;
-    background: linear-gradient(to left, #E91E63, #AD1457);
+    background: linear-gradient(to right, #1349d5, #6f99e4);
+    
     padding: 10px 10px;
     padding-left: 20px;
 }

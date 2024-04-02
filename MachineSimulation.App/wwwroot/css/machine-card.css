@@ -28,7 +28,7 @@
     color: white ; /* Yazý rengini beyaza ayarlar */
 }
 .connect-pink-button:hover {
-    color: black; /* Yazý rengini beyaza ayarlar */
+    color: white; /* Yazý rengini beyaza ayarlar */
 }
 .card:hover {
    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.45); /* Üzerine gelindiðinde gölge efekti deðiþiyor */
@@ -63,3 +63,10 @@
 .detail-btn {
     margin-right: 0.5rem;
 }
+
+.connect-btn {
+    padding: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+    

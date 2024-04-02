@@ -2,29 +2,40 @@
 
 <link rel="stylesheet" href="~/css/machine-card.css" asp-append-version="true" />
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 my-3">
-    <div class="card card-disconnect">
+    <div class="card card-disconnect" onclick="redirectOnClick(event, '@Model.Id', '@Url.Action("Get", "Machine", new { id = Model.Id })')">
         <img src="@Url.Content($"~/images/machines/{Model.ImageUrl}")"
              onerror="this.onerror=null;this.src='@Url.Content("~/images/machines/defaultMachine.jpg")';"
              class="card-img-top" alt="@Model.MachineName">
-
         <div class="card-body">
-            
             <h5 class="card-title">@Model.MachineName</h5>
             <div class="">
-                <a asp-action="Get" asp-controller="Machine" asp-route-id="@Model.Id" class="btn connect-orange-button btn-lg detail-btn">
-                Detay
-            </a>
-                <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id)" class="btn connect-pink-button btn-lg">
-                Bağlan
-            </button>
+               
+                <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id); event.stopPropagation();" class="btn connect-btn connect-pink-button btn-lg">
+                    Bağlan
+                </button>
             </div>
-          
         </div>
     </div>
     <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
-
 </div>
 <script>
+    function redirectOnClick(event, url) {
+        if (!event.target.closest('button, a')) {
+            window.location.href = url;
+        }
+    }
+    function redirectOnClick(event, machineId, detailUrl) {
+        var button = document.getElementById('connect-btn-' + machineId);
+        // Eğer tıklanan element ya da onun ebeveynleri 'button' ya da 'a' değilse ve makina bağlıysa, sayfayı yönlendir
+        if (!event.target.closest('button, a')) {
+            var isConnected = localStorage.getItem('connection-' + machineId) === 'connected';
+            if (isConnected) {
+                window.location.href = detailUrl;
+            } else {
+                showNotification('Makina ile bağlantı kurmadan detayları göremezsiniz.', 'red');
+            }
+        }
+    }
     function showNotification(message, color = 'gray', duration = 3000) {
         const container = document.getElementById('notification-container');
         const notification = document.createElement('div');
@@ -43,10 +54,38 @@
         }, duration);
     }
 
+    var currentConnectionId = null;
+
     function toggleConnection(machineId) {
         var button = document.getElementById('connect-btn-' + machineId);
         var card = button.closest('.card');
         var action = button.textContent.trim() === 'Bağlan' ? 'ModbusConnect' : 'ModbusDisconnect';
+
+        // Kullanıcı zaten bağlıysa ve başka bir bağlantı kurmak istiyorsa uyarı göster
+        if (action === 'ModbusConnect' && currentConnectionId !== null && currentConnectionId !== machineId) {
+            var confirmChange = confirm("Zaten başka bir makineye bağlısınız. Bağlantıyı değiştirmek istediğinizden emin misiniz?");
+            if (!confirmChange) {
+                return; // Kullanıcı iptal ederse işlemi durdur
+            }
+
+            // Bağlantıyı eski makineden kaldır
+            var previousButton = document.getElementById('connect-btn-' + currentConnectionId);
+            if (previousButton) {
+                previousButton.classList.remove('btn-success');
+                previousButton.classList.add('btn-danger');
+                previousButton.closest('.card').style.background = '';
+                previousButton.textContent = 'Bağlan';
+                localStorage.removeItem('connection-' + currentConnectionId);
+            }
+        }
+
+        // Kullanıcı bağlantıyı koparmak istiyorsa uyarı göster
+        if (action === 'ModbusDisconnect' && currentConnectionId === machineId) {
+            var confirmDisconnect = confirm("Makine bağlantısını koparmak istediğinizden emin misiniz?");
+            if (!confirmDisconnect) {
+                return; // Kullanıcı iptal ederse işlemi durdur
+            }
+        }
 
         button.disabled = true;
 
@@ -59,13 +98,19 @@
                         button.classList.add('btn-success');
                         card.style.background = '#27AE60';
                         button.textContent = 'Kop';
+                        localStorage.setItem('connection-' + machineId, 'connected');
                         showNotification(machineId + " Id ' sine sahip makina ile Bağlantı Başarılı.", '#27AE60');
+                        currentConnectionId = machineId; // Yeni bağlantıyı kaydet
                     } else {
                         button.classList.remove('btn-success');
                         button.classList.add('btn-danger');
                         card.style.background = '';
                         button.textContent = 'Bağlan';
-                        showNotification(machineId + " Id ' sine sahip makina ile Bağlantı Kopartıldı.", '#ab003f');
+                        localStorage.removeItem('connection-' + machineId);
+                        showNotification(machineId + " Id ' sine sahip makina ile Bağlantı Kopartıldı.", '#ab003c');
+                        if (currentConnectionId === machineId) {
+                            currentConnectionId = null; // Bağlantıyı sıfırla
+                        }
                     }
                 } else {
                     showNotification('İşlem başarısız.', 'purple');
@@ -79,4 +124,6 @@
                 button.disabled = false;
             });
     }
+
+
 </script>

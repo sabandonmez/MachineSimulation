@@ -9,7 +9,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.MachineName</h5>
             <div class="">
-               
+
                 <button id="connect-btn-@Model.Id" onclick="toggleConnection(@Model.Id); event.stopPropagation();" class="btn connect-btn connect-pink-button btn-lg">
                     Bağlan
                 </button>
@@ -19,6 +19,26 @@
     <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
 </div>
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tüm bağlantı butonlarını kontrol et
+        var connectButtons = document.querySelectorAll('.connect-btn');
+        connectButtons.forEach(function (button) {
+            var machineId = button.id.split('-')[2];
+            var connectionStatus = localStorage.getItem('connection-' + machineId);
+            // Bağlantı durumunu kontrol et ve UI'ı güncelle
+            if (connectionStatus === 'connected') {
+                button.classList.remove('btn-danger');
+                button.classList.add('btn-success');
+                button.closest('.card').style.background = '#27AE60';
+                button.textContent = 'Kop';
+                // Güncel bağlantıyı ayarla
+                currentConnectionId = machineId;
+            }
+        });
+    });
+
+
     function redirectOnClick(event, url) {
         if (!event.target.closest('button, a')) {
             window.location.href = url;

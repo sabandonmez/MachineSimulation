@@ -1,4 +1,5 @@
 ﻿using EasyModbus;
+using MachineSimulation.App.Models;
 using MachineSimulation.Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
@@ -42,45 +43,57 @@ namespace MachineSimulation.App.Controllers
             return WriteModbusRegister(machineId, 0);
         }
 
-        public ActionResult WriteStringsToModbus(int machineId, List<string> strings)
+        [HttpPost]
+        [Route("/modbus/writestrings")]
+        public ActionResult WriteStringsToModbus([FromBody] WriteStringsModel model)
         {
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
+            if (model == null)
+            {
+                return BadRequest("Request body is null.");
+            }
+
+            if (model.Strings == null || !model.Strings.Any())
+            {
+                return BadRequest("Strings are required.");
+            }
+
+            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(model.MachineId, ipAddress, port, slaveId);
             var registerValues = new List<ushort>();
 
-            foreach (var str in strings)
+            foreach (var str in model.Strings)
             {
-                for (int i = 0; i < str.Length; i += 2)
+                if (str.Length == 2)
                 {
-                    ushort highByte = i < str.Length ? Convert.ToByte(str[i]) : (ushort)0;
-                    ushort lowByte = i + 1 < str.Length ? Convert.ToByte(str[i + 1]) : (ushort)0;
+                    // Stringin her karakterinin ASCII değerini alın
+                    ushort highByte = Convert.ToByte(str[0]);
+                    ushort lowByte = Convert.ToByte(str[1]);
+
+                    // ASCII değerlerini birleştir
                     ushort registerValue = (ushort)((highByte << 8) | lowByte);
                     registerValues.Add(registerValue);
                 }
+                else
+                {
+                    // Eğer string iki karakterden farklı bir uzunlukta ise hata ver
+                    return BadRequest("Each string must contain exactly two characters.");
+                }
             }
 
-            ushort startAddress = 4096; // Modbus'un beklediği başlangıç adresi.
+            ushort startAddress = 4096;
             ushort[] registerArray = registerValues.ToArray();
 
-            // Kodun burası, her bir register'ı 4096 adresinden başlayarak Modbus'a yazmak için ayarlanmıştır.
             int offset = 0;
             while (offset < registerArray.Length)
             {
-                // ushort[]'ı int[]'e dönüştürmek için LINQ kullanın
                 int[] intChunk = registerArray.Skip(offset).Take(123).Select(x => (int)x).ToArray();
-
-                // Düzeltilmiş argümanla modbusClient.WriteMultipleRegisters'ı çağırın
                 modbusClient.WriteMultipleRegisters(startAddress, intChunk);
-
-                // ushort yerine int dizisinin uzunluğu ile başlangıç adresini güncelleyin
                 startAddress += (ushort)intChunk.Length;
-
-                // offset'i int dizisinin uzunluğu kadar artırın
                 offset += intChunk.Length;
             }
 
-
             return Json(new { success = true });
         }
+
 
 
         [NonAction]

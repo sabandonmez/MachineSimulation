@@ -18,11 +18,8 @@
 
         </div>
         <div class="row">
-            <!-- Content Alanı -->
-            <!-- İlk içerik alanı -->
+        
             <div class="col-md-6">
-                <!-- View dosyanız -->
-
 
                 <div class="card-div graph-card-green mt-4 align-top">
 
@@ -53,9 +50,9 @@
                                     <div class="card-header" title="@parameter.ParameterName">
                                         <h6>@parameter.ParameterName</h6>
                                     </div>
-
                                     <div class="card-body">
-                                        <h4 class="card-title" data-parameter-name="@parameter.ParameterName">0</h4>
+                                        
+                                        <h4 class="card-title" data-parameter-name="@parameter.ParameterName" data-parameter-value="@parameter.ParameterValue">0</h4>
                                     </div>
 
                                 </div>
@@ -356,12 +353,10 @@
 
 
             document.getElementById('uretimBaslat').addEventListener('click', function () {
-                sendStartProductionRequest(3); // Üretim Başlat için operationId 256
+                sendStartProductionRequest(3); 
             });
 
-            // document.getElementById('uretimiDurdur').addEventListener('click', function () {
-            //     sendStartProductionRequest(257); // Üretimi Durdur için operationId 257
-            // });
+         
 
             // Makine ID'sini URL'den almak için fonksiyon
             function getMachineIdFromUrl() {
@@ -404,6 +399,47 @@
                     .catch(error => {
                         console.error('Üretimi başlatırken bir hata oluştu:', error);
                     });
+            }
+
+            document.getElementById('uretimiDurdur').addEventListener('click', function () {
+                var machineId = getMachineIdFromUrl();
+                console.log('Machine ID:', machineId); // Bu satır machineId'yi konsolda gösterir.
+
+                var parameters = document.querySelectorAll('.card-title[data-parameter-name]');
+                var strings = Array.from(parameters).map(function (param) {
+                    // 'textContent' veya 'innerText' kullanarak h4 etiketinin içeriğini alın
+                    return param.textContent || param.innerText;
+                });
+                console.log(strings);
+
+                // 'fetch' fonksiyonunun çağrısı düzeltilmiş.
+                // 'url' anahtar kelimesi 'fetch' içinde kullanılmaz ve 'data' yerine 'body' kullanılmalı.
+                fetch('/modbus/writestrings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    // 'data' yerine 'body' kullanılmalı ve 'JSON.stringify' doğrudan body içerisine yazılmalı.
+                    body: JSON.stringify({ machineId: machineId, strings: strings }),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Üretim durduruldu ve veriler gönderildi', data);
+                    })
+                    .catch(error => {
+                        console.error('Verileri gönderirken bir hata oluştu:', error);
+                    });
+            });
+
+            // Bu fonksiyon örnek olarak verilmiştir, sizin bu fonksiyonunuzun gerçekte ne yaptığını bilmiyorum.
+            function getMachineIdFromUrl() {
+                // URL'den machineId parametresini çekme işlemleri burada olmalı.
+                return '1'; // Örnek bir machineId döndürüldü.
             }
 
 

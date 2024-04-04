@@ -146,12 +146,21 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        function getMachineIdFromUrl() {
+            var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+            var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+            return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
+        }
+
+
+
         $(document).ready(function () {
+            var machineId = getMachineIdFromUrl();
             $('#hazirlikBaslat').click(function () {
                 $.ajax({
                     url: '@Url.Action("StartPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId: 1 }, /* DİKKAT DÜZELTİLECEK */
+                    data: { machineId },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık başlatıldı.');
@@ -161,10 +170,11 @@
             });
 
             $('#hazirlikBitir').click(function () {
+                var machineId = getMachineIdFromUrl();
                 $.ajax({
                     url: '@Url.Action("StopPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId: 1 },
+                    data: { machineId },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık durduruldu.');
@@ -175,10 +185,11 @@
 
 
             $('#uretimBaslat').click(function () {
+                var machineId = getMachineIdFromUrl();
                 $.ajax({
                     url: '@Url.Action("StartProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId: 1 }, /* DİKKAT DÜZELTİLECEK */
+                    data: { machineId },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim başlatıldı.');
@@ -188,10 +199,11 @@
             });
 
             $('#uretimiDurdur').click(function () {
+                var machineId = getMachineIdFromUrl();
                 $.ajax({
                     url: '@Url.Action("StopProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId: 1 },
+                    data: { machineId },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim durduruldu.');
@@ -295,7 +307,13 @@
             function getMachineIdFromUrl() {
                 var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
                 var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
-                return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
+                // URL'den makine ID'sini (genellikle son segment olarak) çıkarır
+                var machineId = urlSegments[urlSegments.length - 1] || urlSegments[urlSegments.length - 2];
+                // Son segment boş bir string ise (örneğin, URL '/' ile bitiyorsa), önceki segmenti kullan
+                if (machineId === '') {
+                    machineId = urlSegments[urlSegments.length - 2];
+                }
+                return machineId;
             }
 
             // Veri yükleme işlemi
@@ -335,10 +353,10 @@
             }
 
 
-           
+
 
             document.getElementById('uretimBaslat').addEventListener('click', function () {
-                sendStartProductionRequest(256); // Üretim Başlat için operationId 256
+                sendStartProductionRequest(3); // Üretim Başlat için operationId 256
             });
 
             // document.getElementById('uretimiDurdur').addEventListener('click', function () {
@@ -347,8 +365,15 @@
 
             // Makine ID'sini URL'den almak için fonksiyon
             function getMachineIdFromUrl() {
-                // URL'den machineId'yi çıkaracak kod burada olacak
-                return 1; // Bu örnekte statik olarak 1 döndürdüğünü varsayıyoruz
+                var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+                var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+                // URL'den makine ID'sini (genellikle son segment olarak) çıkarır
+                var machineId = urlSegments[urlSegments.length - 1] || urlSegments[urlSegments.length - 2];
+                // Son segment boş bir string ise (örneğin, URL '/' ile bitiyorsa), önceki segmenti kullan
+                if (machineId === '') {
+                    machineId = urlSegments[urlSegments.length - 2];
+                }
+                return machineId;
             }
 
             // Üretim başlatma isteği göndermek için fonksiyon

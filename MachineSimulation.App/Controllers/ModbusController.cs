@@ -7,6 +7,7 @@ namespace MachineSimulation.App.Controllers
 {
     public class ModbusController : Controller
     {
+        private readonly IOperationService _operationService;
         private readonly IModbusConnectionService _modbusConnectionService;
 
         // Sabit Modbus bağlantı parametreleri
@@ -14,37 +15,31 @@ namespace MachineSimulation.App.Controllers
         private readonly int port = 502;
         private readonly byte slaveId = 1;
 
-        public ModbusController(IModbusConnectionService modbusConnectionService)
+        public ModbusController(IModbusConnectionService modbusConnectionService, IOperationService operationService)
         {
             _modbusConnectionService = modbusConnectionService;
+            _operationService = operationService;
         }
 
-        public ActionResult StartPreparation(int machineId)
+        public Task<ActionResult> StartPreparation(int machineId)
         {
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
-            modbusClient.WriteSingleRegister(4249, 1);
-            return Json(new { success = true });
+            return WriteModbusRegister(machineId, 1);
         }
 
-        public ActionResult StopPreparation(int machineId)
+        public Task<ActionResult> StopPreparation(int machineId)
         {
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
-            modbusClient.WriteSingleRegister(4249, 0);
-            return Json(new { success = true });
+            return WriteModbusRegister(machineId, 0);
         }
 
-        public ActionResult StartProduction(int machineId)
+        public Task<ActionResult> StartProduction(int machineId)
         {
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
-            modbusClient.WriteSingleRegister(48, 1);
-            return Json(new { success = true });
+            return WriteModbusRegister(machineId, 1);
         }
 
-        public ActionResult StopProduction(int machineId)
+
+        public Task<ActionResult> StopProduction(int machineId)
         {
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
-            modbusClient.WriteSingleRegister(4255, 0);
-            return Json(new { success = true });
+            return WriteModbusRegister(machineId, 0);
         }
 
         public ActionResult WriteStringsToModbus(int machineId, List<string> strings)
@@ -86,6 +81,31 @@ namespace MachineSimulation.App.Controllers
 
             return Json(new { success = true });
         }
+
+
+        [NonAction]
+        private async Task<ActionResult> WriteModbusRegister(int machineId, ushort registerValue)
+        {
+            try
+            {
+                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId);
+                if (!modbusId.HasValue)
+                {
+                    return Json(new { success = false, message = "Modbus ID not found." });
+                }
+
+                var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
+                modbusClient.WriteSingleRegister(modbusId.Value, registerValue);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
 
 
     }

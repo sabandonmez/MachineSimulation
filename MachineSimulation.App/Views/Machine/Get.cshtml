@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/get.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
 </head>
 <body>
     <div class="mt-3">
@@ -19,21 +19,20 @@
         </div>
         <div class="row">
             <!-- Content Alanı -->
-    
-                    <!-- İlk içerik alanı -->
-                    <div class="col-md-6">
+            <!-- İlk içerik alanı -->
+            <div class="col-md-6">
                 <!-- View dosyanız -->
-               
+
 
                 <div class="card-div graph-card-green mt-4 align-top">
-                 
+
                     <div class="parametre-card ">
                         <h4 class="parametre-card-title">
                             Parametre Grafikleri
                         </h4>
-                    </div> 
+                    </div>
                     <hr class="line-for-cart" />
-                    <div id="graphs-container"  class="graphs-property">
+                    <div id="graphs-container" class="graphs-property">
                         <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
                     </div>
                 </div>
@@ -66,10 +65,10 @@
                     </div>
                 </div>
 
-                </div>
+            </div>
 
-                    <!-- İkinci içerik alanı -->
-                    <div class="col-md-6">
+            <!-- İkinci içerik alanı -->
+            <div class="col-md-6">
 
 
                 <div class="log-card-div graph-card-pink mt-4 align-top scrollable-logs">
@@ -89,7 +88,7 @@
                             <button id="hazirlikBitir" class="btn btn-red">Hazırlık Bitir</button>
                         </div>
                         <div class="sure-label-grubu">
-                            <span id="hazirlikSuresiLabel" class="süre-label">Hazırlık Süresi: <span id="sure">0</span></span>
+                            <span id="hazirlikSuresiLabel" class="süre-label"><span id="sure">0</span></span>
                         </div>
                     </div>
 
@@ -102,7 +101,7 @@
                             <button id="uretimiDurdur" class="btn btn-red">Üretimi Durdur</button>
                         </div>
                         <div class="sure-label-grubu">
-                            <span id="uretimSuresiLabel" class="süre-label">Üretim Süresi: <span id="üretimSüresi">0</span></span>
+                            <span id="uretimSuresiLabel" class="süre-label"><span id="uretimSuresi">0</span></span>
 
                             @* <div id="uretimSuresiListesi">Üretim Süreleri: </div> *@
                         </div>
@@ -135,25 +134,81 @@
 
 
 
-                    </div>
-             
+            </div>
 
-         
-        </div>
+
 
         </div>
-            
+
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#hazirlikBaslat').click(function () {
+                $.ajax({
+                    url: '@Url.Action("StartPreparation", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: 1 }, /* DİKKAT DÜZELTİLECEK */
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Hazırlık başlatıldı.');
+                        }
+                    }
+                });
+            });
 
-        <script>
+            $('#hazirlikBitir').click(function () {
+                $.ajax({
+                    url: '@Url.Action("StopPreparation", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: 1 },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Hazırlık durduruldu.');
+                        }
+                    }
+                });
+            });
+
+
+            $('#uretimBaslat').click(function () {
+                $.ajax({
+                    url: '@Url.Action("StartProduction", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: 1 }, /* DİKKAT DÜZELTİLECEK */
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Üretim başlatıldı.');
+                        }
+                    }
+                });
+            });
+
+            $('#uretimiDurdur').click(function () {
+                $.ajax({
+                    url: '@Url.Action("StopProduction", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: 1 },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Üretim durduruldu.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
         var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
         var currentPage = 1; // Başlangıçta görüntülenecek sayfa
         var parametersData = {}; // Parametre verileri burada saklanacak
         var totalPages = 0; // Toplam sayfa sayısı, hesaplanacak
         $(document).ready(function () {
-     
+
             // Sayfalama için HTML elementleri
             var paginationContainer = $('<div>', {
                 id: 'pagination-controls',
@@ -244,7 +299,7 @@
             }
 
             // Veri yükleme işlemi
-         
+
             var machineId = getMachineIdFromUrl();
             $.ajax({
                 url: 'Machine/GetMachineParameters/' + machineId,
@@ -280,12 +335,35 @@
             }
 
 
+           
 
             document.getElementById('uretimBaslat').addEventListener('click', function () {
-                var machineId = getMachineIdFromUrl(); // Makine ID'nizi buraya girin.
+                sendStartProductionRequest(256); // Üretim Başlat için operationId 256
+            });
 
-                fetch(`/start/${machineId}`, {
-                    method: 'POST'
+            // document.getElementById('uretimiDurdur').addEventListener('click', function () {
+            //     sendStartProductionRequest(257); // Üretimi Durdur için operationId 257
+            // });
+
+            // Makine ID'sini URL'den almak için fonksiyon
+            function getMachineIdFromUrl() {
+                // URL'den machineId'yi çıkaracak kod burada olacak
+                return 1; // Bu örnekte statik olarak 1 döndürdüğünü varsayıyoruz
+            }
+
+            // Üretim başlatma isteği göndermek için fonksiyon
+            function sendStartProductionRequest(operationId) {
+                console.log('Operation ID:', operationId); // Operation ID'nin doğru olduğunu kontrol edin
+                var machineId = getMachineIdFromUrl();
+                console.log('Makine ID:', machineId); // Makine ID'nin doğru olduğunu kontrol edin
+
+                // URL'e operationId'yi ekleyerek güncellenmiş istek
+                fetch(`/start/${machineId}?operationId=${operationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({}) // operationId URL üzerinden gönderildiği için body'de gerek kalmadı
                 })
                     .then(response => {
                         if (!response.ok) {
@@ -294,29 +372,37 @@
                         return response.json();
                     })
                     .then(data => {
-                        for (const key in data.parameters) {
-                            if (data.parameters.hasOwnProperty(key)) {
-                                const value = data.parameters[key];
-                                const parameterElement = document.querySelector(`.card-body h4[data-parameter-name="${key}"]`);
-                                if (parameterElement) {
-                                    parameterElement.textContent = value;
-                                }
-                            }
-                        }
+                        // Gelen veriyi işleyecek kod
+                        updateParameterDisplay(data.parameters);
                         reloadGraphs();
                     })
                     .catch(error => {
-                        console.log('Üretimi başlatırken bir hata oluştu:', error); // Hata mesajı
+                        console.error('Üretimi başlatırken bir hata oluştu:', error);
                     });
-            });
+            }
+
+
+            // Parametreleri güncellemek için fonksiyon
+            function updateParameterDisplay(parameters) {
+                for (const key in parameters) {
+                    if (parameters.hasOwnProperty(key)) {
+                        const value = parameters[key];
+                        const parameterElement = document.querySelector(`.card-body h4[data-parameter-name="${key}"]`);
+                        if (parameterElement) {
+                            parameterElement.textContent = value;
+                        }
+                    }
+                }
+            }
+
 
 
         });
 
 
-        
 
-        </script>
+
+    </script>
     <script>
         $(document).ready(function () {
             var hazirlikTimer, uretimTimer;
@@ -357,26 +443,23 @@
                 });
             }
 
-
-
-
             function sendLog(action) {
                 $.ajax({
-                    url: '/machine/logoperation', 
+                    url: '/machine/logoperation',
                     type: 'POST',
                     data: JSON.stringify({
-                        MachineId: getMachineIdFromUrl(), 
+                        MachineId: getMachineIdFromUrl(),
                         OperationId: action === 'Hazırlık Başlat' ? 1 : (action === 'Hazırlık Bitir' ? 2 : (action === 'Üretim Başlat' ? 3 : 4)),
-                        Timestamp: new Date().toISOString() 
+                        Timestamp: new Date().toISOString()
                     }),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     success: function (response) {
-                       
+
                         updateLogRecords();
                     },
                     error: function (xhr, status, error) {
-                        console.error(error); 
+                        console.error(error);
                     }
                 });
             }
@@ -391,7 +474,7 @@
                     $('#sure').text(hazirlikSuresi);  // Hazırlık süresini güncelle
                 }, 1000);
                 sendLog('Hazırlık Başlat');
-                
+
             });
 
             $('#hazirlikBitir').click(function () {
@@ -403,7 +486,7 @@
                 $('#sure').text(hazirlikSuresi);  // Hazırlık süresini sıfırla
                 $('#toplamSure').text(toplamSure + " saniye");
                 sendLog('Hazırlık Bitir');
-               
+
             });
             $('#uretimBaslat').click(function () {
                 uretimSuresi = 0;
@@ -411,10 +494,10 @@
                 $('#uretimiDurdur').prop('disabled', false);
                 uretimTimer = setInterval(function () {
                     uretimSuresi++;
-                    $('#üretimSüresi').text(uretimSuresi);
+                    $('#uretimSuresi').text(uretimSuresi);
                 }, 1000);
                 sendLog('Üretim Başlat');
-            
+
             });
 
             $('#uretimiDurdur').click(function () {
@@ -424,11 +507,11 @@
                 uretimSuresiListesi.push(uretimSuresi);  // Üretim süresini listeye ekle
                 toplamSure += uretimSuresi;
                 uretimSuresi = 0;
-                $('#üretimSüresi').text(uretimSuresi);
+                $('#uretimSuresi').text(uretimSuresi);
                 $('#toplamSure').text(toplamSure + " saniye");
                 $('#uretimSuresiListesi').text('Üretim Süreleri: ' + uretimSuresiListesi.join(', '));  // Listeyi göster
                 sendLog('Üretim Bitir');
-              
+
             });
 
             // Başlangıçta butonları uygun duruma getir
@@ -439,7 +522,7 @@
 
     </script>
 
-   
+
 
 </body>
 </html>

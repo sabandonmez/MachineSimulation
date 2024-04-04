@@ -31,7 +31,9 @@ namespace MachineSimulation.DataAccess
             services.AddScoped<IMachineWriteRepository, MachineWriteRepository>();
             services.AddScoped<IMachineLogReadRepository,MachineLogReadRepository>();
             services.AddScoped<IMachineLogWriteRepository, MachineLogWriteRepository>();
+
             services.AddScoped<IOperationReadRepository,OperationReadRepository>();
+
             services.AddScoped<IOperationWriteRepository,OperationWriteRepository>();
             services.AddScoped<IOperationLogReadRepository, OperationLogReadRepository>();
             services.AddScoped<IOperationLogWriteRepository, OperationLogWriteRepository>();

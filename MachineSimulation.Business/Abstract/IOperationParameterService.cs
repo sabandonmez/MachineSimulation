@@ -8,6 +8,7 @@ namespace MachineSimulation.Business.Abstract
 {
     public interface IOperationParameterService
     {
-        Task<Dictionary<string, int>> StartProductionAsync(int machineId);
+
+        Task<Dictionary<string, int>> StartProductionAsync(int machineId, int operationId);
     }
 }

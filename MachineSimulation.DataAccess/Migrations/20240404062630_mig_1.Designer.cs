@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240328122446_mig_1")]
+    [Migration("20240404062630_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,7 +82,13 @@ namespace MachineSimulation.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Event")
+                        .HasColumnType("int");
+
                     b.Property<int>("MachineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModbusIp")
                         .HasColumnType("int");
 
                     b.Property<string>("OperationName")

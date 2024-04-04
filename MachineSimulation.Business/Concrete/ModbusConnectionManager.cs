@@ -17,7 +17,26 @@ namespace MachineSimulation.Business.Concrete
             if (!_modbusClients.TryGetValue(machineId, out ModbusClient client))
             {
                 client = new ModbusClient(ipAddress, port) { UnitIdentifier = slaveId };
+                try
+                {
+                    client.Connect(); // Bağlantıyı aç
+                }
+                catch (Exception)
+                {
+                    throw new InvalidOperationException("Modbus bağlantısı açılamadı.");
+                }
                 _modbusClients[machineId] = client;
+            }
+            else if (!client.Connected)
+            {
+                try
+                {
+                    client.Connect(); // Bağlantıyı tekrar açmaya çalış
+                }
+                catch (Exception)
+                {
+                    throw new InvalidOperationException("Mevcut Modbus bağlantısı yeniden açılamadı.");
+                }
             }
 
             return client;

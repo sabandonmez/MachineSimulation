@@ -390,9 +390,11 @@ body {
     align-items: start; /* Sað kenara hizala */
     background-color: white;
     border: 1px solid #C0C0C0;
-
     border-radius: 20px;
     padding: 1rem;
+    padding-left:2rem;
+    font-weight:500;
+    padding-right:2rem;
     margin-left: 1rem;
     margin-right: 1rem;
     margin-top: 0.5rem;
@@ -412,4 +414,11 @@ body {
 }
 .btn-red {
     background-color:var(--buton-kirmizi)!important;
+}
+
+#sure {
+    font-size: 2rem; 
+}
+#uretimSuresi {
+    font-size:2rem;
 }

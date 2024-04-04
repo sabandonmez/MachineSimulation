@@ -2,6 +2,7 @@
 using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationRepositories;
 using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
+using MachineSimulation.DataAccess.Concrete.OperationRepositories;
 using MachineSimulation.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -16,37 +17,43 @@ namespace MachineSimulation.Business.Concrete
         private readonly IOperationParameterReadRepository _operationParameterReadRepository;
         private readonly IOperationParameterWriteRepository _operationParameterWriteRepository;
         private readonly IOperationWriteRepository _operationWriteRepository;
+        private readonly IOperationReadRepository _operationReadRepository;
         private readonly IParameterReadRepository _parameterReadRepository;
-        public OperationParameterManager(IOperationParameterReadRepository operationParameterReadRepository, IOperationParameterWriteRepository operationParameterWriteRepository, IOperationWriteRepository operationWriteRepository, IParameterReadRepository parameterReadRepository)
+        public OperationParameterManager(IOperationParameterReadRepository operationParameterReadRepository, IOperationParameterWriteRepository operationParameterWriteRepository, IOperationWriteRepository operationWriteRepository, IParameterReadRepository parameterReadRepository, IOperationReadRepository operationReadRepository)
         {
             _operationParameterReadRepository = operationParameterReadRepository;
             _operationParameterWriteRepository = operationParameterWriteRepository;
             _operationWriteRepository = operationWriteRepository;
             _parameterReadRepository = parameterReadRepository;
+            _operationReadRepository = operationReadRepository;
         }
-        public async Task<Dictionary<string, int>> StartProductionAsync(int machineId)
+        public async Task<Dictionary<string, int>> StartProductionAsync(int machineId, int operationId)
         {
-            var operation = new Operation { MachineId = machineId, OperationName = "Üretim Başlat" };
-            await _operationWriteRepository.AddAsync(operation);
-            await _operationWriteRepository.SaveAsync();
+            // 'operationId' ve 'machineId' kullanılarak ilgili operasyon bilgisi alınır.
+            var operation = await _operationReadRepository.GetByMachineIdAndOperationId(machineId, operationId);
 
             var updatedParameters = new Dictionary<string, int>();
 
+            // İlgili makine için parametreler alınır.
             var parameters = _parameterReadRepository.GetParametersForMachine(machineId);
+
             foreach (var parameter in parameters)
             {
-                var randomValue = new Random().Next(0, 101);
-                updatedParameters.Add(parameter.ParameterName, randomValue);
+                var newValue = new Random().Next(0, 101);
+                updatedParameters.Add(parameter.ParameterName, newValue);
 
-                // ToString() kullanmanıza gerek yok, eğer değer zaten int ise doğrudan kullanılabilir.
-                _operationParameterWriteRepository.AddOperationParameter(operation.Id, parameter.Id, randomValue.ToString());
+                // 'OperationParameters' tablosunda, ilgili operasyon ve parametre için yeni değer kaydedilir.
+                 _operationParameterWriteRepository.AddOperationParameter(operationId, parameter.Id, newValue.ToString());
             }
 
+            // Tüm değişiklikler veritabanına kaydedilir.
             await _operationParameterWriteRepository.SaveAsync();
 
-            // Güncellenen parametrelerin değerlerini içeren sözlüğü döndür
+            // Güncellenen parametreler ve değerler döndürülür.
             return updatedParameters;
         }
+
+
 
     }
 }

@@ -62,7 +62,9 @@ namespace MachineSimulation.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MachineId = table.Column<int>(type: "int", nullable: false),
-                    OperationName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    OperationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModbusIp = table.Column<int>(type: "int", nullable: false),
+                    Event = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

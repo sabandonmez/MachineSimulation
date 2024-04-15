@@ -3,6 +3,7 @@ using System;
 using MachineSimulation.DataAccess.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    partial class MachineSimulationContextModelSnapshot : ModelSnapshot
+    [Migration("20240415060023_seedData")]
+    partial class seedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -286,50 +288,6 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasIndex("MachineId");
 
                     b.ToTable("Parameters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MachineId = 1,
-                            ParameterName = "Hız",
-                            ValueType = "int"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            MachineId = 1,
-                            ParameterName = "Sıcaklık",
-                            ValueType = "int"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            MachineId = 2,
-                            ParameterName = "Hız",
-                            ValueType = "int"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            MachineId = 2,
-                            ParameterName = "Sıcaklık",
-                            ValueType = "int"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            MachineId = 3,
-                            ParameterName = "Cnc Ilerleme Hizi",
-                            ValueType = "int"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            MachineId = 3,
-                            ParameterName = "Ariza Alarm Sayisi",
-                            ValueType = "int"
-                        });
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>

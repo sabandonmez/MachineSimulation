@@ -26,7 +26,7 @@ namespace MachineSimulation.DataAccess
     {
         public static void AddDataAccessServices(this IServiceCollection services)
         {
-            services.AddDbContext<MachineSimulationContext>(options => options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MachineSimDb;Trusted_Connection=true;"));
+           // services.AddDbContext<MachineSimulationContext>(options => options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MachineSimDb;Trusted_Connection=true;"));
             services.AddScoped<IMachineReadRepository,MachineReadRepository>();
             services.AddScoped<IMachineWriteRepository, MachineWriteRepository>();
             services.AddScoped<IMachineLogReadRepository,MachineLogReadRepository>();

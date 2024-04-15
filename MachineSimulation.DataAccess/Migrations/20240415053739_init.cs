@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MachineSimulation.DataAccess.Migrations
 {
-    public partial class mig_1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "MachineLogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MachineId = table.Column<int>(type: "int", nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Action = table.Column<string>(type: "TEXT", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,12 +28,13 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "Machines",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MachineName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MachineType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductionCount = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineName = table.Column<string>(type: "TEXT", nullable: false),
+                    MachineType = table.Column<string>(type: "TEXT", nullable: false),
+                    ProductionCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModbusId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,11 +45,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "OperationLogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MachineId = table.Column<int>(type: "int", nullable: false),
-                    OperationId = table.Column<int>(type: "int", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OperationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,12 +60,12 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "Operations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MachineId = table.Column<int>(type: "int", nullable: false),
-                    OperationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModbusIp = table.Column<int>(type: "int", nullable: false),
-                    Event = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OperationName = table.Column<string>(type: "TEXT", nullable: false),
+                    ModbusIp = table.Column<int>(type: "INTEGER", nullable: false),
+                    Event = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,11 +82,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "Parameters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MachineId = table.Column<int>(type: "int", nullable: false),
-                    ParameterName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ValueType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParameterName = table.Column<string>(type: "TEXT", nullable: false),
+                    ValueType = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,11 +103,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "OperationParameters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OperationId = table.Column<int>(type: "int", nullable: false),
-                    ParameterId = table.Column<int>(type: "int", nullable: false),
-                    ParameterValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OperationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParameterId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParameterValue = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -18,7 +18,7 @@
 
         </div>
         <div class="row">
-        
+
             <div class="col-md-6">
 
                 <div class="card-div graph-card-green mt-4 align-top">
@@ -51,7 +51,7 @@
                                         <h6>@parameter.ParameterName</h6>
                                     </div>
                                     <div class="card-body">
-                                        
+
                                         <h4 class="card-title" data-parameter-name="@parameter.ParameterName" data-parameter-value="@parameter.ParameterValue">0</h4>
                                     </div>
 
@@ -218,26 +218,7 @@
         var totalPages = 0; // Toplam sayfa sayısı, hesaplanacak
         $(document).ready(function () {
 
-            // Sayfalama için HTML elementleri
-            var paginationContainer = $('<div>', {
-                id: 'pagination-controls',
-                class: 'pagination-container' // Bu sınıfı CSS'te tanımlayacağız
-            });
-
-            var prevButton = $('<button>', {
-                html: '<i class="fa-solid fa-chevron-left"></i>',
-                click: function () { changePage(-1); },
-                class: 'pagination-button' // Bu sınıfı CSS'te tanımlayacağız
-            }).prop('disabled', currentPage === 1);
-
-            var nextButton = $('<button>', {
-                html: '<i class="fa-solid fa-chevron-right"></i>',
-                click: function () { changePage(1); },
-                class: 'pagination-button' // Bu sınıfı CSS'te tanımlayacağız
-            }).prop('disabled', currentPage === totalPages);
-
-            paginationContainer.append(prevButton, nextButton);
-            $('.card-div.graph-card-green').append(paginationContainer);
+            
 
             function changePage(delta) {
                 currentPage += delta;
@@ -246,60 +227,64 @@
                 createCharts(currentPage);
             }
 
-            function createCharts(page) {
+            function createCharts() {
                 var graphsContainer = $('#graphs-container');
                 graphsContainer.empty(); // Mevcut grafikleri temizle
 
-                // Hangi grafiklerin gösterileceğini belirle
-                var startIndex = (page - 1) * graphsPerPage;
-                var endIndex = startIndex + graphsPerPage;
-                var parameterNames = Object.keys(parametersData).slice(startIndex, endIndex);
+                var parameterNames = Object.keys(parametersData);
 
-                $.each(parameterNames, function (_, parameterName) {
+                // Renk paleti
+                var colors = [
+                    'rgba(255, 99, 132, 1)',  // Kırmızı
+                    'rgba(54, 162, 235, 1)',  // Mavi
+                    'rgba(255, 206, 86, 1)',   // Sarı
+                    'rgba(75, 192, 192, 1)',   // Turkuaz
+                    'rgba(153, 102, 255, 1)',  // Mor
+                    'rgba(255, 159, 64, 1)',   // Turuncu
+                    // Diğer renkler eklenebilir
+                ];
+
+                var datasets = parameterNames.map(function (parameterName, index) {
                     var values = parametersData[parameterName];
-                    var labels = values.map(function (_, index) {
-                        return 'Ölçüm ' + (index + 1);
-                    });
-
-                    var canvasId = 'graph-' + parameterName.replace(/\s+/g, '-');
-                    var graphDiv = $('<div>', {
-                        class: 'graph-card',
-                        html: $('<canvas>', { id: canvasId })
-                    });
-
-                    graphsContainer.append(graphDiv);
-
-                    var ctx = document.getElementById(canvasId).getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: parameterName,
-                                data: values,
-                                backgroundColor: 'rgba(0, 128, 0, 0.5)',
-                                borderColor: 'green',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false, // Bu ayar yükseklik/genişlik oranını korumaz
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    // Her parametre için farklı bir renk, renk sayısını aşarsa tekrar başa dön
+                    var color = colors[index % colors.length];
+                    return {
+                        label: parameterName,
+                        data: values,
+                        backgroundColor: color,
+                        borderColor: color.replace('0.5', '1'), // Şeffaflığı kaldırarak sınır rengini belirler
+                        borderWidth: 1,
+                        fill: false
+                    };
                 });
 
-                // Toplam sayfa sayısını güncelle
-                totalPages = Math.ceil(Object.keys(parametersData).length / graphsPerPage);
-                // Sayfalama kontrollerinin görünürlüğünü güncelle
-                prevButton.prop('disabled', currentPage === 1);
-                nextButton.prop('disabled', currentPage === totalPages);
+                var canvasId = 'combined-graph';
+                var graphDiv = $('<div>', {
+                    class: 'graph-card',
+                    html: $('<canvas>', { id: canvasId })
+                });
+
+                graphsContainer.append(graphDiv);
+
+                var ctx = document.getElementById(canvasId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({ length: parametersData[parameterNames[0]].length }, (_, i) => 'Ölçüm ' + (i + 1)),
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
             }
+
 
             function getMachineIdFromUrl() {
                 var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
@@ -352,11 +337,13 @@
 
 
 
-            document.getElementById('uretimBaslat').addEventListener('click', function () {
-                sendStartProductionRequest(3); 
+            $(document).ready(function () {
+                setInterval(function () {
+                    sendStartProductionRequest(3); // Her 10 saniyede bir üretim başlatma isteği gönder
+                }, 2000); // 10000 milisaniye, yani 10 saniye
             });
 
-         
+
 
             // Makine ID'sini URL'den almak için fonksiyon
             function getMachineIdFromUrl() {
@@ -438,8 +425,11 @@
 
             // Bu fonksiyon örnek olarak verilmiştir, sizin bu fonksiyonunuzun gerçekte ne yaptığını bilmiyorum.
             function getMachineIdFromUrl() {
-                // URL'den machineId parametresini çekme işlemleri burada olmalı.
-                return '1'; // Örnek bir machineId döndürüldü.
+                
+                    var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+                    var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+                    return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
+                
             }
 
 

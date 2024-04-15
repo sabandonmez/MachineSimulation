@@ -2,6 +2,8 @@ using System.Reflection;
 using MachineSimulation.DataAccess;
 using MachineSimulation.Business;
 using MachineSimulation.Business.Concrete;
+using MachineSimulation.DataAccess.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+builder.Services.AddDbContext<MachineSimulationContext>(options =>
+{
+	options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"));
+});
 builder.Services.AddDataAccessServices();
 builder.Services.AddBusinessServices();
 builder.Services.AddSingleton<ModbusConnectionManager>();

@@ -24,23 +24,23 @@ namespace MachineSimulation.App.Controllers
 
         public Task<ActionResult> StartPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 1,operationName);
+            return WriteModbusRegister(machineId, true,operationName);
         }
 
         public Task<ActionResult> StopPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 0, operationName);
+            return WriteModbusRegister(machineId, false, operationName);
         }
 
         public Task<ActionResult> StartProduction(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 1, operationName);
+            return WriteModbusRegister(machineId, true, operationName);
         }
 
 
         public Task<ActionResult> StopProduction(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 0, operationName);
+            return WriteModbusRegister(machineId, false, operationName);
         }
 
         [HttpPost]
@@ -58,34 +58,28 @@ namespace MachineSimulation.App.Controllers
             }
 
             var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(model.MachineId, ipAddress, port, slaveId);
-            var registerValues = new List<ushort>();
 
-            foreach (var str in model.Strings)
+            // Her string için bir adres listesi
+            ushort[] addresses = new ushort[] { 4250, 4251 };  // Adresleri buraya eklemeye devam et.
+
+            for (int i = 0; i < model.Strings.Count; i++)
             {
-                // Stringleri ushort'a çevir
-                if (ushort.TryParse(str, out ushort number))
+                var str = model.Strings[i];
+                if (ushort.TryParse(str, out ushort value))
                 {
-                    // Doğrudan sayısal değeri ekle
-                    registerValues.Add(number);
+                    // ushort değeri olarak yaz
+                    modbusClient.WriteSingleRegister(addresses[i], value);
+                }
+                else if (str == "0" || str == "1")
+                {
+                    // Bit değeri olarak yaz (coil olarak)
+                    bool bitValue = str == "1";
+                    modbusClient.WriteSingleCoil(addresses[i], bitValue);
                 }
                 else
                 {
-                    // Eğer string ushort'a çevrilemiyorsa hata ver
-                    return BadRequest("Each string must be a valid ushort.");
+                    return BadRequest("Each string must be a valid ushort or a bit ('0' or '1').");
                 }
-            }
-
-
-            ushort startAddress = 4696;
-            ushort[] registerArray = registerValues.ToArray();
-
-            int offset = 0;
-            while (offset < registerArray.Length)
-            {
-                int[] intChunk = registerArray.Skip(offset).Take(123).Select(x => (int)x).ToArray();
-                modbusClient.WriteMultipleRegisters(startAddress, intChunk);
-                startAddress += (ushort)intChunk.Length;
-                offset += intChunk.Length;
             }
 
             return Json(new { success = true });
@@ -93,8 +87,9 @@ namespace MachineSimulation.App.Controllers
 
 
 
+
         [NonAction]
-        private async Task<ActionResult> WriteModbusRegister(int machineId, ushort registerValue , string operationName)
+        private async Task<ActionResult> WriteModbusRegister(int machineId, bool registerValue , string operationName)
         {
             try
             {
@@ -105,7 +100,7 @@ namespace MachineSimulation.App.Controllers
                 }
 
                 var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
-                modbusClient.WriteSingleRegister(modbusId.Value, registerValue);
+                modbusClient.WriteSingleCoil(modbusId.Value, registerValue);
 
                 return Json(new { success = true });
             }

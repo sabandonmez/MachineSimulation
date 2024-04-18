@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineSimulation.DataAcces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineSimulation.Core", "MachineSimulation.Core\MachineSimulation.Core.csproj", "{F321352E-7A5C-4461-8942-4EC1DCA44D0B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineSimulation.API", "MachineSimulation.API\MachineSimulation.API.csproj", "{5DC5510E-69B8-4E6F-92E1-18A5D7275EBA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineSimulation.App", "MachineSimulation.App\MachineSimulation.App.csproj", "{92515BE9-26E5-486A-BEB8-FAE8E7AFFFDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineSimulation.Business", "MachineSimulation.Business\MachineSimulation.Business.csproj", "{C53A12A0-8E9D-4D34-B845-7796BBE48024}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineSimulation.Business", "MachineSimulation.Business\MachineSimulation.Business.csproj", "{C53A12A0-8E9D-4D34-B845-7796BBE48024}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{F321352E-7A5C-4461-8942-4EC1DCA44D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F321352E-7A5C-4461-8942-4EC1DCA44D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F321352E-7A5C-4461-8942-4EC1DCA44D0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DC5510E-69B8-4E6F-92E1-18A5D7275EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DC5510E-69B8-4E6F-92E1-18A5D7275EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DC5510E-69B8-4E6F-92E1-18A5D7275EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DC5510E-69B8-4E6F-92E1-18A5D7275EBA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92515BE9-26E5-486A-BEB8-FAE8E7AFFFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92515BE9-26E5-486A-BEB8-FAE8E7AFFFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92515BE9-26E5-486A-BEB8-FAE8E7AFFFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU

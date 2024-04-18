@@ -3,6 +3,7 @@ using System;
 using MachineSimulation.DataAccess.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    partial class MachineSimulationContextModelSnapshot : ModelSnapshot
+    [Migration("20240418103713_mig_1")]
+    partial class mig_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -142,7 +144,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 3,
                             Event = 3,
                             MachineId = 1,
-                            ModbusIp = 2218,
+                            ModbusIp = 2219,
                             OperationName = "Üretim Başlat"
                         },
                         new
@@ -150,7 +152,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 4,
                             Event = 4,
                             MachineId = 1,
-                            ModbusIp = 2218,
+                            ModbusIp = 2219,
                             OperationName = "Üretim Bitir"
                         },
                         new

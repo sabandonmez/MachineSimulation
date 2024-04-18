@@ -37,6 +37,8 @@ namespace MachineSimulation.Business.Concrete
             // İlgili makine için parametreler alınır.
             var parameters = _parameterReadRepository.GetParametersForMachine(machineId);
 
+            
+
             foreach (var parameter in parameters)
             {
                 var newValue = new Random().Next(0, 101);

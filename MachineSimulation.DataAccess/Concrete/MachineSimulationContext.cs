@@ -45,18 +45,20 @@ namespace MachineSimulation.DataAccess.Concrete
 
             modelBuilder.Entity<Operation>()
                 .HasData(
-                    new Operation { Id = 1, MachineId = 1, OperationName = "Hazırlık Başlat", ModbusIp = 4249, Event = 1 },
-                    new Operation { Id = 2, MachineId = 1, OperationName = "Hazırlık Bitir", ModbusIp = 4249, Event = 2 },
-                    new Operation { Id = 3, MachineId = 1, OperationName = "Üretim Başlat", ModbusIp = 4255, Event = 3 },
-                    new Operation { Id = 4, MachineId = 1, OperationName = "Üretim Bitir", ModbusIp = 4255, Event = 4 },
-                    new Operation { Id = 5, MachineId = 2, OperationName = "Hazırlık Başlat", ModbusIp = 4250, Event = 1 },
-                    new Operation { Id = 6, MachineId = 2, OperationName = "Hazırlık Bitir", ModbusIp = 4250, Event = 2 },
-                    new Operation { Id = 7, MachineId = 2, OperationName = "Üretim Başlat", ModbusIp = 4256, Event = 3 },
-                    new Operation { Id = 8, MachineId = 2, OperationName = "Üretim Bitir", ModbusIp = 4256, Event = 4 },
-                    new Operation { Id = 9, MachineId = 3, OperationName = "Hazırlık Başlat", ModbusIp = 4251, Event = 1 },
-                    new Operation { Id = 10, MachineId = 3, OperationName = "Hazırlık Bitir", ModbusIp = 4251, Event = 2 },
-                    new Operation { Id = 11, MachineId = 3, OperationName = "Üretim Başlat", ModbusIp = 4257, Event = 3 },
-                    new Operation { Id = 12, MachineId = 3, OperationName = "Üretim Bitir", ModbusIp = 4257, Event = 4 }
+                    new Operation { Id = 1, MachineId = 1, OperationName = "Hazırlık Başlat", ModbusIp = 2222, Event = 1 },
+                    new Operation { Id = 2, MachineId = 1, OperationName = "Hazırlık Bitir", ModbusIp = 2222, Event = 2 },
+                    new Operation { Id = 3, MachineId = 1, OperationName = "Üretim Başlat", ModbusIp = 2218, Event = 3 },
+                    new Operation { Id = 4, MachineId = 1, OperationName = "Üretim Bitir", ModbusIp = 2218, Event = 4 },
+
+                    new Operation { Id = 5, MachineId = 2, OperationName = "Hazırlık Başlat", ModbusIp = 2250, Event = 1 },
+                    new Operation { Id = 6, MachineId = 2, OperationName = "Hazırlık Bitir", ModbusIp = 2250, Event = 2 },
+                    new Operation { Id = 7, MachineId = 2, OperationName = "Üretim Başlat", ModbusIp = 2256, Event = 3 },
+                    new Operation { Id = 8, MachineId = 2, OperationName = "Üretim Bitir", ModbusIp = 2256, Event = 4 },
+
+                    new Operation { Id = 9, MachineId = 3, OperationName = "Hazırlık Başlat", ModbusIp = 2251, Event = 1 },
+                    new Operation { Id = 10, MachineId = 3, OperationName = "Hazırlık Bitir", ModbusIp = 2251, Event = 2 },
+                    new Operation { Id = 11, MachineId = 3, OperationName = "Üretim Başlat", ModbusIp = 2257, Event = 3 },
+                    new Operation { Id = 12, MachineId = 3, OperationName = "Üretim Bitir", ModbusIp = 2257, Event = 4 }
             );
             modelBuilder.Entity<Parameter>()
                .HasData(

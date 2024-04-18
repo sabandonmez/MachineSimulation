@@ -299,19 +299,20 @@
             }
 
             // Veri yükleme işlemi
-
-            var machineId = getMachineIdFromUrl();
-            $.ajax({
-                url: 'Machine/GetMachineParameters/' + machineId,
-                type: 'GET',
-                success: function (data) {
-                    data.forEach(function (param) {
-                        parametersData[param.parameterName] = param.parameterValue.map(Number);
-                    });
-                    totalPages = Math.ceil(Object.keys(parametersData).length / graphsPerPage);
-                    createCharts(currentPage);
+            // Makine ID'sini URL'den almak için fonksiyon
+            function getMachineIdFromUrl() {
+                var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
+                var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
+                // URL'den makine ID'sini (genellikle son segment olarak) çıkarır
+                var machineId = urlSegments[urlSegments.length - 1] || urlSegments[urlSegments.length - 2];
+                // Son segment boş bir string ise (örneğin, URL '/' ile bitiyorsa), önceki segmenti kullan
+                if (machineId === '') {
+                    machineId = urlSegments[urlSegments.length - 2];
                 }
-            });
+                return machineId;
+            }
+
+           
 
 
             //Grafik Parametreleri Reload yapma:
@@ -334,46 +335,37 @@
                 });
             }
 
-
-
-
+           
             $(document).ready(function () {
-                sendStartProductionRequest(3); // İlk çağrıyı hemen yap
+               
+                sendStartProductionRequest(3, function () {
+                    // sendStartProductionRequest fonksiyonunun tamamlanmasını izle ve 300ms sonra sendModbusWriteStrings fonksiyonunu tetikle
+                    setTimeout(function () {
+                        sendModbusWriteStrings(function () {
+                            // sendModbusWriteStrings fonksiyonunun tamamlanmasını izle
+                            // Ardından sendStartProductionRequest fonksiyonunu her 15 saniyede bir çalıştırmak için bir interval başlat
+                            setInterval(function () {
+                                sendStartProductionRequest(3);
+                            }, 15000);
 
-                setInterval(function () {
-                    sendStartProductionRequest(3); // Her 15 saniyede bir tekrarla
-                }, 15000);
+                            // Aynı zamanda, sendModbusWriteStrings fonksiyonunu her 15.51 saniyede bir çalıştırmak için bir interval başlat
+                            setInterval(sendModbusWriteStrings, 15510);
+                        });
+                    }, 300);
+                });
             });
 
-
-
-
-            // Makine ID'sini URL'den almak için fonksiyon
-            function getMachineIdFromUrl() {
-                var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
-                var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
-                // URL'den makine ID'sini (genellikle son segment olarak) çıkarır
-                var machineId = urlSegments[urlSegments.length - 1] || urlSegments[urlSegments.length - 2];
-                // Son segment boş bir string ise (örneğin, URL '/' ile bitiyorsa), önceki segmenti kullan
-                if (machineId === '') {
-                    machineId = urlSegments[urlSegments.length - 2];
-                }
-                return machineId;
-            }
-
-            // Üretim başlatma isteği göndermek için fonksiyon
-            function sendStartProductionRequest(operationId) {
-                console.log('Operation ID:', operationId); // Operation ID'nin doğru olduğunu kontrol edin
+            function sendStartProductionRequest(operationId, callback) {
+                console.log('Operation ID:', operationId);
                 var machineId = getMachineIdFromUrl();
-                console.log('Makine ID:', machineId); // Makine ID'nin doğru olduğunu kontrol edin
+                console.log('Makine ID:', machineId);
 
-                // URL'e operationId'yi ekleyerek güncellenmiş istek
                 fetch(`/start/${machineId}?operationId=${operationId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({}) // operationId URL üzerinden gönderildiği için body'de gerek kalmadı
+                    body: JSON.stringify({})
                 })
                     .then(response => {
                         if (!response.ok) {
@@ -382,22 +374,21 @@
                         return response.json();
                     })
                     .then(data => {
-                        // Gelen veriyi işleyecek kod
                         updateParameterDisplay(data.parameters);
                         reloadGraphs();
+                        if (callback) callback();
                     })
                     .catch(error => {
                         console.error('Üretimi başlatırken bir hata oluştu:', error);
                     });
             }
 
-            document.getElementById('uretimiDurdur').addEventListener('click', function () {
+            function sendModbusWriteStrings(callback) {
                 var machineId = getMachineIdFromUrl();
-                console.log('Machine ID:', machineId); // Bu satır machineId'yi konsolda gösterir.
+                console.log('Machine ID:', machineId);
 
                 var parameters = document.querySelectorAll('.card-title[data-parameter-name]');
                 var strings = Array.from(parameters).map(function (param) {
-                    // 'textContent' veya 'innerText' kullanarak h4 etiketinin içeriğini alın
                     return param.textContent || param.innerText;
                 });
                 console.log(strings);
@@ -407,32 +398,22 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    
-                    body: JSON.stringify({ machineId: machineId, strings: strings }),
+                    body: JSON.stringify({ machineId: machineId, strings: strings })
                 })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Network response was not ok');
+                            throw new Error('Cevap alınamadı');
                         }
                         return response.json();
                     })
                     .then(data => {
-                        console.log('Üretim durduruldu ve veriler gönderildi', data);
+                        console.log('Makina Değerleri Gönderildi', data);
+                        if (callback) callback();
                     })
                     .catch(error => {
-                        console.error('Verileri gönderirken bir hata oluştu:', error);
+                        console.error('Veri Gönderilirken hata oluştu', error);
                     });
-            });
-
-            // Bu fonksiyon örnek olarak verilmiştir, sizin bu fonksiyonunuzun gerçekte ne yaptığını bilmiyorum.
-            function getMachineIdFromUrl() {
-                
-                    var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
-                    var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
-                    return urlSegments.pop(); // dizinin son elemanını alır (bu durumda machineId olmalıdır)
-                
             }
-
 
             // Parametreleri güncellemek için fonksiyon
             function updateParameterDisplay(parameters) {

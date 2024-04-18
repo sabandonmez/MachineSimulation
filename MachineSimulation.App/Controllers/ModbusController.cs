@@ -22,25 +22,25 @@ namespace MachineSimulation.App.Controllers
             _operationService = operationService;
         }
 
-        public Task<ActionResult> StartPreparation(int machineId)
+        public Task<ActionResult> StartPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 1);
+            return WriteModbusRegister(machineId, 1,operationName);
         }
 
-        public Task<ActionResult> StopPreparation(int machineId)
+        public Task<ActionResult> StopPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 0);
+            return WriteModbusRegister(machineId, 0, operationName);
         }
 
-        public Task<ActionResult> StartProduction(int machineId)
+        public Task<ActionResult> StartProduction(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 1);
+            return WriteModbusRegister(machineId, 1, operationName);
         }
 
 
-        public Task<ActionResult> StopProduction(int machineId)
+        public Task<ActionResult> StopProduction(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, 0);
+            return WriteModbusRegister(machineId, 0, operationName);
         }
 
         [HttpPost]
@@ -62,24 +62,21 @@ namespace MachineSimulation.App.Controllers
 
             foreach (var str in model.Strings)
             {
-                if (str.Length == 2)
+                // Stringleri ushort'a çevir
+                if (ushort.TryParse(str, out ushort number))
                 {
-                    // Stringin her karakterinin ASCII değerini alın
-                    ushort highByte = Convert.ToByte(str[0]);
-                    ushort lowByte = Convert.ToByte(str[1]);
-
-                    // ASCII değerlerini birleştir
-                    ushort registerValue = (ushort)((highByte << 8) | lowByte);
-                    registerValues.Add(registerValue);
+                    // Doğrudan sayısal değeri ekle
+                    registerValues.Add(number);
                 }
                 else
                 {
-                    // Eğer string iki karakterden farklı bir uzunlukta ise hata ver
-                    return BadRequest("Each string must contain exactly two characters.");
+                    // Eğer string ushort'a çevrilemiyorsa hata ver
+                    return BadRequest("Each string must be a valid ushort.");
                 }
             }
 
-            ushort startAddress = 4096;
+
+            ushort startAddress = 4696;
             ushort[] registerArray = registerValues.ToArray();
 
             int offset = 0;
@@ -97,11 +94,11 @@ namespace MachineSimulation.App.Controllers
 
 
         [NonAction]
-        private async Task<ActionResult> WriteModbusRegister(int machineId, ushort registerValue)
+        private async Task<ActionResult> WriteModbusRegister(int machineId, ushort registerValue , string operationName)
         {
             try
             {
-                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId);
+                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId,operationName);
                 if (!modbusId.HasValue)
                 {
                     return Json(new { success = false, message = "Modbus ID not found." });

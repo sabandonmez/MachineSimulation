@@ -25,9 +25,9 @@ namespace MachineSimulation.Business.Concrete
             return _operationReadRepository.GetOperationIdByName(name);
             
         }
-        public async Task<int?> GetOperationModbusIdAsync(int machineId)
+        public async Task<int?> GetOperationModbusIdAsync(int machineId, string operationName)
         {
-            return await _operationReadRepository.GetOperationModbusIdAsync(machineId);
+            return await _operationReadRepository.GetOperationModbusIdAsync(machineId,operationName);
 
         }
     }

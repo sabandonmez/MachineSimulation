@@ -157,7 +157,7 @@
                 $.ajax({
                     url: '@Url.Action("StartPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId },
+                    data: { machineId: machineId, operationName: 'Hazırlık Başlat' },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık başlatıldı.');
@@ -171,7 +171,7 @@
                 $.ajax({
                     url: '@Url.Action("StopPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId },
+                    data: { machineId: machineId, operationName: 'Hazırlık Bitir' },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık durduruldu.');
@@ -186,7 +186,7 @@
                 $.ajax({
                     url: '@Url.Action("StartProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId },
+                    data: { machineId: machineId, operationName: 'Üretim Başlat' },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim başlatıldı.');
@@ -200,7 +200,7 @@
                 $.ajax({
                     url: '@Url.Action("StopProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId },
+                    data: { machineId: machineId, operationName: 'Üretim Bitir' },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim durduruldu.');
@@ -338,10 +338,13 @@
 
 
             $(document).ready(function () {
+                sendStartProductionRequest(3); // İlk çağrıyı hemen yap
+
                 setInterval(function () {
-                    sendStartProductionRequest(3); // Her 10 saniyede bir üretim başlatma isteği gönder
-                }, 2000); // 10000 milisaniye, yani 10 saniye
+                    sendStartProductionRequest(3); // Her 15 saniyede bir tekrarla
+                }, 15000);
             });
+
 
 
 
@@ -399,14 +402,12 @@
                 });
                 console.log(strings);
 
-                // 'fetch' fonksiyonunun çağrısı düzeltilmiş.
-                // 'url' anahtar kelimesi 'fetch' içinde kullanılmaz ve 'data' yerine 'body' kullanılmalı.
                 fetch('/modbus/writestrings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    // 'data' yerine 'body' kullanılmalı ve 'JSON.stringify' doğrudan body içerisine yazılmalı.
+                    
                     body: JSON.stringify({ machineId: machineId, strings: strings }),
                 })
                     .then(response => {

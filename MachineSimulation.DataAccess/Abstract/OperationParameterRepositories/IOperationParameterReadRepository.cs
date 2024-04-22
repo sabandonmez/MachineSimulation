@@ -10,5 +10,6 @@ namespace MachineSimulation.DataAccess.Abstract.OperationParameterRepositories
 {
     public interface IOperationParameterReadRepository : IReadRepository<OperationParameter>
     {
+        Task<int> GetCountByParameterId(int parameterId);
     }
 }

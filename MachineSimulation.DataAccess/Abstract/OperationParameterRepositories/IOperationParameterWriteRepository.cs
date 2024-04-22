@@ -11,5 +11,6 @@ namespace MachineSimulation.DataAccess.Abstract.OperationParameterRepositories
     public interface IOperationParameterWriteRepository : IWriteRepository<OperationParameter>
     {
         void AddOperationParameter(int operationId, int parameterId, string parameterValue);
+        Task DeleteOldestOperationParameterByParameterId(int parameterId);
     }
 }

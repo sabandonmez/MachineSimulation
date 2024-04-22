@@ -29,23 +29,31 @@ namespace MachineSimulation.Business.Concrete
         }
         public async Task<Dictionary<string, int>> StartProductionAsync(int machineId, int operationId)
         {
-            // 'operationId' ve 'machineId' kullanılarak ilgili operasyon bilgisi alınır.
+            // İlgili operasyon bilgisi alınır.
             var operation = await _operationReadRepository.GetByMachineIdAndOperationId(machineId, operationId);
-
-            var updatedParameters = new Dictionary<string, int>();
 
             // İlgili makine için parametreler alınır.
             var parameters = _parameterReadRepository.GetParametersForMachine(machineId);
 
-            
-
+            // Her bir parametre için işlem yapılır.
+            var updatedParameters = new Dictionary<string, int>();
             foreach (var parameter in parameters)
             {
+                // Belirli bir ParameterId için OperationParameters tablosundaki kayıtların sayısı kontrol edilir.
+                var count = await _operationParameterReadRepository.GetCountByParameterId(parameter.Id);
+
+                // Eğer 10'dan fazla parametre varsa, en eski kaydı (en düşük Id) siler.
+                if (count >= 10)
+                {
+                    await _operationParameterWriteRepository.DeleteOldestOperationParameterByParameterId(parameter.Id);
+                }
+
+                // Yeni parametre değeri üretilir ve güncelleme listesine eklenir.
                 var newValue = new Random().Next(0, 101);
                 updatedParameters.Add(parameter.ParameterName, newValue);
 
-                // 'OperationParameters' tablosunda, ilgili operasyon ve parametre için yeni değer kaydedilir.
-                 _operationParameterWriteRepository.AddOperationParameter(operationId, parameter.Id, newValue.ToString());
+                // OperationParameters tablosuna yeni değer eklenir.
+                _operationParameterWriteRepository.AddOperationParameter(operationId, parameter.Id, newValue.ToString());
             }
 
             // Tüm değişiklikler veritabanına kaydedilir.
@@ -54,6 +62,7 @@ namespace MachineSimulation.Business.Concrete
             // Güncellenen parametreler ve değerler döndürülür.
             return updatedParameters;
         }
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,21 @@ namespace MachineSimulation.DataAccess.Concrete.OperationParameterRepositories
             };
 
             _context.OperationParameters.Add(operationParameter);
+        }
+
+        public async Task DeleteOldestOperationParameterByParameterId(int parameterId)
+        {
+       
+            var oldestParameter = await _context.OperationParameters
+                                                .Where(op => op.ParameterId == parameterId)
+                                                .OrderBy(op => op.Id) 
+                                                .FirstOrDefaultAsync(); // En üstteki (en eski) kaydı al
+
+            if (oldestParameter != null)
+            {
+                _context.OperationParameters.Remove(oldestParameter);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -24,12 +24,12 @@ namespace MachineSimulation.App.Controllers
 
         public Task<ActionResult> StartPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, true,operationName);
+            return WriteModbusRegister(machineId, false,operationName);
         }
 
         public Task<ActionResult> StopPreparation(int machineId, string operationName)
         {
-            return WriteModbusRegister(machineId, false, operationName);
+            return WriteModbusRegister(machineId, true, operationName);
         }
 
         public Task<ActionResult> StartProduction(int machineId, string operationName)
@@ -60,7 +60,7 @@ namespace MachineSimulation.App.Controllers
             var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(model.MachineId, ipAddress, port, slaveId);
 
             // Her string için bir adres listesi
-            ushort[] addresses = new ushort[] { 4250, 4251 };  // Adresleri buraya eklemeye devam et.
+            ushort[] addresses = new ushort[] { 4196,4198,4200,4202,4204,4206 };  // Adresleri buraya eklemeye devam edebilirsin.
 
             for (int i = 0; i < model.Strings.Count; i++)
             {

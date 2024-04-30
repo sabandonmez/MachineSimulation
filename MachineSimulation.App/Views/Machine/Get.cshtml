@@ -10,6 +10,87 @@
     <link rel="stylesheet" href="~/css/get.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <style>
+       
+
+        .traffic-light-up {
+            width: 20px;
+            background: black;
+            border-radius: 3px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            position: absolute;
+            top: 0; /* Üstten hizala */
+            left: 105%; /* Sol kenara hizala */
+            transform: translateX(-50%); /* Yatayda ortala */
+        }
+
+        .traffic-light-down {
+            width: 5px;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            position: absolute;
+            top:60px;
+            left: 105%; /* Sol kenara hizala */
+            transform: translateX(-50%); /* Yatayda ortala */
+        }
+
+        .traffic-light-base {
+            width: 20px;
+            background: black;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            position: absolute;
+            top: 75px;
+            left: 105%; /* Sol kenara hizala */
+            transform: translateX(-50%); /* Yatayda ortala */
+        }
+        .down{
+            width: 100%;
+            height: 15px;
+            background-color: black;
+            border: 1px solid black;
+        }
+        .base{
+            width: 100%;
+            height: 5px;
+            background-color: black;
+            border-radius: 1.3px;
+            border: 1px solid black;
+        }
+        .light {
+            width: 100%;
+            height: 20px;
+            border-radius: 3px;
+            background-color: black;
+            border: 1px solid black;
+            transition: opacity 0.5s ease;
+        }
+
+        .red {
+            background-color: #ff0000;
+            opacity: 0.5;
+        }
+
+        .yellow {
+            background-color: #ffff00;
+            opacity: 0.5;
+        }
+
+        .green {
+            background-color: #00ff00;
+            opacity: 0.5;
+        }
+       
+    </style>
+
+
 </head>
 <body>
     <div class="mt-3">
@@ -21,18 +102,48 @@
 
             <div class="col-md-6">
 
-                <div class="card-div graph-card-green mt-4 align-top">
+                <div class="card-div graph-card-blue  mt-4 align-top">
+                    
+                        <div class="machine-state-card ">
+                            <h4 class="machine-state-card-title">
+                                Makine Durumu
+                            </h4>
+                        </div>
 
-                    <div class="parametre-card ">
-                        <h4 class="parametre-card-title">
-                            Parametre Grafikleri
-                        </h4>
-                    </div>
-                    <hr class="line-for-cart" />
-                    <div id="graphs-container" class="graphs-property">
-                        <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
-                    </div>
+                        <div id="machine-state-container" class="machine-state">
+                            <img src="~/images/machines/@Model.ImageUrl" />
+
+                            @* Lamb *@
+
+                            <div class="container">
+                                <div class="traffic-light-up">
+                                    <div class="light red" id="red-light"></div>
+                                    <div class="light yellow" id="yellow-light"></div>
+                                    <div class="light green" id="green-light"></div>
+                                </div>
+
+                                <div class="traffic-light-down">
+                                    <div class="down" id="down"></div>
+                                </div>
+                                <div class="traffic-light-base">
+                                    <div class="base" id="base"></div>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    
+                  
+                   
+                    
+
+
                 </div>
+
+
                 <div class="graph-card-orange kalite-card-div h-100 scrollable-quality-datas">
                     <div class="kalite-card">
                         <h4 class="kalite-card-title">
@@ -68,7 +179,7 @@
             <div class="col-md-6">
 
 
-                <div class="log-card-div graph-card-pink mt-4 align-top scrollable-logs">
+                <div class="uretim-card-div graph-card-pink mt-4 align-top scrollable-logs">
 
                     <div class="uretim-card">
                         <h4 class="uretim-card-title">
@@ -112,7 +223,7 @@
 
                 </div>
 
-                <div class="uretim-card-div graph-card-blue align-top scrollable-production-datas">
+                @* <div class="uretim-card-div graph-card-blue align-top scrollable-production-datas">
 
 
                     <div class="container">
@@ -127,6 +238,32 @@
                     </div>
 
 
+                </div> *@
+                <div class="log-card-div graph-card-green" onclick="openModal('greenModal')">
+                    <h4 class="log-card-title">Log Kayıtları</h4>
+                </div>
+
+                <div class="log-card-div graph-card-purple" onclick="openModal('purpleModal')">
+                    <h4 class="log-card-title">Parametre Grafikleri</h4>
+                </div>
+
+                <!-- Modals -->
+                <div id="greenModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Log Kayıtları</h2>
+                        <partial name="_OperationLogs" model="Model.OperationLogs" />
+                    </div>
+                </div>
+
+                <div id="purpleModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Parametre Grafikleri</h2>
+                        <div id="graphs-container" class="graphs-property">
+                            <!-- JavaScript ile dinamik olarak grafik kartları buraya eklenecek -->
+                        </div>
+                    </div>
                 </div>
 
 
@@ -142,6 +279,72 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    @* For Models *@
+    <script>
+        function openModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = "block";
+
+            var span = modal.getElementsByClassName("close")[0];
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
+
+        // Kullanıcı pencere dışına tıkladığında pencereyi kapat
+        window.onclick = function (event) {
+            var modals = document.getElementsByClassName('modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    @* For Lamb *@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const redLight = document.getElementById('red-light');
+            const yellowLight = document.getElementById('yellow-light');
+            const greenLight = document.getElementById('green-light');
+
+            let currentLight = 0; // Şu anki ışık durumunu belirten değişken
+
+            // Işık durumunu güncelleyip uygun ışığı yakan fonksiyon
+            function updateLights() {
+                clearLights();
+                switch (currentLight) {
+                    case 0:
+                        redLight.style.opacity = 2;
+                        break;
+                    case 1:
+                        yellowLight.style.opacity = 2;
+                        break;
+                    case 2:
+                        greenLight.style.opacity =2;
+                        break;
+                }
+                currentLight = (currentLight + 1) % 3; // Sonraki ışığa geç
+            }
+
+            // Tüm ışıkları kapatma fonksiyonu
+            function clearLights() {
+                redLight.style.opacity = 0.5;
+                yellowLight.style.opacity = 0.5;
+                greenLight.style.opacity = 0.5;
+            }
+
+            // Her 3 saniyede bir ışıkları güncelle
+            setInterval(updateLights, 3000);
+        });
+
+
+    </script>
+
+
+
     <script>
         function getMachineIdFromUrl() {
             var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
@@ -210,7 +413,6 @@
             });
         });
     </script>
-
     <script>
         var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
         var currentPage = 1; // Başlangıçta görüntülenecek sayfa
@@ -407,7 +609,7 @@
                         return response.json();
                     })
                     .then(data => {
-                        console.log('Makina Değerleri Gönderildi', data);
+                        console.log('Makine Değerleri Gönderildi', data);
                         if (callback) callback();
                     })
                     .catch(error => {

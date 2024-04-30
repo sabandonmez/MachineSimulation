@@ -40,6 +40,9 @@ body {
 .graph-card-pink {
     background: linear-gradient(to left, #E91E63, #AD1457); /* Parlak pembe'den koyu pembe'ye gradient */
 }
+.graph-card-purple {
+    background: linear-gradient(to left, #ad4cde,#660099);
+}
 
 
 
@@ -61,7 +64,7 @@ body {
     border: 2px solid #AD1457;
 }
 .scrollable-quality-datas {
-    max-height: 200.4px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
+    max-height: 210px; /* Maksimum yükseklik, bu deðeri ihtiyacýnýza göre ayarlayýn */
     overflow-y: auto; /* Yatayda içerik taþtýðýnda scroll bar'ý aktif et */
     overflow-x: hidden; /* Yatay scroll bar'ý gizle, sadece dikey scroll isteniyorsa */
     border: 2px solid #F2994A;
@@ -246,8 +249,24 @@ body {
     border-radius: 15px;
     color: white !important;
 }
-.parametre-card {
-    position: sticky;
+
+.machine-state {
+    margin-top: 2rem;
+    position: relative; /* Bu konteyneri referans noktasý olarak ayarlar */
+    display: inline-block;
+    margin-left:auto;
+    margin-right:auto;
+    
+}
+
+
+    .machine-state img {
+        width: 180px;
+        height: 170px
+    }
+
+.machine-state-card {
+
     top: 0;
     z-index: 2;
     background-color: transparent;
@@ -256,7 +275,7 @@ body {
     margin-bottom: -1.5rem;
     margin-right: -20px;
 }
-.parametre-card-title {
+.machine-state-card-title {
     position: sticky;
     top: 0;
     padding: 10px 10px;
@@ -266,8 +285,10 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background: linear-gradient(to left, #6FCF97, #27AE60); /* Yeþil renk geçiþi */
 }
+
+
+
 .uretim-card-div {
     padding-left: 20px;
     padding-right: 20px;
@@ -302,9 +323,8 @@ body {
 }
 
 .log-card-div {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
-    padding-bottom: 20px;
     margin-bottom: 15px;
     border-radius: 15px;
     color: white !important;
@@ -316,12 +336,8 @@ body {
     margin-left: -40px;
 }
 .log-card-title {
-    position: sticky;
-    top: 0;
-    background: linear-gradient(to right, #1349d5, #6f99e4);
-    
     padding: 10px 10px;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 
@@ -422,3 +438,41 @@ body {
 #uretimSuresi {
     font-size:2rem;
 }
+
+
+/*For Modals*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+

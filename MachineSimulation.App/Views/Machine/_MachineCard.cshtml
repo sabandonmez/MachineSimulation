@@ -18,6 +18,8 @@
     </div>
     <div id="notification-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
 </div>
+
+
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -46,13 +48,13 @@
     }
     function redirectOnClick(event, machineId, detailUrl) {
         var button = document.getElementById('connect-btn-' + machineId);
-        // Eğer tıklanan element ya da onun ebeveynleri 'button' ya da 'a' değilse ve makina bağlıysa, sayfayı yönlendir
+        // Eğer tıklanan element ya da onun ebeveynleri 'button' ya da 'a' değilse ve Makine bağlıysa, sayfayı yönlendir
         if (!event.target.closest('button, a')) {
             var isConnected = localStorage.getItem('connection-' + machineId) === 'connected';
             if (isConnected) {
                 window.location.href = detailUrl;
             } else {
-                showNotification('Makina ile bağlantı kurmadan detayları göremezsiniz.', 'red');
+                showNotification('Makine ile bağlantı kurmadan detayları göremezsiniz.', 'red');
             }
         }
     }
@@ -101,12 +103,11 @@
 
         // Kullanıcı bağlantıyı koparmak istiyorsa uyarı göster
         if (action === 'ModbusDisconnect' && currentConnectionId === machineId) {
-            var confirmDisconnect = confirm("Herhangi bir eylem gerçekleştirmediniz makina seçimini kaldırmak istediğinizden emin misiniz?");
+            var confirmDisconnect = confirm("Herhangi bir eylem gerçekleştirmediniz Makine seçimini kaldırmak istediğinizden emin misiniz?");
             if (!confirmDisconnect) {
                 return; // Kullanıcı iptal ederse işlemi durdur
             }
         }
-
         button.disabled = true;
 
         fetch(`/Machine/${action}?machineId=${machineId}`, { method: 'GET' })
@@ -119,7 +120,7 @@
                         card.style.background = '#27AE60';
                         button.textContent = 'Seçimi Kaldır';
                         localStorage.setItem('connection-' + machineId, 'connected');
-                        showNotification(machineId + " Id ' sine sahip makina seçtiniz.", '#27AE60');
+                        showNotification(machineId + " Id ' sine sahip Makine seçtiniz.", '#27AE60');
                         currentConnectionId = machineId; // Yeni bağlantıyı kaydet
                     } else {
                         button.classList.remove('btn-success');
@@ -127,7 +128,7 @@
                         card.style.background = '';
                         button.textContent = 'Seç';
                         localStorage.removeItem('connection-' + machineId);
-                        showNotification(machineId + " Id ' sine sahip makina seçiminiz kaldırıldı.", '#ab003c');
+                        showNotification(machineId + " Id ' sine sahip Makine seçiminiz kaldırıldı.", '#ab003c');
                         if (currentConnectionId === machineId) {
                             currentConnectionId = null; // Bağlantıyı sıfırla
                         }

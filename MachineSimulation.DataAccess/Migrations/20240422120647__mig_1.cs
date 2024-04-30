@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MachineSimulation.DataAccess.Migrations
 {
-    public partial class init : Migration
+    public partial class _mig_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,20 @@ namespace MachineSimulation.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OperationLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,6 +140,111 @@ namespace MachineSimulation.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Machines",
+                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
+                values: new object[] { 1, "PlastikEnjeksiyon.jpg", "Plastik Enjeksiyon", "enjeksiyon", 4096, 0 });
+
+            migrationBuilder.InsertData(
+                table: "Machines",
+                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
+                values: new object[] { 2, "KitamuraCncTezgahı.jpg", "Kitamura Cnc Tezgahı", "cnc", 4097, 0 });
+
+            migrationBuilder.InsertData(
+                table: "Machines",
+                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
+                values: new object[] { 3, "AbkantPress.jpg", "Abkant Press", "press", 4098, 0 });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 1, 1, 1, 2280, "Hazırlık Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 2, 2, 1, 2280, "Hazırlık Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 3, 3, 1, 2273, "Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 4, 4, 1, 2273, "Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 5, 1, 2, 2281, "Hazırlık Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 6, 2, 2, 2281, "Hazırlık Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 7, 3, 2, 2274, "Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 8, 4, 2, 2274, "Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 9, 1, 3, 2282, "Hazırlık Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 10, 2, 3, 2282, "Hazırlık Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 11, 3, 3, 2275, "Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 12, 4, 3, 2275, "Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 1, 1, "Hız", "int" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 2, 1, "Sıcaklık", "int" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 3, 2, "Hız", "int" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 4, 2, "Sıcaklık", "int" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 5, 3, "Cnc Ilerleme Hizi", "int" });
+
+            migrationBuilder.InsertData(
+                table: "Parameters",
+                columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
+                values: new object[] { 6, 3, "Ariza Alarm Sayisi", "int" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OperationParameters_OperationId",
                 table: "OperationParameters",
@@ -157,6 +276,9 @@ namespace MachineSimulation.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "OperationParameters");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Operations");

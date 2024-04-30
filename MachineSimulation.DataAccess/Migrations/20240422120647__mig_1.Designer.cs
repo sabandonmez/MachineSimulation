@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240418091500_seedData_3")]
-    partial class seedData_3
+    [Migration("20240422120647__mig_1")]
+    partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,7 +128,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 1,
                             Event = 1,
                             MachineId = 1,
-                            ModbusIp = 2249,
+                            ModbusIp = 2280,
                             OperationName = "Hazırlık Başlat"
                         },
                         new
@@ -136,7 +136,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 2,
                             Event = 2,
                             MachineId = 1,
-                            ModbusIp = 2249,
+                            ModbusIp = 2280,
                             OperationName = "Hazırlık Bitir"
                         },
                         new
@@ -144,7 +144,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 3,
                             Event = 3,
                             MachineId = 1,
-                            ModbusIp = 2255,
+                            ModbusIp = 2273,
                             OperationName = "Üretim Başlat"
                         },
                         new
@@ -152,7 +152,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 4,
                             Event = 4,
                             MachineId = 1,
-                            ModbusIp = 2255,
+                            ModbusIp = 2273,
                             OperationName = "Üretim Bitir"
                         },
                         new
@@ -160,7 +160,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 5,
                             Event = 1,
                             MachineId = 2,
-                            ModbusIp = 2250,
+                            ModbusIp = 2281,
                             OperationName = "Hazırlık Başlat"
                         },
                         new
@@ -168,7 +168,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 6,
                             Event = 2,
                             MachineId = 2,
-                            ModbusIp = 2250,
+                            ModbusIp = 2281,
                             OperationName = "Hazırlık Bitir"
                         },
                         new
@@ -176,7 +176,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 7,
                             Event = 3,
                             MachineId = 2,
-                            ModbusIp = 2256,
+                            ModbusIp = 2274,
                             OperationName = "Üretim Başlat"
                         },
                         new
@@ -184,7 +184,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 8,
                             Event = 4,
                             MachineId = 2,
-                            ModbusIp = 2256,
+                            ModbusIp = 2274,
                             OperationName = "Üretim Bitir"
                         },
                         new
@@ -192,7 +192,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 9,
                             Event = 1,
                             MachineId = 3,
-                            ModbusIp = 2251,
+                            ModbusIp = 2282,
                             OperationName = "Hazırlık Başlat"
                         },
                         new
@@ -200,7 +200,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 10,
                             Event = 2,
                             MachineId = 3,
-                            ModbusIp = 2251,
+                            ModbusIp = 2282,
                             OperationName = "Hazırlık Bitir"
                         },
                         new
@@ -208,7 +208,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 11,
                             Event = 3,
                             MachineId = 3,
-                            ModbusIp = 2257,
+                            ModbusIp = 2275,
                             OperationName = "Üretim Başlat"
                         },
                         new
@@ -216,7 +216,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 12,
                             Event = 4,
                             MachineId = 3,
-                            ModbusIp = 2257,
+                            ModbusIp = 2275,
                             OperationName = "Üretim Bitir"
                         });
                 });
@@ -332,6 +332,25 @@ namespace MachineSimulation.DataAccess.Migrations
                             ParameterName = "Ariza Alarm Sayisi",
                             ValueType = "int"
                         });
+                });
+
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>

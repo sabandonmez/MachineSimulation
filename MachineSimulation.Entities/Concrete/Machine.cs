@@ -19,7 +19,7 @@ namespace MachineSimulation.Entities.Concrete
             get => imageUrl ?? $"{MachineName.Replace(" ", "")}.jpg";
             set => imageUrl = value;
         }
-
+     
         public virtual ICollection<Parameter> Parameters { get; set; } // Bir makinenin birden çok parametresi olabilir.
         public virtual ICollection<Operation> Operations { get; set; } // Bir makinenin birden çok operasyonu olabilir.
     }

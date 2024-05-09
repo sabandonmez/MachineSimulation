@@ -30,7 +30,6 @@ namespace MachineSimulation.Services.Concrete
 
         public async Task<IEnumerable<Machine>> GetAllMachinesAsync()
         {
-            // GetAll() IQueryable döndürdüğü için, sonuçları bir liste olarak almak için ToListAsync() kullanılır.
             return await _machineReadRepository.GetAll(false).ToListAsync();
         }
 
@@ -47,6 +46,11 @@ namespace MachineSimulation.Services.Concrete
         public List<ParameterDto> GetParameters(int machineId)
         {
             return _machineReadRepository.GetParameters(machineId);
+        }
+
+        public List<StoppageDto> GetStoppages(int machineId)
+        {
+            return _machineReadRepository.GetStoppages(machineId);
         }
 
         public async Task UpdateMachine(Machine machine)

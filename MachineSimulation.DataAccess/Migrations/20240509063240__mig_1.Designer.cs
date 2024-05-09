@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240422120647__mig_1")]
+    [Migration("20240509063240__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,7 +109,7 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int>("MachineId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ModbusIp")
+                    b.Property<int?>("ModbusIp")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("OperationName")
@@ -157,6 +157,37 @@ namespace MachineSimulation.DataAccess.Migrations
                         },
                         new
                         {
+                            Id = 13,
+                            Event = 5,
+                            MachineId = 1,
+                            OperationName = "Otomatik Üretim Başlat"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Event = 6,
+                            MachineId = 1,
+                            ModbusIp = 4249,
+                            OperationName = "Otomatik Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Event = 7,
+                            MachineId = 1,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Başlat"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Event = 8,
+                            MachineId = 1,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Bitir"
+                        },
+                        new
+                        {
                             Id = 5,
                             Event = 1,
                             MachineId = 2,
@@ -189,6 +220,37 @@ namespace MachineSimulation.DataAccess.Migrations
                         },
                         new
                         {
+                            Id = 17,
+                            Event = 5,
+                            MachineId = 2,
+                            OperationName = "Otomatik Üretim Başlat"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Event = 6,
+                            MachineId = 2,
+                            ModbusIp = 4249,
+                            OperationName = "Otomatik Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Event = 7,
+                            MachineId = 2,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Başlat"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Event = 8,
+                            MachineId = 2,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Bitir"
+                        },
+                        new
+                        {
                             Id = 9,
                             Event = 1,
                             MachineId = 3,
@@ -218,6 +280,37 @@ namespace MachineSimulation.DataAccess.Migrations
                             MachineId = 3,
                             ModbusIp = 2275,
                             OperationName = "Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Event = 5,
+                            MachineId = 3,
+                            OperationName = "Otomatik Üretim Başlat"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Event = 6,
+                            MachineId = 3,
+                            ModbusIp = 4249,
+                            OperationName = "Otomatik Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Event = 7,
+                            MachineId = 3,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Başlat"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Event = 8,
+                            MachineId = 3,
+                            ModbusIp = 2280,
+                            OperationName = "Duruş Bitir"
                         });
                 });
 
@@ -334,6 +427,51 @@ namespace MachineSimulation.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.Stoppage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MachineId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ReasonStoppageName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ReasonStoppageValue")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MachineId");
+
+                    b.ToTable("Stoppages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            MachineId = 1,
+                            ReasonStoppageName = "Bakım Arıza",
+                            ReasonStoppageValue = 45
+                        },
+                        new
+                        {
+                            Id = 2,
+                            MachineId = 1,
+                            ReasonStoppageName = "Planlı Duruş",
+                            ReasonStoppageValue = 60
+                        },
+                        new
+                        {
+                            Id = 3,
+                            MachineId = 1,
+                            ReasonStoppageName = "Deneme Duruşu",
+                            ReasonStoppageValue = 5
+                        });
+                });
+
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
@@ -394,11 +532,22 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Navigation("Machine");
                 });
 
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.Stoppage", b =>
+                {
+                    b.HasOne("MachineSimulation.Entities.Concrete.Machine", "Machine")
+                        .WithMany("Stopages")
+                        .HasForeignKey("MachineId");
+
+                    b.Navigation("Machine");
+                });
+
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Machine", b =>
                 {
                     b.Navigation("Operations");
 
                     b.Navigation("Parameters");
+
+                    b.Navigation("Stopages");
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>

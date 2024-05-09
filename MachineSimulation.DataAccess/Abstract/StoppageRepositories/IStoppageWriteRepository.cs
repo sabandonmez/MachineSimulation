@@ -6,10 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MachineSimulation.DataAccess.Abstract.MachineRepositories
+namespace MachineSimulation.DataAccess.Abstract.StoppageRepositories
 {
-    public interface IMachineWriteRepository : IWriteRepository<Machine>
+    public interface IStoppageWriteRepository:IWriteRepository<Stoppage>
     {
-        Task AddMachineAsync(Machine machine);
     }
 }

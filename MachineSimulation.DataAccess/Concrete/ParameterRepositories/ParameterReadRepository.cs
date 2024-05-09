@@ -1,6 +1,7 @@
 ﻿using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace MachineSimulation.DataAccess.Concrete.ParameterRepositories
             return _context.Parameters
                 .Where(p => p.MachineId == machineId)
                 .ToList();
+        }
+
+        int IParameterReadRepository.GetCountParameterByMachineIdAsync(int machineId)
+        {
+            return  _context.Parameters.Where(p => p.MachineId == machineId).Count();
         }
     }
 }

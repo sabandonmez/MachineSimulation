@@ -78,7 +78,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     MachineId = table.Column<int>(type: "INTEGER", nullable: false),
                     OperationName = table.Column<string>(type: "TEXT", nullable: false),
-                    ModbusIp = table.Column<int>(type: "INTEGER", nullable: false),
+                    ModbusIp = table.Column<int>(type: "INTEGER", nullable: true),
                     Event = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -111,6 +111,26 @@ namespace MachineSimulation.DataAccess.Migrations
                         principalTable: "Machines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stoppages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ReasonStoppageName = table.Column<string>(type: "TEXT", nullable: true),
+                    ReasonStoppageValue = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stoppages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stoppages_Machines_MachineId",
+                        column: x => x.MachineId,
+                        principalTable: "Machines",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -216,6 +236,66 @@ namespace MachineSimulation.DataAccess.Migrations
                 values: new object[] { 12, 4, 3, 2275, "Üretim Bitir" });
 
             migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 13, 5, 1, null, "Otomatik Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 14, 6, 1, 4249, "Otomatik Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 15, 7, 1, 2280, "Duruş Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 16, 8, 1, 2280, "Duruş Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 17, 5, 2, null, "Otomatik Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 18, 6, 2, 4249, "Otomatik Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 19, 7, 2, 2280, "Duruş Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 20, 8, 2, 2280, "Duruş Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 21, 5, 3, null, "Otomatik Üretim Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 22, 6, 3, 4249, "Otomatik Üretim Bitir" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 23, 7, 3, 2280, "Duruş Başlat" });
+
+            migrationBuilder.InsertData(
+                table: "Operations",
+                columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
+                values: new object[] { 24, 8, 3, 2280, "Duruş Bitir" });
+
+            migrationBuilder.InsertData(
                 table: "Parameters",
                 columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
                 values: new object[] { 1, 1, "Hız", "int" });
@@ -245,6 +325,21 @@ namespace MachineSimulation.DataAccess.Migrations
                 columns: new[] { "Id", "MachineId", "ParameterName", "ValueType" },
                 values: new object[] { 6, 3, "Ariza Alarm Sayisi", "int" });
 
+            migrationBuilder.InsertData(
+                table: "Stoppages",
+                columns: new[] { "Id", "MachineId", "ReasonStoppageName", "ReasonStoppageValue" },
+                values: new object[] { 1, 1, "Bakım Arıza", 45 });
+
+            migrationBuilder.InsertData(
+                table: "Stoppages",
+                columns: new[] { "Id", "MachineId", "ReasonStoppageName", "ReasonStoppageValue" },
+                values: new object[] { 2, 1, "Planlı Duruş", 60 });
+
+            migrationBuilder.InsertData(
+                table: "Stoppages",
+                columns: new[] { "Id", "MachineId", "ReasonStoppageName", "ReasonStoppageValue" },
+                values: new object[] { 3, 1, "Deneme Duruşu", 5 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OperationParameters_OperationId",
                 table: "OperationParameters",
@@ -264,6 +359,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "IX_Parameters_MachineId",
                 table: "Parameters",
                 column: "MachineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stoppages_MachineId",
+                table: "Stoppages",
+                column: "MachineId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -276,6 +376,9 @@ namespace MachineSimulation.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "OperationParameters");
+
+            migrationBuilder.DropTable(
+                name: "Stoppages");
 
             migrationBuilder.DropTable(
                 name: "Users");

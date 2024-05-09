@@ -30,6 +30,7 @@ namespace MachineSimulation.Business
             services.AddScoped<IMachineLogService, MachineLogManager>();
             services.AddScoped<IOperationLogService, OperationLogManager>();
             services.AddScoped<IModbusConnectionService, ModbusConnectionManager>();
+            services.AddScoped<IStoppageService,StoppageManager>();
 
         }
     }

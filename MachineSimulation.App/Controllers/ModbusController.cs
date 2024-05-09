@@ -32,6 +32,16 @@ namespace MachineSimulation.App.Controllers
             return WriteModbusRegister(machineId, true, operationName);
         }
 
+        public Task<ActionResult> StartBasedOnSpecificReason(int machineId, string operationName)
+        {
+            return WriteModbusRegister(machineId, false, operationName);
+        }
+
+        public Task<ActionResult> StopBasedOnSpecificReason(int machineId, string operationName)
+        {
+            return WriteModbusRegister(machineId, true, operationName);
+        }
+
         public Task<ActionResult> StartProduction(int machineId, string operationName)
         {
             return WriteModbusRegister(machineId, true, operationName);
@@ -42,6 +52,13 @@ namespace MachineSimulation.App.Controllers
         {
             return WriteModbusRegister(machineId, false, operationName);
         }
+
+        public Task<ActionResult> StopAutomaticProduction(int machineId,int registerİntValue, string operationName)
+        {
+            return WriteModbusRegister(machineId, registerİntValue, operationName);
+        }
+        
+
 
         [HttpPost]
         [Route("/modbus/writestrings")]
@@ -110,7 +127,27 @@ namespace MachineSimulation.App.Controllers
             }
         }
 
+        [NonAction]
+        private async Task<ActionResult> WriteModbusRegister(int machineId, int registerİntValue, string operationName)
+        {
+            try
+            {
+                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId, operationName);
+                if (!modbusId.HasValue)
+                {
+                    return Json(new { success = false, message = "Modbus ID not found." });
+                }
 
+                var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(machineId, ipAddress, port, slaveId);
+                modbusClient.WriteSingleRegister(modbusId.Value, registerİntValue);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
     }

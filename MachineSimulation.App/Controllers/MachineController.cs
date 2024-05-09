@@ -34,7 +34,6 @@ namespace MachineSimulation.App.Controllers
 			return View(model);
 		}
 
-
         [HttpGet]
         public async Task<IActionResult> ModbusConnect(int machineId)
         {
@@ -112,6 +111,7 @@ namespace MachineSimulation.App.Controllers
         {
             var model =  _machineService.GetMachineDetails(id);
             model.OperationLogs = _operationLogService.GetOperationLogsWithNames(id);
+            model.Stopages=_machineService.GetStoppages(id);
             return View(model);
         }
 
@@ -127,6 +127,8 @@ namespace MachineSimulation.App.Controllers
 
             return Ok(model);
         }
+
+      
 
         [HttpGet("machine/getLogs/{machineId}")]
         public IActionResult GetLogs(int machineId)

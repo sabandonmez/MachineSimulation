@@ -9,6 +9,10 @@ namespace MachineSimulation.Entities.Concrete
 {
     public class Machine : BaseEntity
     {
+        public Machine()
+        {
+            Stopages=new HashSet<Stoppage>();
+        }
         private string? imageUrl;
         public string MachineName { get; set; }
         public string MachineType { get; set; }
@@ -22,5 +26,7 @@ namespace MachineSimulation.Entities.Concrete
      
         public virtual ICollection<Parameter> Parameters { get; set; } // Bir makinenin birden çok parametresi olabilir.
         public virtual ICollection<Operation> Operations { get; set; } // Bir makinenin birden çok operasyonu olabilir.
+        public virtual ICollection<Stoppage> Stopages { get; set; }  // Bir makinenin birden çok Durdurma Sebebi olabilir.
+
     }
 }

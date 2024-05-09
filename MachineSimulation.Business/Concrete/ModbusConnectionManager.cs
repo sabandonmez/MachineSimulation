@@ -23,7 +23,7 @@ namespace MachineSimulation.Business.Concrete
                 }
                 catch (Exception)
                 {
-                    throw new InvalidOperationException("Modbus bağlantısı açılamadı.");
+                   // throw new InvalidOperationException("Modbus bağlantısı açılamadı.");
                 }
                 _modbusClients[machineId] = client;
             }

@@ -78,12 +78,15 @@ body {
 }
 
 .graphs-property {
-    margin-top: 30px;
     overflow-x: auto;
-    display: flex;
     background-color: white;
     border-radius: 15px;
+    width: 100%; /* Konteyner geniþliðini artýr */
+    height: 80vh; /* Konteyner yüksekliðini belirle */
+    margin: auto; /* Merkeze al */
+    display: block; /* Blok düzeyinde görüntüle */
 }
+
 
 .graph-card {
 
@@ -284,8 +287,7 @@ body {
 .uretim-card-div {
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 15px;
+
     border-radius: 15px;
     color: white !important;
     display: flex;
@@ -318,7 +320,7 @@ body {
 .log-card-div {
     padding-left: 10px;
     padding-right: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     border-radius: 15px;
     color: white !important;
 }
@@ -333,7 +335,13 @@ body {
     padding-left: 10px;
 }
 
+h4 {
+    margin-bottom: 0rem!important;
+}
 
+.graph-card-log {
+    margin-bottom: 1.3rem !important;
+}
 /*kartlarýn baþlýk ayarlarý BÝTÝÞ*/
 @media (min-width: 576px) {
     .graph-card {
@@ -387,17 +395,18 @@ body {
     display: flex;
     flex-direction: column; /* Butonlarý dikey hale getir */
     align-items: center; /* Sol kenara hizala */
-    justify-content:center;
+    justify-content: center;
     background-color: blue;
     padding-left: 2rem;
     padding-right: 2rem;
-    padding-top: 1.5rem;
+    padding-top: 1.75rem;
+
     margin: 0rem 1rem 0rem 0rem;
     background-color: white;
     border: 1px solid #C0C0C0;
     border-radius: 20px;
-    min-height:12.3rem;
-    max-width:10.898rem;
+    min-height: 12.3rem;
+    max-width: 10.898rem;
 }
 
 .sure-label-grubu {
@@ -436,6 +445,9 @@ body {
 #uretimSuresi {
     font-size:2rem;
 }
+#durusSuresi{
+    font-size:2rem;
+}
 
 
 /*For Modals*/
@@ -454,11 +466,15 @@ body {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 2% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 80%; 
+    max-height: 90vh; 
+    overflow-y: auto; 
 }
+
+
 
 .close {
     color: #aaa;
@@ -486,7 +502,7 @@ body {
     gap: 0px;
     position: absolute;
     top: 0; /* Üstten hizala */
-    left: 105%; /* Sol kenara hizala */
+    left: -30px; /* Sol kenara hizala */
     transform: translateX(-50%); /* Yatayda ortala */
 }
 
@@ -497,7 +513,7 @@ body {
     flex-direction: column;
     gap: 0px;
     position: absolute;
-    top: 60px;
+    top: 104px;
     left: 105%; /* Sol kenara hizala */
     transform: translateX(-50%); /* Yatayda ortala */
 }
@@ -510,29 +526,29 @@ body {
     flex-direction: column;
     gap: 0px;
     position: absolute;
-    top: 75px;
+    /*top: 75px;*/
     left: 105%; /* Sol kenara hizala */
     transform: translateX(-50%); /* Yatayda ortala */
 }
 
-.down {
+/*.down {
     width: 100%;
-    height: 15px;
+    height: 4.4rem;
     background-color: black;
     border: 1px solid black;
-}
+}*/
 
-.base {
+/*.base {
     width: 100%;
     height: 5px;
     background-color: black;
     border-radius: 1.3px;
     border: 1px solid black;
 }
-
+*/
 .light {
     width: 100%;
-    height: 20px;
+    height: 32px;
     border-radius: 3px;
     background-color: black;
     border: 1px solid black;
@@ -558,10 +574,19 @@ body {
     .input-number {
         width: 6.619rem !important; /* padding hesabýný düþerek geniþlik */
     }
+    .input-number-durus {
+        width: 6.619rem !important; /* padding hesabýný düþerek geniþlik */
+    }
 }
 @media (min-width: 992px) {
     .input-number {
         width: 10.868rem !important; /* Örnek olarak daha küçük bir geniþlik */
+    }
+    .veri-gruplari {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* width: 12rem; */
     }
 }
 
@@ -570,10 +595,107 @@ body {
         width: 16.868rem !important; /* Örnek olarak daha küçük bir geniþlik */
         margin-left:5rem!important;
         }
-    .ucuncu-baslik {
+
+    .input-number-durus {
+        margin-left:2rem;
+        width: 16.868rem !important; /* Örnek olarak daha küçük bir geniþlik */
         margin-left: 5rem !important;
     }
-    .sure-label-grubu {
-        margin-left:auto;
+    .ucuncu-baslik-durus-sebebi{
+        margin-left:5rem;
     }
+
+    .ucuncu-baslik {
+        margin-left: 5rem !important;
+     
+    }
+    .veri-gruplari {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+         width: 12rem; 
+    }
+}
+
+
+
+
+.input-grubu {
+    margin-bottom: 1.5rem;
+}
+
+.input-number-durus {
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    width: 10.868rem; /* padding hesabýný düþerek geniþlik */
+    height: 2.7rem;
+    border: none;
+}
+
+.input-number {
+    border-radius: 12px;
+    padding-left:2rem;
+    padding-right:2rem;
+    text-align:center;
+    width: 10.868rem; /* padding hesabýný düþerek geniþlik */
+    height: 2.7rem;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.veri-gruplari {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.custom-hr {
+    height: 3px !important; /* Çizgi kalýnlýðý */
+    background-color: white !important; /* Koyu gri çizgi rengi */
+    margin: 10px 0 !important; /* Üst ve alttan boþluk */
+    width: 100% !important; /* Geniþlik */
+
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.ikinci-baslik {
+    color: black;
+    margin-bottom: 1.2rem;
+}
+
+.ucuncu-baslik, .ucuncu-baslik-notmargin {
+    color: black;
+}
+
+
+
+.custom-sure-label {
+    margin: auto;
+}
+
+.toplam-sure-design {
+    display: flex;
+    justify-content: center;
+    border: 2px solid gray;
+    background-color: white;
+    color: #161617 !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .toplam-sure-design:hover {
+        background: linear-gradient(to left, #6FCF97, #27AE60);
+        color: white !important;
+    }
+
+.graph-card-orange hr {
+    color: white !important;
+    opacity: 2;
+}
+
+
+#otomatikUretimSuresi {
+    font-size: 2rem;
 }

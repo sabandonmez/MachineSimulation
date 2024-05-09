@@ -16,5 +16,8 @@ namespace MachineSimulation.Entities.DTOs
         public IEnumerable<MachineLog> MachineLogs { get; set; }
         public IEnumerable<OperationLogDto>  OperationLogs { get; set; }
         public List<ParameterDto> Parameters { get; set; }
+        public List<StoppageDto> Stopages { get; set; }
+
+
     }
 }

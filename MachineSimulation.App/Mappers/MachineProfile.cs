@@ -14,6 +14,9 @@ namespace MachineSimulation.API.Mappers
 			CreateMap<MachineDetailsDto,Machine>();
 			CreateMap<Machine,MachineDetailsDto>();
 
+			CreateMap<Stoppage,StoppageDto>();
+			CreateMap<StoppageDto,Stoppage>();
+
 
 		}
 	}

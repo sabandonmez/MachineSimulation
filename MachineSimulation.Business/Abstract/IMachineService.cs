@@ -16,6 +16,7 @@ namespace MachineSimulation.Business.Abstract
         Task<Machine> GetByIdMachineAsync(int id);
         MachineDetailsDto GetMachineDetails(int machineId);
         List<ParameterDto> GetParameters(int machineId);
+        List<StoppageDto> GetStoppages(int machineId);
 
     }
 }

@@ -9,73 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/get.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        .input-grubu {
-
-            margin-bottom:1.5rem;
-        }
-
-        .input-number {
-            border-radius: 12px;
-            padding: 0.5rem 1rem;
-            width: 10.868rem; /* padding hesabını düşerek genişlik */
-            height:2.7rem;
-            border:none;
-        }
-
-        .veri-gruplari {
-            display: flex;
-            flex-direction: column;
-            align-items:center;
-            width:12rem;
-        }
-
-        .custom-hr {
-            height: 3px !important; /* Çizgi kalınlığı */
-            background-color: white !important; /* Koyu gri çizgi rengi */
-            margin: 10px 0 !important; /* Üst ve alttan boşluk */
-            width: 100% !important; /* Genişlik */
-           
-            margin-top:1.5rem!important;
-            margin-bottom:1.5rem!important;
-        }
-
-        .ikinci-baslik{
-            color:black;
-            margin-bottom:1.2rem;
-        }
-
-        .ucuncu-baslik{
-            color: black;
-           
-        }
-
-
-        .custom-sure-label {
-            margin:auto;
-        }
-
-        .toplam-sure-design {
-            display: flex;
-            justify-content: center;
-            border: 2px solid gray;
-            background-color: white;
-            color: #161617 !important;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-            .toplam-sure-design:hover {
-                background: linear-gradient(to left, #6FCF97, #27AE60);
-                color: white !important;
-            }
-
-            .graph-card-orange hr{
-                color: white!important;
-                opacity:2;
-            }
-    </style>
-
 </head>
 <body>
     <div class="mt-3">
@@ -98,7 +31,7 @@
                         <div id="machine-state-container" class="machine-state">
                             <img src="~/images/machines/@Model.ImageUrl" />
 
-                            @* Lamb *@
+                            @* Lamba *@
 
                             <div class="container">
                                 <div class="light-up">
@@ -115,14 +48,7 @@
                                 </div>
                             </div>
 
-
-
-
-
                         </div>
-                    
-                  
-                   
                     
 
 
@@ -161,7 +87,7 @@
 
 
 
-                <div class="log-card-div graph-card-green" onclick="openModal('greenModal')">
+                <div class="log-card-div graph-card-green graph-card-log" onclick="openModal('greenModal')">
                     <h4 class="log-card-title">Log Kayıtları</h4>
                 </div>
 
@@ -180,7 +106,7 @@
 
                     <div class="uretim-card">
                         <h4 class="uretim-card-title">
-                            Üretim-Duruş Drurumu
+                            Üretim-Duruş Durumu
                         </h4>
                     </div>
 
@@ -188,7 +114,7 @@
                     <div class="custom-hr"><p></p></div>
                     
                     <h5 class="ikinci-baslik">Manuel Üretim</h5>
-                    <!-- Üretim bölümü -->
+                    <!-- Manuel Üretim bölümü -->
                     <div class="uretim-bolumu">
                         
 
@@ -196,34 +122,43 @@
                             <button id="uretimBaslat" class="btn btn-green">Üretim Başlat</button>
                             <button id="uretimiDurdur" class="btn btn-red">Üretimi Durdur</button>
                         </div>
-                        <div class="sure-label-grubu custom-sure-label">
-                            <span id="uretimSuresiLabel" class="süre-label"><span id="uretimSuresi">0</span></span>
+
+
+                        <div class="veri-gruplari">
+                            <h6 class="ucuncu-baslik-notmargin">Anlık Süre (Saniye):</h6>
+                            <div class="sure-label-grubu custom-sure-label">
+                                <span id="uretimSuresiLabel" class="süre-label"><span id="uretimSuresi">0</span></span>
+                            </div>
                         </div>
+
+
                     </div>
                     <hr />
 
 
                     <h5 class="ikinci-baslik">Otomatik Üretim</h5>
                     <!-- Otomatik Üretim bölümü -->
-
                     <div class="uretim-bolumu">
                         <div class="buton-grubu">
-                            <button id="uretimBaslat" class="btn btn-green">Üretim Başlat</button>
-                            <button id="uretimiDurdur" class="btn btn-red">Üretimi Durdur</button>
+                            <button id="otomatikUretimBaslat" class="btn btn-green">Üretim Başlat</button>
+                            <button id="otomatikUretimiDurdur" class="btn btn-red" disabled>Üretimi Durdur</button>
                         </div>
                         <div class="veri-gruplari">
                             <div class="veri-grubu-giris">
                                 <h6 class="ucuncu-baslik">Üretim Süresi Giriniz:</h6>
                                 <div class="input-grubu">
-                                    <input type="number" id="veriGirisi" placeholder="Veri girin" class="input-number">
+                                    <input type="number" id="otomatikVeriGirisi"  class="input-number" min="1" step="1">
+
                                 </div>
                             </div>
-                           
+                            <h6 class="ucuncu-baslik-notmargin">Atanan Süre (Saniye):</h6>
                             <div class="sure-label-grubu">
-                                <span id="uretimSuresiLabel" class="süre-label"><span id="uretimSuresi">0</span></span>
+                                <span id="otomatikUretimSuresiLabel" class="süre-label"><span id="otomatikUretimSuresi">0</span></span>
                             </div>
                         </div>
                     </div>
+
+
 
 
                    
@@ -235,44 +170,60 @@
 
 
                     <h5 class="ikinci-baslik">Hazırlık Duruş Durumu</h5>
-                    <!-- Hazırlık bölümü -->
+                    <!-- Hazırlık Duruş Durumu Bölümü -->
                     <div class="hazirlik-bolumu">
 
                         <div class="buton-grubu">
                             <button id="hazirlikBaslat" class="btn btn-green">Hazırlık Başlat</button>
                             <button id="hazirlikBitir" class="btn btn-red">Hazırlık Bitir</button>
                         </div>
-                        <div class="sure-label-grubu custom-sure-label">
-                            <span id="hazirlikSuresiLabel" class="süre-label"><span id="sure">0</span></span>
+
+
+                        <div class="veri-gruplari">
+                            <h6 class="ucuncu-baslik-notmargin">Anlık Süre (Saniye):</h6>
+                            <div class="sure-label-grubu custom-sure-label">
+                                <span id="hazirlikSuresiLabel" class="süre-label"><span id="sure">0</span></span>
+                            </div>
                         </div>
+
+                       
                     </div>
 
                     <hr />
 
 
                     <h5 class="ikinci-baslik">Belirli Duruş Durumu</h5>
-                    <!-- Hazırlık bölümü -->
+                    <!-- Belirli Duruş Durumu bölümü -->
                     <div class="hazirlik-bolumu">
 
                         <div class="buton-grubu">
-                            <button id="hazirlikBaslat" class="btn btn-green">Duruş Başlat</button>
-                            <button id="hazirlikBitir" class="btn btn-red">Duruş Bitir</button>
+                            <button id="durusBaslat" class="btn btn-green" disabled>Duruş Başlat</button>
+                            <button id="durusBitir" class="btn btn-red" disabled>Duruşu Bitir</button>
+
                         </div>
                         <div class="veri-gruplari">
                             <div class="veri-grubu-giris">
-                            <h6 class="ucuncu-baslik">Duruş Sebebi Seçiniz:</h6>
+                                <h6 class="ucuncu-baslik">Duruş Sebebi Seçiniz:</h6>
                             <div class="input-grubu">
-                                <select id="" class="form-select input-number">
-                                    <option></option>
-                                    <option>Bakım Arızası</option>
-                                    <option>Planlı Duruş</option>
-                                    <option>Elektrik Arızası</option>
-                                </select>
+                                    <select id="stoppageReasonSelect" class="form-select input-number-durus">
+                                        <option value="">Seçiniz...</option>
+                                        @foreach (var stoppage in Model.Stopages)
+                                        {
+                                            <option value="@stoppage.ReasonStoppageValue">@stoppage.ReasonStoppageName</option>
+                                        }
+                                    </select>
                             </div>
                             </div>
-                            <div class="sure-label-grubu">
-                                <span id="uretimSuresiLabel" class="süre-label"><span id="uretimSuresi">0</span></span>
+
+                            <div class="veri-gruplari">
+                                <h6 class="ucuncu-baslik-notmargin">Atanan Süre (Saniye):</h6>
+                                <div class="sure-label-grubu">
+                                    <span id="durusSuresiLabel" class="süre-label"><span id="durusSuresi">0</span></span>
+                                </div>
                             </div>
+
+
+                            
                         </div>
                     </div>
 
@@ -281,7 +232,7 @@
 
 
                     <!-- Toplam süre -->
-                    <div class="log-card-div toplam-sure-design" onclick="openModal('sureModal')">
+                    <div class="log-card-div toplam-sure-design" onclick="openModal('sureRaporModel')">
                         <h5 class="log-card-title">Süre Raporu</h5>
                     </div>
 
@@ -309,12 +260,109 @@
                 </div>
 
                 @* Toplam Süre Modal *@
-                <div id="sureModal" class="modal">
+                <div id="sureRaporModel" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Süre Raporu</h2>
                         <div class="d-flex flex-column align-items-center">
-                            <span id="toplamSureLabel" class="sure-label mb-1">Toplam Üretim Süresi: <span id="toplamSure">0</span></span>
+                            <table class="table">
+                                
+                                <tbody>
+                                    <tr>             
+                                        <th>Toplam Üretim Süresi :</th>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Toplam Duruş Süresi :</th>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <hr />
+
+                            <h3>Manuel Üretim</h3>
+                            <hr />
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col">Manuel Üretim Listesi</th>
+                                        <th scope="col">Manuel Üretim Adeti</th>
+                                        <th scope="col">Toplam Manuel Üretim Süresi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="currentDate">00.00.0000</td>
+                                        <td id="uretimSuresiListesi">0</td>
+                                        <td id="manuelUretimAdedi">0</td>
+                                        <td id="manuelToplamSure">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <hr />
+
+                            <h3>Otomatik Üretim</h3>
+                            <hr />
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col">Otomatik Üretim Süresi</th>
+                                        <th scope="col">Otomatik Üretim Sayısı</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="currentDate">00.00.0000</td>
+                                        <td>15 saniye</td>
+                                        <td id="uretimSayisi">25</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+
+                            <hr />
+
+
+                            <h3>Duruş Durumları</h3>
+                            <hr />
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col">Duruş Türü</th>
+                                        <th scope="col">Beklenen Süre</th>
+                                        <th scope="col">Gerçekleşen Süre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Stopages)
+                                    {
+                                        <tr>
+                                            <td class="currentDate">00.00.0000</td>
+                                            <td>@item.ReasonStoppageName</td>
+                                            <td>@item.ReasonStoppageValue  saniye</td>
+                                            <td>0</td>
+                                        </tr>
+                                    }
+
+                                    
+
+                                    <tr>
+                                        <td class="currentDate">00.00.0000</td>
+                                        <td>Hazırlık Duruşu</td>
+                                        <td>---</td>
+                                        <td id="hazirlikDurusSüresi">0</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
                         </div>
 
                     </div>
@@ -332,7 +380,34 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.7.12/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+   
+
+    <script>
+        document.getElementById('otomatikVeriGirisi').addEventListener('input', function () {
+            var value = this.value;
+            if (value < 1) {
+                this.value = ''; 
+            }
+        });
+
+        // JavaScript ile tarih bilgisini alıp biçimlendirme
+        var today = new Date();
+        var day = today.getDate().toString().padStart(2, '0'); // Gün için '0' ekler
+        var month = (today.getMonth() + 1).toString().padStart(2, '0'); // Ay için '0' ekler
+        var year = today.getFullYear();
+
+        // Formatı DD.MM.YYYY olarak ayarlama
+        var date = day + '.' + month + '.' + year;
+
+        // Tarih bilgisini HTML'deki belirli bir elemana yazma
+        // 'getElementsByClassName' ile tüm elemanları seçip döngü ile her birine tarih bilgisini yazma
+        var elements = document.getElementsByClassName("currentDate");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].innerHTML = date;
+        }
+
+    </script>
+
     @* For Models *@
     <script>
         function openModal(modalId) {
@@ -355,51 +430,186 @@
             }
         }
 
+
+        $(document).ready(function () {
+            // Üretim başlatma ve Otomatik Üretim başlatma butonları için olay dinleyiciler
+            $('#uretimBaslat').click(function () {
+                turnOnGreenLight();  // Yeşil ışığı aç
+            });
+
+            $('#otomatikUretimBaslat').click(function () {
+                var inputValue = $('#otomatikVeriGirisi').val(); // İnput alanından değeri al
+                if (inputValue) {
+                    turnOnGreenLight();  // Eğer input değeri varsa yeşil ışığı aç
+                } else {
+                    alert("Lütfen gerekli veriyi giriniz.");  // Değer yoksa uyarı mesajı göster
+                }
+            });
+
+            // Üretim durdurma, Otomatik Üretim durdurma ve Hazırlık Bitir butonları için olay dinleyiciler
+            $('#uretimiDurdur, #otomatikUretimiDurdur, #hazirlikBitir').click(function () {
+                clearLights();  
+            });
+
+            $('#hazirlikBaslat').click(function () {
+                turnOnYellowLight();  
+            });
+
+            // Duruş başlatma butonu için olay dinleyici
+            $('#durusBaslat').click(function () {
+                turnOnRedLight(); 
+            });
+
+            // Duruş bitirme butonu için olay dinleyici
+            $('#durusBitir').click(function () {
+                turnOnGreenLight();  
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+            // Başlangıçta Duruş Başlat ve Duruş Bitir butonlarını devre dışı bırak
+            $('#durusBaslat, #durusBitir').prop('disabled', true);
+
+            $('#uretimBaslat').click(function () {
+                // Otomatik Üretim kontrollerini devre dışı bırak
+                $('#otomatikUretimBaslat, #otomatikVeriGirisi').prop('disabled', true);
+                // Duruş butonlarını etkinleştir
+                $('#durusBaslat, #durusBitir').prop('disabled', false);
+            });
+
+            $('#uretimiDurdur').click(function () {
+                // Otomatik Üretim kontrollerini tekrar etkinleştir
+                $('#otomatikUretimBaslat, #otomatikVeriGirisi').prop('disabled', false);
+                // Duruş butonlarını devre dışı bırak
+                $('#durusBaslat, #durusBitir').prop('disabled', true);
+            });
+
+            $('#otomatikUretimBaslat').click(function () {
+                // Manuel Üretim kontrollerini devre dışı bırak
+                $('#uretimBaslat').prop('disabled', true);
+                // Duruş butonlarını etkinleştir
+                $('#durusBaslat, #durusBitir').prop('disabled', false);
+            });
+
+            $('#otomatikUretimiDurdur').click(function () {
+                // Manuel Üretim kontrollerini tekrar etkinleştir
+                $('#uretimBaslat').prop('disabled', false);
+                // Duruş butonlarını devre dışı bırak
+                $('#durusBaslat, #durusBitir').prop('disabled', true);
+            });
+        });
+
+
+
+
+
     </script>
 
-    @* For Lamb *@
     <script>
+        let turnOnYellowLight;
+        let turnOnGreenLight;
+        let turnOnRedLight;
+
+        let clearLights;
+
+        let flashingYellowInterval; // Sarı ışığın yanıp sönme interval'ını saklamak için bir değişken
+        let flashingGreenInterval;
+        let flashingRedInterval;
+
         document.addEventListener('DOMContentLoaded', function () {
             const redLight = document.getElementById('red-light');
             const yellowLight = document.getElementById('yellow-light');
             const greenLight = document.getElementById('green-light');
 
-            let currentLight = 0; // Şu anki ışık durumunu belirten değişken
+            // Tüm ışıkları kapatma ve sarı ışık yanıp sönme işlemini durdurma fonksiyonu
 
-            // Işık durumunu güncelleyip uygun ışığı yakan fonksiyon
-            function updateLights() {
-                clearLights();
-                switch (currentLight) {
-                    case 0:
-                        redLight.style.opacity = 2;
-                        break;
-                    case 1:
-                        yellowLight.style.opacity = 2;
-                        break;
-                    case 2:
-                        greenLight.style.opacity =2;
-                        break;
-                }
-                currentLight = (currentLight + 1) % 3; // Sonraki ışığa geç
-            }
-
-            // Tüm ışıkları kapatma fonksiyonu
-            function clearLights() {
+            clearLights = function () {
                 redLight.style.opacity = 0.5;
                 yellowLight.style.opacity = 0.5;
                 greenLight.style.opacity = 0.5;
-            }
 
-            // Her 3 saniyede bir ışıkları güncelle
-            setInterval(updateLights, 3000);
+                // Tüm interval'ları durdur
+                if (flashingYellowInterval) {
+                    clearInterval(flashingYellowInterval);
+                    flashingYellowInterval = null;
+                }
+                if (flashingGreenInterval) {
+                    clearInterval(flashingGreenInterval);
+                    flashingGreenInterval = null;
+                }
+                if (flashingRedInterval) {
+                    clearInterval(flashingRedInterval);
+                    flashingRedInterval = null;
+                }
+            };
+
+
+            turnOnYellowLight = function () {
+                clearLights(); // Önce tüm ışıkları kapat
+                setTimeout(function () {
+                    yellowLight.style.opacity = 2; 
+                    let yellowOn = true;
+                    flashingYellowInterval = setInterval(function () {
+                        yellowLight.style.opacity = yellowOn ? 0.5 : 2;
+                        yellowOn = !yellowOn;
+                    }, 1300);
+                }, 500);
+            };
+
+
+             turnOnRedLight = function () {
+                clearLights(); // Önce tüm ışıkları kapat
+                setTimeout(function () {
+                    redLight.style.opacity = 2; 
+                    let redOn = true;
+                    flashingRedInterval = setInterval(function () {
+                        redLight.style.opacity = redOn ? 0.5 : 2;
+                        redOn = !redOn;
+                    }, 1300);
+                }, 500);
+            };
+
+            // turnOnGreenLight = function () {
+            //     clearLights(); // Önce tüm ışıkları kapat
+            //     setTimeout(function () {
+            //         greenLight.style.opacity = 2;
+            //         let greenOn = true;
+            //         flashingGreenInterval = setInterval(function () {
+            //             greenLight.style.opacity = greenOn ? 0.5 : 2;
+            //             greenOn = !greenOn;
+            //         }, 1300);
+            //     }, 500);
+            // };
+
+            turnOnGreenLight = function () {
+                if (flashingGreenInterval) clearInterval(flashingGreenInterval);
+                clearLights(); // Önce tüm ışıkları kapat
+                setTimeout(function () {
+                    greenLight.style.opacity = 2;
+                    let greenOn = true;
+                    flashingGreenInterval = setInterval(function () {
+                        greenLight.style.opacity = greenOn ? 0.5 : 2;
+                        greenOn = !greenOn;
+                    }, 1300);
+                }, 500);
+            };
+
+
+
+            // turnOnRedLight = function () {
+            //     clearLights(); // Önce tüm ışıkları kapat
+            //     redLight.style.opacity = 2; // Yeşil ışığı aç
+               
+            // };
+
+
         });
 
 
-    </script>
 
-
-
-    <script>
         function getMachineIdFromUrl() {
             var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
             var urlSegments = currentUrl.split('/'); // URL yolunu '/' karakterine göre bölerek diziye dönüştürür
@@ -410,6 +620,8 @@
 
         $(document).ready(function () {
             var machineId = getMachineIdFromUrl();
+
+
             $('#hazirlikBaslat').click(function () {
                 $.ajax({
                     url: '@Url.Action("StartPreparation", "Modbus")',
@@ -432,6 +644,34 @@
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık durduruldu.');
+                        }
+                    }
+                });
+            });
+            
+
+            $('#durusBaslat').click(function () {
+                $.ajax({
+                    url: '@Url.Action("StartBasedOnSpecificReason", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: machineId, operationName: 'Duruş Başlat' },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Duruş başlatıldı.');
+                        }
+                    }
+                });
+            });
+
+            $('#durusBitir').click(function () {
+                var machineId = getMachineIdFromUrl();
+                $.ajax({
+                    url: '@Url.Action("StopBasedOnSpecificReason", "Modbus")',
+                    type: 'POST',
+                    data: { machineId: machineId, operationName: 'Duruş Bitir' },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log('Duruş durduruldu.');
                         }
                     }
                 });
@@ -465,8 +705,26 @@
                     }
                 });
             });
+
+            /*  !** */
+            $('#otomatikUretimBaslat').click(function () {
+                var sureInput = $('#otomatikVeriGirisi');
+                var sure = parseInt(sureInput.val(), 10); // Sayıyı düzgün bir şekilde çözümlemek için parseInt kullanılır.
+
+                // sure değeri NaN değilse ve 0'dan büyükse konsola mesaj yazdırılır.
+                if (!isNaN(sure) && sure > 0) {
+                    console.log('Otomatik Üretim başlatıldı.');
+                } else {
+                    sureInput.focus(); // Kullanıcıyı tekrar giriş alanına yönlendirir.
+                }
+            });
+
         });
+
+
+
     </script>
+
     <script>
         var graphsPerPage = 1; // Her sayfada görüntülenecek grafik sayısı
         var currentPage = 1; // Başlangıçta görüntülenecek sayfa
@@ -517,7 +775,8 @@
                 var canvasId = 'combined-graph';
                 var graphDiv = $('<div>', {
                     class: 'graph-card',
-                    html: $('<canvas>', { id: canvasId })
+                    html: $('<canvas>', { id: canvasId }),
+                    style: 'width: 100% ; height:80% ; margin:auto;padding-top:4rem'
                 });
 
                 graphsContainer.append(graphDiv);
@@ -692,10 +951,15 @@
 
 
     </script>
+
+
     <script>
         $(document).ready(function () {
             var hazirlikTimer, uretimTimer;
-            var hazirlikSuresi = 0, uretimSuresi = 0, toplamSure = 0;
+            var uretimSuresi = 0, manuelToplamSure = 0;
+            var hazirlikSuresi = 0, hazirlikDurusSüresi = 0;
+
+            var manuelUretimAdedi = 0;
             var hazirlikSuresiEklendi = false;
             var uretimSuresiListesi = [];  // Üretim sürelerini saklamak için bir liste
 
@@ -762,7 +1026,7 @@
                     hazirlikSuresi++;
                     $('#sure').text(hazirlikSuresi);  // Hazırlık süresini güncelle
                 }, 1000);
-                sendLog('Hazırlık Başlat');
+             
 
             });
 
@@ -770,11 +1034,11 @@
                 clearInterval(hazirlikTimer);
                 $('#hazirlikBaslat').prop('disabled', false);  // Bu butonun tekrar etkinleştirilmesi gerekiyor.
                 $(this).prop('disabled', true);
-                toplamSure += hazirlikSuresi;
+                hazirlikDurusSüresi += hazirlikSuresi;
                 hazirlikSuresi = 0;
                 $('#sure').text(hazirlikSuresi);  // Hazırlık süresini sıfırla
-                $('#toplamSure').text(toplamSure + " saniye");
-                sendLog('Hazırlık Bitir');
+                $('#hazirlikDurusSüresi').text(hazirlikDurusSüresi+" saniye");
+                
 
             });
             $('#uretimBaslat').click(function () {
@@ -785,7 +1049,7 @@
                     uretimSuresi++;
                     $('#uretimSuresi').text(uretimSuresi);
                 }, 1000);
-                sendLog('Üretim Başlat');
+                
 
             });
 
@@ -794,20 +1058,173 @@
                 $('#uretimBaslat').prop('disabled', false);
                 $(this).prop('disabled', true);
                 uretimSuresiListesi.push(uretimSuresi);  // Üretim süresini listeye ekle
-                toplamSure += uretimSuresi;
+                manuelToplamSure += uretimSuresi;
+                manuelUretimAdedi++;
                 uretimSuresi = 0;
                 $('#uretimSuresi').text(uretimSuresi);
-                $('#toplamSure').text(toplamSure + " saniye");
-                $('#uretimSuresiListesi').text('Üretim Süreleri: ' + uretimSuresiListesi.join(', '));  // Listeyi göster
-                sendLog('Üretim Bitir');
+                $('#manuelToplamSure').text(manuelToplamSure + " saniye");
+                $('#uretimSuresiListesi').text(uretimSuresiListesi.join(', '));  // Listeyi göster
+                $('#manuelUretimAdedi').text(manuelUretimAdedi);
+            
 
             });
+
+          
+
+            /* DURUS */
+
+            var otomatikUretimTimer, uretimTimer;
+            var sure, baslangicSuresi, uretimSuresi = 0,uretimSayisi=0;
+            var otomatikUretimAktif = false, manuelUretimAktif = false;
+
+            // Otomatik Üretim Kontrolleri
+            document.getElementById('otomatikUretimBaslat').addEventListener('click', function () {
+                var sureInput = document.getElementById('otomatikVeriGirisi');
+                sure = parseInt(sureInput.value);
+                baslangicSuresi = sure;
+                if (isNaN(sure) || sure <= 0) {
+                    sureInput.focus();
+                    return;
+                }
+                otomatikUretimAktif = true;
+                document.getElementById('otomatikUretimSuresi').innerText = sure;
+                sureInput.disabled = true;
+                document.getElementById('otomatikUretimiDurdur').disabled = false;
+                otomatikUretimGuncelle();
+                baslatOtomatikUretim();
+            });
+
+            // Manuel Üretim Kontrolleri
+            $('#uretimBaslat').click(function () {
+                manuelUretimAktif = true;
+                uretimSuresi = 0;
+                $('#uretimSuresi').text(uretimSuresi);
+                clearInterval(uretimTimer);
+                uretimTimer = setInterval(function () {
+                    uretimSuresi++;
+                    $('#uretimSuresi').text(uretimSuresi);
+                }, 1000);
+            });
+
+            // Durus Kontrolleri
+            var durusTimeout;  // Zamanlayıcı için global bir değişken tanımlayın
+
+            $('#durusBaslat').click(function () {
+                var stoppageDuration = parseInt($('#stoppageReasonSelect').val());
+                if (!stoppageDuration) {
+                    alert("Lütfen Geçerli bir Sebep Giriniz.");
+                    return;
+                }
+
+                if (otomatikUretimAktif) clearInterval(otomatikUretimTimer);
+                if (manuelUretimAktif) clearInterval(uretimTimer);
+
+                // Mevcut zamanlayıcı varsa iptal edin
+                clearTimeout(durusTimeout);
+
+                // Yeni bir zamanlayıcı başlat
+                durusTimeout = setTimeout(function () {
+                    $('#durusBitir').click(); // Programatik olarak durusBitir'e tıklanır
+                }, stoppageDuration * 1000);
+            });
+
+            $('#durusBitir').click(function () {
+                // Manuel olarak tetiklenirse, zamanlayıcıyı iptal edin
+                clearTimeout(durusTimeout);
+                triggerDurusBitir();
+            });
+
+          
+
+
+
+            function triggerDurusBitir() {
+                if (otomatikUretimAktif) {
+                    baslatOtomatikUretim();
+                }
+                if (manuelUretimAktif) {
+                    clearInterval(uretimTimer);
+                    uretimTimer = setInterval(function () {
+                        uretimSuresi++;
+                        $('#uretimSuresi').text(uretimSuresi);
+                        
+                    }, 1000);
+                }
+                if (!manuelUretimAktif && otomatikUretimAktif) {
+                    $('#uretimSuresi').text(0);
+                }
+                
+            }
+
+
+
+
+
+            function otomatikUretimGuncelle() {
+                document.getElementById('otomatikUretimSuresi').innerText = sure;
+                if (sure === -1) {
+                    if (otomatikUretimAktif) {
+                        sure = baslangicSuresi;
+                        otomatikUretimGuncelle();
+                        uretimSayisi++;
+                        console.log("Otomatik üretim sayacı:" +uretimSayisi);
+                    } else {
+                        clearInterval(otomatikUretimTimer);
+                    }
+                } else {
+                    sure--;
+                }
+            }
+
+            function baslatOtomatikUretim() {
+                clearInterval(otomatikUretimTimer);
+                otomatikUretimTimer = setInterval(otomatikUretimGuncelle, 1000);
+            }
+
+
+            document.getElementById('otomatikUretimiDurdur').addEventListener('click', function () {
+                otomatikUretimAktif = false;
+                clearInterval(otomatikUretimTimer);
+                document.getElementById('otomatikVeriGirisi').disabled = false;
+                document.getElementById('otomatikUretimiDurdur').disabled = true;
+                document.getElementById('otomatikUretimSuresi').innerText = '0';
+            });
+            document.getElementById('uretimiDurdur').addEventListener('click', function () {
+                manuelUretimAktif = false;
+                uretimSuresi = 0;
+            });
+
+            /* DURUS */
+
+            $(document).ready(function () {
+                var machineId = getMachineIdFromUrl();
+
+                $('#otomatikUretimiDurdur').click(function () {
+                    var machineId = getMachineIdFromUrl();
+                    $.ajax({
+                        url: '@Url.Action("StopAutomaticProduction", "Modbus")',
+                        type: 'POST',
+                        data: { machineId: machineId, registerİntValue: uretimSayisi, operationName: 'Otomatik Üretim Bitir' },
+                        success: function (response) {
+                            if (response.success) {
+
+                                console.log('Otomatik Üretim durduruldu.');
+                                $('#uretimSayisi').text(uretimSayisi);
+                            }
+                        }
+                    });
+                });
+
+            });
+
+
 
             // Başlangıçta butonları uygun duruma getir
             $('#hazirlikBitir').prop('disabled', true);
             $('#uretimiDurdur').prop('disabled', true);
-        });
 
+        });
+       
 
     </script>
 

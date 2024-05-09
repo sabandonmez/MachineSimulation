@@ -37,6 +37,9 @@ namespace MachineSimulation.Business.Concrete
 
             // Her bir parametre için işlem yapılır.
             var updatedParameters = new Dictionary<string, int>();
+
+            var parameterCounts = _parameterReadRepository.GetCountParameterByMachineIdAsync(machineId);
+
             foreach (var parameter in parameters)
             {
                 // Belirli bir ParameterId için OperationParameters tablosundaki kayıtların sayısı kontrol edilir.
@@ -49,7 +52,7 @@ namespace MachineSimulation.Business.Concrete
                 }
 
                 // Yeni parametre değeri üretilir ve güncelleme listesine eklenir.
-                var newValue = new Random().Next(0, 101);
+                var newValue = new Random().Next(35, 65);
                 updatedParameters.Add(parameter.ParameterName, newValue);
 
                 // OperationParameters tablosuna yeni değer eklenir.

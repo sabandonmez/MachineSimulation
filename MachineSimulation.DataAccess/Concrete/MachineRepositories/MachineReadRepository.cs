@@ -34,6 +34,12 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
                 MachineType = machine.MachineType,
                 ProductionCount = machine.ProductionCount,
                 ImageUrl = machine.ImageUrl,
+                Stopages=machine.Stopages.Select(p=>new StoppageDto 
+                {
+                    MachineId = machineId,
+                    ReasonStoppageName = p.ReasonStoppageName,
+                    ReasonStoppageValue=p.ReasonStoppageValue
+                }).ToList(),
                 Parameters = machine.Parameters.Select(p => new ParameterDto
                 {
                     ParameterName = p.ParameterName,
@@ -61,5 +67,16 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
             return parameters;
         }
 
+        public List<StoppageDto> GetStoppages(int machineId)
+        {
+            var stoppages=_context.Stoppages
+                                  .Where(s=>s.MachineId==machineId)
+                                  .Select(s=>new StoppageDto
+                                  {
+                                      ReasonStoppageName=s.ReasonStoppageName,
+                                      ReasonStoppageValue = s.ReasonStoppageValue
+                                  }).ToList();
+            return stoppages;                        
+        }
     }
 }

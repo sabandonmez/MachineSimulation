@@ -5,6 +5,7 @@ using MachineSimulation.DataAccess.Abstract.OperationLogRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationRepositories;
 using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
+using MachineSimulation.DataAccess.Abstract.StoppageRepositories;
 using MachineSimulation.DataAccess.Concrete;
 using MachineSimulation.DataAccess.Concrete.MachineLogRepositories;
 using MachineSimulation.DataAccess.Concrete.MachineRepositories;
@@ -12,6 +13,7 @@ using MachineSimulation.DataAccess.Concrete.OperationLogRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationRepositories;
 using MachineSimulation.DataAccess.Concrete.ParameterRepositories;
+using MachineSimulation.DataAccess.Concrete.StoppageRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -41,6 +43,9 @@ namespace MachineSimulation.DataAccess
             services.AddScoped<IParameterWriteRepository,ParameterWriteRepository>();
             services.AddScoped<IOperationParameterReadRepository,OperationParameterReadRepository>();
             services.AddScoped<IOperationParameterWriteRepository,OperationParameterWriteRepository>();
+
+            services.AddScoped<IStoppageReadRepository,StoppageReadRepository>();
+            services.AddScoped<IStoppageWriteRepository,StoppageWriteRepository>();
         }
     }
 }

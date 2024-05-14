@@ -266,21 +266,18 @@
                         <h2>Süre Raporu</h2>
                         <div class="d-flex flex-column align-items-center">
                             <table class="table">
-                                
                                 <tbody>
-                                    <tr>             
+                                    <tr>
                                         <th>Toplam Üretim Süresi :</th>
-                                        <td>0</td>
+                                        <td id="toplamUretimSuresi">0</td>
                                     </tr>
                                     <tr>
                                         <th>Toplam Duruş Süresi :</th>
-                                        <td>0</td>
+                                        <td id="toplamDurusSuresi">0</td>
                                     </tr>
                                 </tbody>
                             </table>
-
                             <hr />
-
                             <h3>Manuel Üretim</h3>
                             <hr />
                             <table class="table text-center">
@@ -301,36 +298,31 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                             <hr />
-
                             <h3>Otomatik Üretim</h3>
                             <hr />
                             <table class="table text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">Tarih</th>
-                                        <th scope="col">Otomatik Üretim Süresi</th>
-                                        <th scope="col">Otomatik Üretim Sayısı</th>
-
+                                        <th scope="col">Otomatik Üretim Listesi</th>
+                                        <th scope="col">Otomatik Üretim Adeti</th>
+                                        <th scope="col">Toplam Otomatik Üretim Süresi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="currentDate">00.00.0000</td>
-                                        <td>15 saniye</td>
-                                        <td id="uretimSayisi">25</td>
+                                        <td id="otomatikUretimSuresiListesi">0</td>
+                                        <td id="uretimSayisi">0</td>
+                                        <td id="otoUretimSuresi">0</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            
-
                             <hr />
-
-
                             <h3>Duruş Durumları</h3>
                             <hr />
-                            <table class="table text-center">
+                            <table id="durusDurumlari" class="table text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">Tarih</th>
@@ -340,18 +332,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.Stopages)
-                                    {
-                                        <tr>
-                                            <td class="currentDate">00.00.0000</td>
-                                            <td>@item.ReasonStoppageName</td>
-                                            <td>@item.ReasonStoppageValue  saniye</td>
-                                            <td>0</td>
-                                        </tr>
-                                    }
-
-                                    
-
+                                    <!-- Dinamik olarak doldurulacak -->
                                     <tr>
                                         <td class="currentDate">00.00.0000</td>
                                         <td>Hazırlık Duruşu</td>
@@ -359,14 +340,13 @@
                                         <td id="hazirlikDurusSüresi">0</td>
 
                                     </tr>
-
                                 </tbody>
                             </table>
-
+                            
                         </div>
-
                     </div>
                 </div>
+
 
 
             </div>
@@ -404,6 +384,46 @@
         var elements = document.getElementsByClassName("currentDate");
         for (var i = 0; i < elements.length; i++) {
             elements[i].innerHTML = date;
+        }
+
+
+        // Değerleri güncelleyen bir fonksiyon tanımlayalım
+        function updateToplamUretimSuresi() {
+            var otoUretimSuresi = parseInt($('#otoUretimSuresi').text()) || 0;
+            var manuelToplamSure = parseInt($('#manuelToplamSure').text()) || 0;
+            var toplamUretimSuresi = otoUretimSuresi + manuelToplamSure;
+
+            $('#toplamUretimSuresi').text(toplamUretimSuresi + " saniye");
+        }
+
+        // MutationObserver oluşturma fonksiyonu
+        function createObserver(targetNode) {
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.type === 'childList') {
+                        updateToplamUretimSuresi();
+                    }
+                });
+            });
+
+            var config = { childList: true };
+            observer.observe(targetNode, config);
+        }
+
+        // Başlangıçta toplam üretim süresini güncellemek
+        updateToplamUretimSuresi();
+
+        // otoUretimSuresi ve manuelToplamSure için gözlemcileri başlat
+        createObserver(document.getElementById('otoUretimSuresi'));
+        createObserver(document.getElementById('manuelToplamSure'));
+
+        // Değerleri değiştirmek için yardımcı fonksiyonlar
+        function setOtoUretimSuresi(value) {
+            $('#otoUretimSuresi').text(value);
+        }
+
+        function setManuelToplamSure(value) {
+            $('#manuelToplamSure').text(value);
         }
 
     </script>
@@ -453,11 +473,6 @@
 
             $('#hazirlikBaslat').click(function () {
                 turnOnYellowLight();  
-            });
-
-            // Duruş başlatma butonu için olay dinleyici
-            $('#durusBaslat').click(function () {
-                turnOnRedLight(); 
             });
 
             // Duruş bitirme butonu için olay dinleyici
@@ -555,7 +570,7 @@
                     flashingYellowInterval = setInterval(function () {
                         yellowLight.style.opacity = yellowOn ? 0.5 : 2;
                         yellowOn = !yellowOn;
-                    }, 1300);
+                    }, 300);
                 }, 500);
             };
 
@@ -568,21 +583,10 @@
                     flashingRedInterval = setInterval(function () {
                         redLight.style.opacity = redOn ? 0.5 : 2;
                         redOn = !redOn;
-                    }, 1300);
+                    }, 300);
                 }, 500);
             };
 
-            // turnOnGreenLight = function () {
-            //     clearLights(); // Önce tüm ışıkları kapat
-            //     setTimeout(function () {
-            //         greenLight.style.opacity = 2;
-            //         let greenOn = true;
-            //         flashingGreenInterval = setInterval(function () {
-            //             greenLight.style.opacity = greenOn ? 0.5 : 2;
-            //             greenOn = !greenOn;
-            //         }, 1300);
-            //     }, 500);
-            // };
 
             turnOnGreenLight = function () {
                 if (flashingGreenInterval) clearInterval(flashingGreenInterval);
@@ -593,17 +597,12 @@
                     flashingGreenInterval = setInterval(function () {
                         greenLight.style.opacity = greenOn ? 0.5 : 2;
                         greenOn = !greenOn;
-                    }, 1300);
+                    }, 300);
                 }, 500);
             };
 
 
 
-            // turnOnRedLight = function () {
-            //     clearLights(); // Önce tüm ışıkları kapat
-            //     redLight.style.opacity = 2; // Yeşil ışığı aç
-               
-            // };
 
 
         });
@@ -959,9 +958,12 @@
             var uretimSuresi = 0, manuelToplamSure = 0;
             var hazirlikSuresi = 0, hazirlikDurusSüresi = 0;
 
+            var toplamUretimSuresi = 0;
+
             var manuelUretimAdedi = 0;
             var hazirlikSuresiEklendi = false;
             var uretimSuresiListesi = [];  // Üretim sürelerini saklamak için bir liste
+            var toplamDurusSuresi = 0;
 
             function getMachineIdFromUrl() {
                 var currentUrl = window.location.pathname; // mevcut sayfanın URL yolunu alır
@@ -1035,9 +1037,11 @@
                 $('#hazirlikBaslat').prop('disabled', false);  // Bu butonun tekrar etkinleştirilmesi gerekiyor.
                 $(this).prop('disabled', true);
                 hazirlikDurusSüresi += hazirlikSuresi;
+                toplamDurusSuresi += hazirlikDurusSüresi;
+                $('#toplamDurusSuresi').text(toplamDurusSuresi + " saniye");
                 hazirlikSuresi = 0;
                 $('#sure').text(hazirlikSuresi);  // Hazırlık süresini sıfırla
-                $('#hazirlikDurusSüresi').text(hazirlikDurusSüresi+" saniye");
+                $('#hazirlikDurusSüresi').text(hazirlikDurusSüresi + " saniye");
                 
 
             });
@@ -1074,8 +1078,10 @@
             /* DURUS */
 
             var otomatikUretimTimer, uretimTimer;
-            var sure, baslangicSuresi, uretimSuresi = 0,uretimSayisi=0;
+            var sure, baslangicSuresi, uretimSuresi = 0,uretimSayisi=0,AdetUretimSayisi=0;
+            var toplamOtomatikUretimSuresi = 0;
             var otomatikUretimAktif = false, manuelUretimAktif = false;
+            var otomatikUretimSuresiListesi = [];
 
             // Otomatik Üretim Kontrolleri
             document.getElementById('otomatikUretimBaslat').addEventListener('click', function () {
@@ -1094,6 +1100,9 @@
                 baslatOtomatikUretim();
             });
 
+
+
+
             // Manuel Üretim Kontrolleri
             $('#uretimBaslat').click(function () {
                 manuelUretimAktif = true;
@@ -1107,38 +1116,73 @@
             });
 
             // Durus Kontrolleri
-            var durusTimeout;  // Zamanlayıcı için global bir değişken tanımlayın
+            var durusTimeout;
+            var durusInterval;
+            
 
             $('#durusBaslat').click(function () {
                 var stoppageDuration = parseInt($('#stoppageReasonSelect').val());
-                if (!stoppageDuration) {
-                    alert("Lütfen Geçerli bir Sebep Giriniz.");
+
+                if (isNaN(stoppageDuration) || stoppageDuration <= 0) {
+                    alert("Lütfen geçerli bir süre giriniz.");
                     return;
                 }
 
+                turnOnRedLight();
                 if (otomatikUretimAktif) clearInterval(otomatikUretimTimer);
                 if (manuelUretimAktif) clearInterval(uretimTimer);
 
-                // Mevcut zamanlayıcı varsa iptal edin
                 clearTimeout(durusTimeout);
+                clearInterval(durusInterval);
 
-                // Yeni bir zamanlayıcı başlat
+                $('#durusSuresi').text(stoppageDuration);
+
+                // Süre 0'da durması için süre azaltımı başlamadan önce süreyi kontrol et
+                if (stoppageDuration > 0) {
+                    durusInterval = setInterval(function () {
+                        stoppageDuration--;
+                        $('#durusSuresi').text(stoppageDuration);
+
+                        if (stoppageDuration <= 0) {
+                            clearInterval(durusInterval);
+                            $('#durusSuresi').text(0);
+                            $('#durusBitir').click(); // Süre 0'a ulaştığında duruş bitirme işlemi
+                        }
+                    }, 1000);
+                }
+
                 durusTimeout = setTimeout(function () {
-                    $('#durusBitir').click(); // Programatik olarak durusBitir'e tıklanır
+                    $('#durusBitir').click();
                 }, stoppageDuration * 1000);
             });
 
+
             $('#durusBitir').click(function () {
-                // Manuel olarak tetiklenirse, zamanlayıcıyı iptal edin
                 clearTimeout(durusTimeout);
+                clearInterval(durusInterval);
                 triggerDurusBitir();
+                $('#durusSuresi').text(0);
             });
 
-          
-
-
-
             function triggerDurusBitir() {
+                var beklenenSure = parseInt($('#stoppageReasonSelect').val());
+                var gerceklesenSure = beklenenSure - parseInt($('#durusSuresi').text());
+
+                toplamDurusSuresi += gerceklesenSure;
+                $('#toplamDurusSuresi').text(toplamDurusSuresi+" saniye");
+
+                // Duruş Durumları tablosunu güncelle
+                var currentDate = new Date().toLocaleDateString('tr-TR');
+                var durusTuru = $('#stoppageReasonSelect option:selected').text();
+                var newRow = `
+                <tr>
+                    <td>${currentDate}</td>
+                    <td>${durusTuru}</td>
+                    <td>${beklenenSure} saniye</td>
+                    <td>${gerceklesenSure} saniye</td>
+                </tr>`;
+                $('#durusDurumlari tbody').append(newRow);
+
                 if (otomatikUretimAktif) {
                     baslatOtomatikUretim();
                 }
@@ -1147,15 +1191,12 @@
                     uretimTimer = setInterval(function () {
                         uretimSuresi++;
                         $('#uretimSuresi').text(uretimSuresi);
-                        
                     }, 1000);
                 }
                 if (!manuelUretimAktif && otomatikUretimAktif) {
                     $('#uretimSuresi').text(0);
                 }
-                
             }
-
 
 
 
@@ -1167,7 +1208,8 @@
                         sure = baslangicSuresi;
                         otomatikUretimGuncelle();
                         uretimSayisi++;
-                        console.log("Otomatik üretim sayacı:" +uretimSayisi);
+                        AdetUretimSayisi++;
+                        console.log("Otomatik üretim sayacı:" + AdetUretimSayisi);
                     } else {
                         clearInterval(otomatikUretimTimer);
                     }
@@ -1207,9 +1249,19 @@
                         data: { machineId: machineId, registerİntValue: uretimSayisi, operationName: 'Otomatik Üretim Bitir' },
                         success: function (response) {
                             if (response.success) {
-
                                 console.log('Otomatik Üretim durduruldu.');
-                                $('#uretimSayisi').text(uretimSayisi);
+                                $('#uretimSayisi').text(uretimSayisi);  
+
+                                var sureInput = document.getElementById('otomatikVeriGirisi');
+                                sure = parseInt(sureInput.value);
+                                toplamOtomatikUretimSuresi += sure * AdetUretimSayisi;
+                                document.getElementById('otoUretimSuresi').innerText = toplamOtomatikUretimSuresi + " saniye";
+                                AdetUretimSayisi = 0;
+
+                                otomatikUretimSuresiListesi.push(sure);
+                                $('#otomatikUretimSuresiListesi').text(otomatikUretimSuresiListesi.join(', '));
+
+                                
                             }
                         }
                     });

@@ -15,8 +15,7 @@ namespace MachineSimulation.Entities.Concrete
         }
         private string? imageUrl;
         public string MachineName { get; set; }
-        public string MachineType { get; set; }
-        public int ProductionCount { get; set; } // Tamamlanan operasyon sayısını tutar.
+
         public int ModbusId { get; set; } 
         public string? ImageUrl
         {

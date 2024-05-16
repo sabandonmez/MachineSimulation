@@ -31,8 +31,6 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
             var machineDto = new MachineDetailsDto
             {
                 MachineName = machine.MachineName,
-                MachineType = machine.MachineType,
-                ProductionCount = machine.ProductionCount,
                 ImageUrl = machine.ImageUrl,
                 Stopages=machine.Stopages.Select(p=>new StoppageDto 
                 {

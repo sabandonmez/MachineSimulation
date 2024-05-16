@@ -30,14 +30,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("MachineType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ModbusId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductionCount")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -50,27 +43,21 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 1,
                             ImageUrl = "PlastikEnjeksiyon.jpg",
                             MachineName = "Plastik Enjeksiyon",
-                            MachineType = "enjeksiyon",
-                            ModbusId = 4096,
-                            ProductionCount = 0
+                            ModbusId = 4096
                         },
                         new
                         {
                             Id = 2,
                             ImageUrl = "KitamuraCncTezgahı.jpg",
                             MachineName = "Kitamura Cnc Tezgahı",
-                            MachineType = "cnc",
-                            ModbusId = 4097,
-                            ProductionCount = 0
+                            ModbusId = 4097
                         },
                         new
                         {
                             Id = 3,
                             ImageUrl = "AbkantPress.jpg",
                             MachineName = "Abkant Press",
-                            MachineType = "press",
-                            ModbusId = 4098,
-                            ProductionCount = 0
+                            ModbusId = 4098
                         });
                 });
 

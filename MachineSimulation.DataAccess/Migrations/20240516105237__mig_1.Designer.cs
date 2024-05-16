@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240509063240__mig_1")]
+    [Migration("20240516105237__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,14 +32,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("MachineType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ModbusId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductionCount")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -52,27 +45,21 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 1,
                             ImageUrl = "PlastikEnjeksiyon.jpg",
                             MachineName = "Plastik Enjeksiyon",
-                            MachineType = "enjeksiyon",
-                            ModbusId = 4096,
-                            ProductionCount = 0
+                            ModbusId = 4096
                         },
                         new
                         {
                             Id = 2,
                             ImageUrl = "KitamuraCncTezgahı.jpg",
                             MachineName = "Kitamura Cnc Tezgahı",
-                            MachineType = "cnc",
-                            ModbusId = 4097,
-                            ProductionCount = 0
+                            ModbusId = 4097
                         },
                         new
                         {
                             Id = 3,
                             ImageUrl = "AbkantPress.jpg",
                             MachineName = "Abkant Press",
-                            MachineType = "press",
-                            ModbusId = 4098,
-                            ProductionCount = 0
+                            ModbusId = 4098
                         });
                 });
 
@@ -167,7 +154,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 14,
                             Event = 6,
                             MachineId = 1,
-                            ModbusIp = 4249,
+                            ModbusIp = 4206,
                             OperationName = "Otomatik Üretim Bitir"
                         },
                         new
@@ -230,7 +217,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 18,
                             Event = 6,
                             MachineId = 2,
-                            ModbusIp = 4249,
+                            ModbusIp = 4206,
                             OperationName = "Otomatik Üretim Bitir"
                         },
                         new
@@ -293,7 +280,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 22,
                             Event = 6,
                             MachineId = 3,
-                            ModbusIp = 4249,
+                            ModbusIp = 4206,
                             OperationName = "Otomatik Üretim Bitir"
                         },
                         new

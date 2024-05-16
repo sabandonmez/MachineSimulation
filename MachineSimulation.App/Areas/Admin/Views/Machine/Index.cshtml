@@ -1,1 +1,40 @@
-﻿<h3>HELLO ADMİN - Machine</h3>
+﻿@model IEnumerable<Machine>
+<link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
+
+<div class="display-6 text-center">
+	<h1>Makineler</h1>
+
+	<div class="d-flex justify-content-end my-3">
+		<a asp-action="Create" class="btn btn-outline-success">
+			<i class="fa fa-plus"></i>
+			Create</a>
+	</div>
+
+	<div class="table-container ">
+
+		<table class="table table-striped table-hover">
+			<thead class="thead-all">
+				<tr>
+					<th>MachineName</th>
+					<th>ImageUrl</th>
+					<th>ModbusId</th>
+					<th>Operasyonlar</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (Machine mchn in Model)
+				{
+					<tr>
+						<td>@mchn.MachineName</td>
+						<td>@mchn.ImageUrl</td>
+						<td>@mchn.ModbusId</td>
+						<td>.</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+

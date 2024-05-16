@@ -40,9 +40,9 @@ namespace MachineSimulation.DataAccess.Concrete
 
             modelBuilder.Entity<Machine>()
                 .HasData(
-                    new Machine { Id=1,MachineName = "Plastik Enjeksiyon", MachineType = "enjeksiyon", ProductionCount = 0, ImageUrl = "PlastikEnjeksiyon.jpg", ModbusId = 4096 },
-                    new Machine { Id = 2, MachineName = "Kitamura Cnc Tezgahı", MachineType = "cnc", ProductionCount = 0, ImageUrl = "KitamuraCncTezgahı.jpg", ModbusId = 4097 },
-                    new Machine { Id = 3, MachineName = "Abkant Press", MachineType = "press", ProductionCount = 0, ImageUrl = "AbkantPress.jpg", ModbusId = 4098 }
+                    new Machine { Id=1,MachineName = "Plastik Enjeksiyon",ImageUrl = "PlastikEnjeksiyon.jpg", ModbusId = 4096 },
+                    new Machine { Id = 2, MachineName = "Kitamura Cnc Tezgahı",ImageUrl = "KitamuraCncTezgahı.jpg", ModbusId = 4097 },
+                    new Machine { Id = 3, MachineName = "Abkant Press", ImageUrl = "AbkantPress.jpg", ModbusId = 4098 }
             );
 
             modelBuilder.Entity<Operation>()

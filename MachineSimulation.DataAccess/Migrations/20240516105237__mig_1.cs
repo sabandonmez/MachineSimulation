@@ -31,8 +31,6 @@ namespace MachineSimulation.DataAccess.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     MachineName = table.Column<string>(type: "TEXT", nullable: false),
-                    MachineType = table.Column<string>(type: "TEXT", nullable: false),
-                    ProductionCount = table.Column<int>(type: "INTEGER", nullable: false),
                     ModbusId = table.Column<int>(type: "INTEGER", nullable: false),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -162,18 +160,18 @@ namespace MachineSimulation.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Machines",
-                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
-                values: new object[] { 1, "PlastikEnjeksiyon.jpg", "Plastik Enjeksiyon", "enjeksiyon", 4096, 0 });
+                columns: new[] { "Id", "ImageUrl", "MachineName", "ModbusId" },
+                values: new object[] { 1, "PlastikEnjeksiyon.jpg", "Plastik Enjeksiyon", 4096 });
 
             migrationBuilder.InsertData(
                 table: "Machines",
-                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
-                values: new object[] { 2, "KitamuraCncTezgahı.jpg", "Kitamura Cnc Tezgahı", "cnc", 4097, 0 });
+                columns: new[] { "Id", "ImageUrl", "MachineName", "ModbusId" },
+                values: new object[] { 2, "KitamuraCncTezgahı.jpg", "Kitamura Cnc Tezgahı", 4097 });
 
             migrationBuilder.InsertData(
                 table: "Machines",
-                columns: new[] { "Id", "ImageUrl", "MachineName", "MachineType", "ModbusId", "ProductionCount" },
-                values: new object[] { 3, "AbkantPress.jpg", "Abkant Press", "press", 4098, 0 });
+                columns: new[] { "Id", "ImageUrl", "MachineName", "ModbusId" },
+                values: new object[] { 3, "AbkantPress.jpg", "Abkant Press", 4098 });
 
             migrationBuilder.InsertData(
                 table: "Operations",
@@ -243,7 +241,7 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Operations",
                 columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
-                values: new object[] { 14, 6, 1, 4249, "Otomatik Üretim Bitir" });
+                values: new object[] { 14, 6, 1, 4206, "Otomatik Üretim Bitir" });
 
             migrationBuilder.InsertData(
                 table: "Operations",
@@ -263,7 +261,7 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Operations",
                 columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
-                values: new object[] { 18, 6, 2, 4249, "Otomatik Üretim Bitir" });
+                values: new object[] { 18, 6, 2, 4206, "Otomatik Üretim Bitir" });
 
             migrationBuilder.InsertData(
                 table: "Operations",
@@ -283,7 +281,7 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Operations",
                 columns: new[] { "Id", "Event", "MachineId", "ModbusIp", "OperationName" },
-                values: new object[] { 22, 6, 3, 4249, "Otomatik Üretim Bitir" });
+                values: new object[] { 22, 6, 3, 4206, "Otomatik Üretim Bitir" });
 
             migrationBuilder.InsertData(
                 table: "Operations",

@@ -10,8 +10,6 @@ namespace MachineSimulation.Entities.DTOs
     public class MachineDetailsDto
     {
         public string MachineName { get; set; }
-        public string MachineType { get; set; }
-        public int ProductionCount { get; set; }
         public string ImageUrl { get; set; }
         public IEnumerable<MachineLog> MachineLogs { get; set; }
         public IEnumerable<OperationLogDto>  OperationLogs { get; set; }

@@ -55,7 +55,7 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OperationName",
+                name: "OperationNames",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -64,7 +64,7 @@ namespace MachineSimulation.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OperationName", x => x.Id);
+                    table.PrimaryKey("PK_OperationNames", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,9 +141,9 @@ namespace MachineSimulation.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Operations_OperationName_OperationNameId",
+                        name: "FK_Operations_OperationNames_OperationNameId",
                         column: x => x.OperationNameId,
-                        principalTable: "OperationName",
+                        principalTable: "OperationNames",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -191,42 +191,42 @@ namespace MachineSimulation.DataAccess.Migrations
                 values: new object[] { 3, "AbkantPress.jpg", "Abkant Press", 4098 });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 1, "Hazırlık Başlat" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 2, "Hazırlık Bitir" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 3, "Üretim Başlat" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 4, "Üretim Bitir" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 5, "Otomatik Üretim Başlat" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 6, "Otomatik Üretim Bitir" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 7, "Duruş Başlat" });
 
             migrationBuilder.InsertData(
-                table: "OperationName",
+                table: "OperationNames",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 8, "Duruş Bitir" });
 
@@ -450,7 +450,7 @@ namespace MachineSimulation.DataAccess.Migrations
                 name: "Parameters");
 
             migrationBuilder.DropTable(
-                name: "OperationName");
+                name: "OperationNames");
 
             migrationBuilder.DropTable(
                 name: "Machines");

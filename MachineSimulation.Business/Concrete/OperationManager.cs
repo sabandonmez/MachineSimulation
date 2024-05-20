@@ -37,6 +37,10 @@ namespace MachineSimulation.Business.Concrete
                 .ToListAsync();
         }
 
+        public async Task<Operation> GetByIdOperationAsync(int id)
+        {
+            return await _operationReadRepository.GetOperationByIdAsync(id);
+        }
 
         public Task<Operation> GetOperationIdByName(int name)
         {
@@ -47,6 +51,12 @@ namespace MachineSimulation.Business.Concrete
         {
             return await _operationReadRepository.GetOperationModbusIdAsync(machineId,operationNameId);
 
+        }
+
+        public async Task UpdateOperation(Operation operation)
+        {
+            _operationWriteRepository.Update(operation);
+            await _operationWriteRepository.SaveAsync();
         }
     }
 }

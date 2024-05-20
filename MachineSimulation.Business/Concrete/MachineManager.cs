@@ -30,7 +30,7 @@ namespace MachineSimulation.Services.Concrete
 
 		public async Task DeleteOneMachine(int id)
 		{
-			_machineWriteRepository.RemoveAsync(id);
+			_machineWriteRepository.DeleteOneMachine(id);
 			await _machineWriteRepository.SaveAsync();
 
 		}

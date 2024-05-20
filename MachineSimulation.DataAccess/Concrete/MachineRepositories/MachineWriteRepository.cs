@@ -22,6 +22,19 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
             await _context.SaveChangesAsync();
         }
 
-	
-	}
+        public async Task<bool> DeleteOneMachine(int id)
+        {
+            var machine = await _context.Machines.FindAsync(id);
+            if (machine == null)
+            {
+                return false;
+            }
+
+            _context.Machines.Remove(machine);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+    }
 }

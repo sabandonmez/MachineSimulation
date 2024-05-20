@@ -1,4 +1,4 @@
-﻿ @model Machine
+﻿@model Operation
 
 <div class="text-center">
     <div class="display-6">
@@ -10,23 +10,30 @@
     <form asp-action="Update" method="post" enctype="multipart/form-data">
         <div class="text-danger" asp-validation-summary="All"></div>
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="OperationNameId" />
+        <input type="hidden" asp-for="MachineId" />
+
 
         <div class="form-group">
-            <label for="operationName" class="form-label">Select Operation Name:</label>
-            <select id="operationName" name="operationNameId" class="form-control rounded" required style="width: 100%;">
-                <!-- Operation Name options will be populated here by JavaScript -->
-            </select>
+            <label asp-for="OperationName.Name" class="form-label">Operation Name:</label>
+            <input type="text" class="form-control rounded" value="@Model.OperationName.Name" readonly style="width: 100%;">
         </div>
 
         <div class="form-group">
-            <label for="modbusIp" class="form-label">Modbus IP:</label>
-            <input type="number" id="modbusIp" name="modbusIp" class="form-control rounded" required style="width: 100%;">
+            <label asp-for="Machine.MachineName" class="form-label">Machine:</label>
+            <input type="text" class="form-control rounded" value="@Model.Machine.MachineName" readonly style="width: 100%;">
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="ModbusIp" class="form-label">Modbus IP:</label>
+            <input type="text" asp-for="ModbusIp" class="form-control rounded" required style="width: 100%;">
         </div>
 
         <div class="form-group my-3">
             <button class="btn btn-primary" type="submit">
                 <i class="fa fa-save"></i>
-                Ekle
+                Güncelle
             </button>
             <a asp-action="Index" class="btn btn-warning">
                 <i class="fa fa-list"></i>

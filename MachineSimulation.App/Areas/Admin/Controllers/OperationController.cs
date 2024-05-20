@@ -21,21 +21,36 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult Update()
+        [HttpGet]
+        public async Task<IActionResult> Update([FromRoute(Name = "id")] int id)
         {
-            return View();
+            var model = await _operationService.GetByIdOperationAsync(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update([FromForm] Operation operation)
         {
-            await _operationService.AddOperationAsync(operation);
-            return RedirectToAction("Index");
-         
+           
+                try
+                {
+                    await _operationService.UpdateOperation(operation);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Güncelleme sırasında bir hata oluştu: " + ex.Message);
+                }
+            
+            return View(operation);
         }
 
- 
+
 
     }
 }

@@ -11,5 +11,6 @@ namespace MachineSimulation.DataAccess.Abstract.MachineRepositories
     public interface IMachineWriteRepository : IWriteRepository<Machine>
     {
         Task AddMachineAsync(Machine machine);
+        Task<bool> DeleteOneMachine(int id);
     }
 }

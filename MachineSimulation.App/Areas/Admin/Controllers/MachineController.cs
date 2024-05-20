@@ -9,11 +9,13 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
     {
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly  IMachineService _machineService;
+        private readonly IOperationService _operationService;
 
-		public MachineController(IMachineService machineService, IWebHostEnvironment hostingEnvironment)
+		public MachineController(IMachineService machineService, IWebHostEnvironment hostingEnvironment,IOperationService operationService)
 		{
 			_machineService = machineService;
 			_hostingEnvironment = hostingEnvironment;
+            _operationService = operationService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -27,36 +29,49 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
             return View();
         }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([FromForm] Machine machine, IFormFile ImageFile)
-		{
-			
-				if (ImageFile != null && ImageFile.Length > 0)
-				{
-					// MachineName'den dosya adı oluşturma
-					var fileName = machine.MachineName.Replace(" ", "") + ".jpg";
-					var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "machines", fileName);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm] Machine machine, IFormFile ImageFile)
+        {
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                // MachineName'den dosya adı oluşturma
+                var fileName = machine.MachineName.Replace(" ", "") + ".jpg";
+                var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "machines", fileName);
 
-					// Dosyayı belirtilen yola kaydetme
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						await ImageFile.CopyToAsync(stream);
-					}
+                // Dosyayı belirtilen yola kaydetme
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
 
-					// ImageUrl'yi modelde ayarlama
-					machine.ImageUrl = fileName;
-				}
+                // ImageUrl'yi modelde ayarlama
+                machine.ImageUrl = fileName;
+            }
 
-				// Veritabanına kaydetme
-				await _machineService.AddMachineAsync(machine);
-				return RedirectToAction("Index");
+            // Veritabanına makineyi kaydetme
+            await _machineService.AddMachineAsync(machine);
 
-				
-			
-		}
+            // Makine için önceden tanımlı operasyonları ekleme
+            var predefinedOperationNames = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-		public async Task<IActionResult> Update([FromRoute(Name ="id")] int id)
+            foreach (var operationNameId in predefinedOperationNames)
+            {
+                var operation = new Operation
+                {
+                    MachineId = machine.Id,
+                    OperationNameId = operationNameId,
+                    ModbusIp = null // Bu değeri isterseniz burada ayarlayabilirsiniz
+                };
+
+                await _operationService.AddOperationAsync(operation);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        public async Task<IActionResult> Update([FromRoute(Name ="id")] int id)
 		{
 			var model=await _machineService.GetByIdMachineAsync(id);
 			return View(model);
@@ -128,21 +143,20 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
         }
 
 
-        public async Task<IActionResult> Delete([FromRoute(Name="id")] int id)
+        public async Task<IActionResult> Delete([FromRoute(Name = "id")] int id)
         {
-            var existingMachine = await  _machineService.GetByIdMachineAsync(id);
-           var deleteOperation= _machineService.DeleteOneMachine(id);
+            var existingMachine = await _machineService.GetByIdMachineAsync(id);
+            var deleteOperation =  _machineService.DeleteOneMachine(id);
             if (deleteOperation.IsCompleted)
             {
-				var oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "machines", existingMachine.ImageUrl);
-				if (System.IO.File.Exists(oldFilePath))
-				{
-					System.IO.File.Delete(oldFilePath);
-				}
-			}
-			
+                var oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "machines", existingMachine.ImageUrl);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+            }
 
-			return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
     }

@@ -22,6 +22,16 @@ namespace MachineSimulation.DataAccess.Concrete.OperationRepositories
             return await _context.Operations.FirstOrDefaultAsync(o => o.MachineId == machineId && o.Id == id);
         }
 
+        public async Task<Operation> GetOperationByIdAsync(int id)
+        {
+            return await _context.Operations
+                                 .Include(o => o.Machine)
+                                 .Include(o => o.OperationName)
+                                 .Include(o => o.OperationParameters)
+                                 .FirstOrDefaultAsync(o => o.Id == id);
+        }
+
+
         //GetOperationIdByName
         public async Task<Operation> GetOperationIdByName(int name)
         {

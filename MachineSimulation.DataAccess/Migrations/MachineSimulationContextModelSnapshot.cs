@@ -305,7 +305,7 @@ namespace MachineSimulation.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OperationName");
+                    b.ToTable("OperationNames");
 
                     b.HasData(
                         new

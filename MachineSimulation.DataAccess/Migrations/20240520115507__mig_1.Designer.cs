@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240516123816__mig_1")]
+    [Migration("20240520115507__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,7 +307,7 @@ namespace MachineSimulation.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OperationName");
+                    b.ToTable("OperationNames");
 
                     b.HasData(
                         new

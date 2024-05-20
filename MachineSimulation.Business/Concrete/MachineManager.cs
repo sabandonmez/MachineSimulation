@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MachineSimulation.Services.Concrete
 {
-    public class MachineManager : IMachineService
+    public class MachineManager : IMachineService 
     {
         private readonly IMachineReadRepository _machineReadRepository;
         private readonly IMachineWriteRepository _machineWriteRepository;
@@ -28,7 +28,14 @@ namespace MachineSimulation.Services.Concrete
             await _machineWriteRepository.SaveAsync();
         }
 
-        public async Task<IEnumerable<Machine>> GetAllMachinesAsync()
+		public async Task DeleteOneMachine(int id)
+		{
+			_machineWriteRepository.RemoveAsync(id);
+			await _machineWriteRepository.SaveAsync();
+
+		}
+
+		public async Task<IEnumerable<Machine>> GetAllMachinesAsync()
         {
             return await _machineReadRepository.GetAll(false).ToListAsync();
         }

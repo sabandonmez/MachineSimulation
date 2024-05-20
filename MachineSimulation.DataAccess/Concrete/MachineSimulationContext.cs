@@ -45,49 +45,54 @@ namespace MachineSimulation.DataAccess.Concrete
                     new Machine { Id = 3, MachineName = "Abkant Press", ImageUrl = "AbkantPress.jpg", ModbusId = 4098 }
             );
 
-            modelBuilder.Entity<Operation>()
-                .HasData(
-                    new Operation { Id = 1, MachineId = 1, OperationName = "Hazırlık Başlat", ModbusIp = 2280, Event = 1 },
-                    new Operation { Id = 2, MachineId = 1, OperationName = "Hazırlık Bitir", ModbusIp = 2280, Event = 2 },
-                    new Operation { Id = 3, MachineId = 1, OperationName = "Üretim Başlat", ModbusIp = 2273, Event = 3 },
-                    new Operation { Id = 4, MachineId = 1, OperationName = "Üretim Bitir", ModbusIp = 2273, Event = 4 },
 
-                    new Operation { Id = 13, MachineId = 1, OperationName = "Otomatik Üretim Başlat", Event = 5 },
-                    new Operation { Id = 14, MachineId = 1, OperationName = "Otomatik Üretim Bitir", ModbusIp = 4206, Event = 6 },
-
-                     new Operation { Id = 15, MachineId = 1, OperationName = "Duruş Başlat", ModbusIp = 2280, Event = 7 },
-                    new Operation { Id = 16, MachineId = 1, OperationName = "Duruş Bitir", ModbusIp = 2280, Event = 8 },
-
-                    new Operation { Id = 5, MachineId = 2, OperationName = "Hazırlık Başlat", ModbusIp = 2281, Event = 1 },
-                    new Operation { Id = 6, MachineId = 2, OperationName = "Hazırlık Bitir", ModbusIp = 2281, Event = 2 },
-                    new Operation { Id = 7, MachineId = 2, OperationName = "Üretim Başlat", ModbusIp = 2274, Event = 3 },
-                    new Operation { Id = 8, MachineId = 2, OperationName = "Üretim Bitir", ModbusIp = 2274, Event = 4 },
-
-                    new Operation { Id = 17, MachineId = 2, OperationName = "Otomatik Üretim Başlat",  Event = 5 },
-                    new Operation { Id = 18, MachineId = 2, OperationName = "Otomatik Üretim Bitir", ModbusIp = 4206, Event = 6 },
-
-                      new Operation { Id = 19, MachineId =2, OperationName = "Duruş Başlat", ModbusIp = 2280, Event = 7 },
-                    new Operation { Id = 20, MachineId = 2, OperationName = "Duruş Bitir", ModbusIp = 2280, Event = 8 },
-
-                    new Operation { Id = 9, MachineId = 3, OperationName = "Hazırlık Başlat", ModbusIp = 2282, Event = 1 },
-                    new Operation { Id = 10, MachineId = 3, OperationName = "Hazırlık Bitir", ModbusIp = 2282, Event = 2 },
-                    new Operation { Id = 11, MachineId = 3, OperationName = "Üretim Başlat", ModbusIp = 2275, Event = 3 },
-                    new Operation { Id = 12, MachineId = 3, OperationName = "Üretim Bitir", ModbusIp = 2275, Event = 4 },
-
-                    new Operation { Id = 21, MachineId = 3, OperationName = "Otomatik Üretim Başlat", Event = 5 },
-                    new Operation { Id = 22, MachineId = 3, OperationName = "Otomatik Üretim Bitir", ModbusIp = 4206, Event = 6 },
-
-                    new Operation { Id = 23, MachineId = 3, OperationName = "Duruş Başlat", ModbusIp = 2280, Event = 7 },
-                    new Operation { Id = 24, MachineId = 3, OperationName = "Duruş Bitir", ModbusIp = 2280, Event = 8 }
+			modelBuilder.Entity<OperationName>().HasData(
+	          new OperationName { Id = 1, Name = "Hazırlık Başlat" },
+	          new OperationName { Id = 2, Name = "Hazırlık Bitir" },
+	          new OperationName { Id = 3, Name = "Üretim Başlat" },
+	          new OperationName { Id = 4, Name = "Üretim Bitir" },
+	          new OperationName { Id = 5, Name = "Otomatik Üretim Başlat" },
+	          new OperationName { Id = 6, Name = "Otomatik Üretim Bitir" },
+	          new OperationName { Id = 7, Name = "Duruş Başlat" },
+	          new OperationName { Id = 8, Name = "Duruş Bitir" }
             );
-            modelBuilder.Entity<Parameter>()
+
+
+
+			modelBuilder.Entity<Operation>().HasData(
+		new Operation { Id = 1, MachineId = 1, OperationNameId = 1, ModbusIp = 2280 },
+		new Operation { Id = 2, MachineId = 1, OperationNameId = 2, ModbusIp = 2280 },
+		new Operation { Id = 3, MachineId = 1, OperationNameId = 3, ModbusIp = 2273 },
+		new Operation { Id = 4, MachineId = 1, OperationNameId = 4, ModbusIp = 2273 },
+		new Operation { Id = 13, MachineId = 1, OperationNameId = 5},
+		new Operation { Id = 14, MachineId = 1, OperationNameId = 6, ModbusIp = 4206 },
+		new Operation { Id = 15, MachineId = 1, OperationNameId = 7, ModbusIp = 2280 },
+		new Operation { Id = 16, MachineId = 1, OperationNameId = 8, ModbusIp = 2280 },
+		new Operation { Id = 5, MachineId = 2, OperationNameId = 1, ModbusIp = 2281 },
+		new Operation { Id = 6, MachineId = 2, OperationNameId = 2, ModbusIp = 2281 },
+		new Operation { Id = 7, MachineId = 2, OperationNameId = 3, ModbusIp = 2274 },
+		new Operation { Id = 8, MachineId = 2, OperationNameId = 4, ModbusIp = 2274 },
+		new Operation { Id = 17, MachineId = 2, OperationNameId = 5},
+		new Operation { Id = 18, MachineId = 2, OperationNameId = 6, ModbusIp = 4206 },
+		new Operation { Id = 19, MachineId = 2, OperationNameId = 7, ModbusIp = 2280 },
+		new Operation { Id = 20, MachineId = 2, OperationNameId = 8, ModbusIp = 2280 },
+		new Operation { Id = 9, MachineId = 3, OperationNameId = 1, ModbusIp = 2282 },
+		new Operation { Id = 10, MachineId = 3, OperationNameId = 2, ModbusIp = 2282 },
+		new Operation { Id = 11, MachineId = 3, OperationNameId = 3, ModbusIp = 2275 },
+		new Operation { Id = 12, MachineId = 3, OperationNameId = 4, ModbusIp = 2275 },
+		new Operation { Id = 21, MachineId = 3, OperationNameId = 5 },
+		new Operation { Id = 22, MachineId = 3, OperationNameId = 6, ModbusIp = 4206 },
+		new Operation { Id = 23, MachineId = 3, OperationNameId = 7, ModbusIp = 2280 },
+		new Operation { Id = 24, MachineId = 3, OperationNameId = 8, ModbusIp = 2280 }
+	);
+			modelBuilder.Entity<Parameter>()
                .HasData(
-                  new Parameter { Id = 1, MachineId = 1, ParameterName = "Hız", ValueType = "int" },
-                  new Parameter { Id = 2, MachineId = 1, ParameterName = "Sıcaklık", ValueType = "int" },
-                  new Parameter { Id = 3, MachineId = 2, ParameterName = "Hız", ValueType = "int" },
-                  new Parameter { Id = 4, MachineId = 2, ParameterName = "Sıcaklık", ValueType = "int" },
-                  new Parameter { Id = 5, MachineId = 3, ParameterName = "Cnc Ilerleme Hizi", ValueType = "int" },
-                  new Parameter { Id = 6, MachineId = 3, ParameterName = "Ariza Alarm Sayisi", ValueType = "int" }
+                  new Parameter { Id = 1, MachineId = 1, ParameterName = "Hız" },
+                  new Parameter { Id = 2, MachineId = 1, ParameterName = "Sıcaklık" },
+                  new Parameter { Id = 3, MachineId = 2, ParameterName = "Hız" },
+                  new Parameter { Id = 4, MachineId = 2, ParameterName = "Sıcaklık" },
+                  new Parameter { Id = 5, MachineId = 3, ParameterName = "Cnc Ilerleme Hizi" },
+                  new Parameter { Id = 6, MachineId = 3, ParameterName = "Ariza Alarm Sayisi" }
            );
             modelBuilder.Entity<Stoppage>()
            .HasData(

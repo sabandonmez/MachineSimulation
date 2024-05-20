@@ -41,7 +41,7 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
                 Parameters = machine.Parameters.Select(p => new ParameterDto
                 {
                     ParameterName = p.ParameterName,
-                    ValueType = p.ValueType
+    
                 }).ToList()
             };
 
@@ -55,7 +55,7 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
                                       .Select(p => new ParameterDto
                                       {
                                           ParameterName = p.ParameterName,
-                                          ValueType = p.ValueType,
+                                      
                                           ParameterValue = p.OperationParameters
                                                             .Select(op => op.ParameterValue)
                                                             .ToList()

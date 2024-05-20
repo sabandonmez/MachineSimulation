@@ -10,7 +10,7 @@ namespace MachineSimulation.Entities.DTOs
     {
         public int Id { get; set; }
         public int MachineId { get; set; }
-        public string OperationName { get; set; } 
+        public int OperationNameId { get; set; } 
         public DateTime Timestamp { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace MachineSimulation.DataAccess.Abstract.OperationRepositories
     public interface IOperationReadRepository : IReadRepository<Operation>
     {
         public Task<Operation> GetByMachineIdAndOperationId(int machineId, int id);
-        public Task<Operation> GetOperationIdByName(string name);
+        public Task<Operation> GetOperationIdByName(int name);
       
-        public  Task<int?> GetOperationModbusIdAsync(int machineId,string operationName);
+        public  Task<int?> GetOperationModbusIdAsync(int machineId,int operationName);
     }
 }

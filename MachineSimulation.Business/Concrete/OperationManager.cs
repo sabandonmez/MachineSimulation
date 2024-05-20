@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,14 +21,31 @@ namespace MachineSimulation.Business.Concrete
             _operationWriteRepository = operationWriteRepository;
         }
 
-        public Task<Operation> GetOperationIdByName(string name)
+        public async Task AddOperationAsync(Operation operation)
+        {
+            await _operationWriteRepository.AddAsync(operation);
+            await _operationWriteRepository.SaveAsync();
+
+        }
+
+        public async Task<IEnumerable<Operation>> GetAllOperationsAsync()
+        {
+            return await _operationReadRepository
+                .GetAll(false)
+                .Include(o => o.Machine) // İlişkisel verileri dahil ediyoruz
+                .Include(o => o.OperationName) // İlişkisel verileri dahil ediyoruz
+                .ToListAsync();
+        }
+
+
+        public Task<Operation> GetOperationIdByName(int name)
         {
             return _operationReadRepository.GetOperationIdByName(name);
             
         }
-        public async Task<int?> GetOperationModbusIdAsync(int machineId, string operationName)
+        public async Task<int?> GetOperationModbusIdAsync(int machineId, int operationNameId)
         {
-            return await _operationReadRepository.GetOperationModbusIdAsync(machineId,operationName);
+            return await _operationReadRepository.GetOperationModbusIdAsync(machineId,operationNameId);
 
         }
     }

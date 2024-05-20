@@ -625,7 +625,7 @@
                 $.ajax({
                     url: '@Url.Action("StartPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Hazırlık Başlat' },
+                    data: { machineId: machineId, operationNameId: 1 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık başlatıldı.');
@@ -639,7 +639,7 @@
                 $.ajax({
                     url: '@Url.Action("StopPreparation", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Hazırlık Bitir' },
+                    data: { machineId: machineId, operationNameId: 2 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Hazırlık durduruldu.');
@@ -653,7 +653,7 @@
                 $.ajax({
                     url: '@Url.Action("StartBasedOnSpecificReason", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Duruş Başlat' },
+                    data: { machineId: machineId, operationNameId: 7 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Duruş başlatıldı.');
@@ -667,7 +667,7 @@
                 $.ajax({
                     url: '@Url.Action("StopBasedOnSpecificReason", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Duruş Bitir' },
+                    data: { machineId: machineId, operationNameId: 8 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Duruş durduruldu.');
@@ -682,7 +682,7 @@
                 $.ajax({
                     url: '@Url.Action("StartProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Üretim Başlat' },
+                    data: { machineId: machineId, operationNameId: 3 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim başlatıldı.');
@@ -696,7 +696,7 @@
                 $.ajax({
                     url: '@Url.Action("StopProduction", "Modbus")',
                     type: 'POST',
-                    data: { machineId: machineId, operationName: 'Üretim Bitir' },
+                    data: { machineId: machineId, operationNameId: 4 },
                     success: function (response) {
                         if (response.success) {
                             console.log('Üretim durduruldu.');
@@ -984,11 +984,15 @@
                             2: 'Hazırlık Bitir',
                             3: 'Üretim Başlat',
                             4: 'Üretimi Durdur',
+                            5:'Otomatik Üretimi Başlat',
+                            6: 'Otomatik Üretim Bitir',
+                            7:'Duruş Başlat',
+                            8: 'Duruş Bitir'
                         };
 
                         var logsHtml = logs.map(function (log) {
-                            var operationName = operationNames[log.operationId] || 'Bilinmeyen İşlem';
-                            return '<tr><td>' + operationName + '</td><td>' + new Date(log.timestamp).toLocaleString() + '</td></tr>';
+                            var operationName = operationNames[log.operationId] || 0;
+                            return '<tr><td>' + operationNameId + '</td><td>' + new Date(log.timestamp).toLocaleString() + '</td></tr>';
                         }).join('');
                         $('tbody').html(logsHtml);
                     },
@@ -1246,7 +1250,7 @@
                     $.ajax({
                         url: '@Url.Action("StopAutomaticProduction", "Modbus")',
                         type: 'POST',
-                        data: { machineId: machineId, registerİntValue: uretimSayisi, operationName: 'Otomatik Üretim Bitir' },
+                        data: { machineId: machineId, registerİntValue: uretimSayisi, operationNameId: 6 },
                         success: function (response) {
                             if (response.success) {
                                 console.log('Otomatik Üretim durduruldu.');

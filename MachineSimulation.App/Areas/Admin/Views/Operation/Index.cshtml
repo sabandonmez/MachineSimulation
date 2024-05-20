@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Operation>
+<link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
+
+<div class="display-6 text-center">
+    <h1>Operasyonlar</h1>
+
+@*     <div class="d-flex justify-content-end my-3">
+        <a asp-action="Create" class="btn btn-outline-success">
+            <i class="fa fa-plus"></i>
+            Oluştur
+        </a>
+    </div> *@
+
+    <div class="table-container">
+        <table class="table table-striped table-hover">
+            <thead class="thead-all">
+                <tr>
+                    <th>MachineName</th>
+                    <th>OperationName</th>
+                    <th>ModbusIp</th>
+                    <th>Operasyonlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var oprt in Model.OrderBy(o => o.Machine.MachineName))
+                    {
+                        <tr>
+                            <td>@oprt.Machine.MachineName</td>
+                            <td>@oprt.OperationName.Name</td>
+                            <td>@oprt.ModbusIp</td>
+                            <td>
+                                <a class="btn btn-warning" asp-action="Update" asp-controller="Operation" asp-route-id="@oprt.Id">
+                                    <i class="fa fa-edit"></i>
+                                    <span>Güncelle</span>
+                                </a>
+                           
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No operations found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

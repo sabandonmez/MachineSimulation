@@ -10,5 +10,6 @@ namespace MachineSimulation.DataAccess.Abstract.OperationRepositories
 {
     public interface IOperationWriteRepository : IWriteRepository<Operation>
     {
+        Task AddMOperationAsync(Operation operation);
     }
 }

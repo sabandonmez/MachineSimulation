@@ -23,16 +23,16 @@ namespace MachineSimulation.DataAccess.Concrete.OperationRepositories
         }
 
         //GetOperationIdByName
-        public async Task<Operation> GetOperationIdByName(string name)
+        public async Task<Operation> GetOperationIdByName(int name)
         {
-           return await _context.Operations.FirstOrDefaultAsync(o => o.OperationName==name);
+           return await _context.Operations.FirstOrDefaultAsync(o => o.OperationNameId==name);
             
         }
-        public async Task<int?> GetOperationModbusIdAsync(int machineId, string operationName)
+        public async Task<int?> GetOperationModbusIdAsync(int machineId, int operationName)
         {
             var operation = await _context.Operations
                                           .FirstOrDefaultAsync(o => o.MachineId == machineId &&
-                                                                    o.OperationName == operationName);
+                                                                    o.OperationNameId == operationName);
 
             // operation null ise, null döner.
             return operation?.ModbusIp;

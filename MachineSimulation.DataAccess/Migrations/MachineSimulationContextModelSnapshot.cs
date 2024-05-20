@@ -88,22 +88,20 @@ namespace MachineSimulation.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Event")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("MachineId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ModbusIp")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("OperationName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("OperationNameId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MachineId");
+
+                    b.HasIndex("OperationNameId");
 
                     b.ToTable("Operations");
 
@@ -111,191 +109,167 @@ namespace MachineSimulation.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Event = 1,
                             MachineId = 1,
                             ModbusIp = 2280,
-                            OperationName = "Hazırlık Başlat"
+                            OperationNameId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Event = 2,
                             MachineId = 1,
                             ModbusIp = 2280,
-                            OperationName = "Hazırlık Bitir"
+                            OperationNameId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Event = 3,
                             MachineId = 1,
                             ModbusIp = 2273,
-                            OperationName = "Üretim Başlat"
+                            OperationNameId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Event = 4,
                             MachineId = 1,
                             ModbusIp = 2273,
-                            OperationName = "Üretim Bitir"
+                            OperationNameId = 4
                         },
                         new
                         {
                             Id = 13,
-                            Event = 5,
                             MachineId = 1,
-                            OperationName = "Otomatik Üretim Başlat"
+                            OperationNameId = 5
                         },
                         new
                         {
                             Id = 14,
-                            Event = 6,
                             MachineId = 1,
                             ModbusIp = 4206,
-                            OperationName = "Otomatik Üretim Bitir"
+                            OperationNameId = 6
                         },
                         new
                         {
                             Id = 15,
-                            Event = 7,
                             MachineId = 1,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Başlat"
+                            OperationNameId = 7
                         },
                         new
                         {
                             Id = 16,
-                            Event = 8,
                             MachineId = 1,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Bitir"
+                            OperationNameId = 8
                         },
                         new
                         {
                             Id = 5,
-                            Event = 1,
                             MachineId = 2,
                             ModbusIp = 2281,
-                            OperationName = "Hazırlık Başlat"
+                            OperationNameId = 1
                         },
                         new
                         {
                             Id = 6,
-                            Event = 2,
                             MachineId = 2,
                             ModbusIp = 2281,
-                            OperationName = "Hazırlık Bitir"
+                            OperationNameId = 2
                         },
                         new
                         {
                             Id = 7,
-                            Event = 3,
                             MachineId = 2,
                             ModbusIp = 2274,
-                            OperationName = "Üretim Başlat"
+                            OperationNameId = 3
                         },
                         new
                         {
                             Id = 8,
-                            Event = 4,
                             MachineId = 2,
                             ModbusIp = 2274,
-                            OperationName = "Üretim Bitir"
+                            OperationNameId = 4
                         },
                         new
                         {
                             Id = 17,
-                            Event = 5,
                             MachineId = 2,
-                            OperationName = "Otomatik Üretim Başlat"
+                            OperationNameId = 5
                         },
                         new
                         {
                             Id = 18,
-                            Event = 6,
                             MachineId = 2,
                             ModbusIp = 4206,
-                            OperationName = "Otomatik Üretim Bitir"
+                            OperationNameId = 6
                         },
                         new
                         {
                             Id = 19,
-                            Event = 7,
                             MachineId = 2,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Başlat"
+                            OperationNameId = 7
                         },
                         new
                         {
                             Id = 20,
-                            Event = 8,
                             MachineId = 2,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Bitir"
+                            OperationNameId = 8
                         },
                         new
                         {
                             Id = 9,
-                            Event = 1,
                             MachineId = 3,
                             ModbusIp = 2282,
-                            OperationName = "Hazırlık Başlat"
+                            OperationNameId = 1
                         },
                         new
                         {
                             Id = 10,
-                            Event = 2,
                             MachineId = 3,
                             ModbusIp = 2282,
-                            OperationName = "Hazırlık Bitir"
+                            OperationNameId = 2
                         },
                         new
                         {
                             Id = 11,
-                            Event = 3,
                             MachineId = 3,
                             ModbusIp = 2275,
-                            OperationName = "Üretim Başlat"
+                            OperationNameId = 3
                         },
                         new
                         {
                             Id = 12,
-                            Event = 4,
                             MachineId = 3,
                             ModbusIp = 2275,
-                            OperationName = "Üretim Bitir"
+                            OperationNameId = 4
                         },
                         new
                         {
                             Id = 21,
-                            Event = 5,
                             MachineId = 3,
-                            OperationName = "Otomatik Üretim Başlat"
+                            OperationNameId = 5
                         },
                         new
                         {
                             Id = 22,
-                            Event = 6,
                             MachineId = 3,
                             ModbusIp = 4206,
-                            OperationName = "Otomatik Üretim Bitir"
+                            OperationNameId = 6
                         },
                         new
                         {
                             Id = 23,
-                            Event = 7,
                             MachineId = 3,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Başlat"
+                            OperationNameId = 7
                         },
                         new
                         {
                             Id = 24,
-                            Event = 8,
                             MachineId = 3,
                             ModbusIp = 2280,
-                            OperationName = "Duruş Bitir"
+                            OperationNameId = 8
                         });
                 });
 
@@ -317,6 +291,63 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperationLogs");
+                });
+
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.OperationName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OperationName");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Hazırlık Başlat"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Hazırlık Bitir"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Üretim Başlat"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Otomatik Üretim Başlat"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Otomatik Üretim Bitir"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Duruş Başlat"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Duruş Bitir"
+                        });
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.OperationParameter", b =>
@@ -357,10 +388,6 @@ namespace MachineSimulation.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ValueType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MachineId");
@@ -372,43 +399,37 @@ namespace MachineSimulation.DataAccess.Migrations
                         {
                             Id = 1,
                             MachineId = 1,
-                            ParameterName = "Hız",
-                            ValueType = "int"
+                            ParameterName = "Hız"
                         },
                         new
                         {
                             Id = 2,
                             MachineId = 1,
-                            ParameterName = "Sıcaklık",
-                            ValueType = "int"
+                            ParameterName = "Sıcaklık"
                         },
                         new
                         {
                             Id = 3,
                             MachineId = 2,
-                            ParameterName = "Hız",
-                            ValueType = "int"
+                            ParameterName = "Hız"
                         },
                         new
                         {
                             Id = 4,
                             MachineId = 2,
-                            ParameterName = "Sıcaklık",
-                            ValueType = "int"
+                            ParameterName = "Sıcaklık"
                         },
                         new
                         {
                             Id = 5,
                             MachineId = 3,
-                            ParameterName = "Cnc Ilerleme Hizi",
-                            ValueType = "int"
+                            ParameterName = "Cnc Ilerleme Hizi"
                         },
                         new
                         {
                             Id = 6,
                             MachineId = 3,
-                            ParameterName = "Ariza Alarm Sayisi",
-                            ValueType = "int"
+                            ParameterName = "Ariza Alarm Sayisi"
                         });
                 });
 
@@ -484,7 +505,15 @@ namespace MachineSimulation.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MachineSimulation.Entities.Concrete.OperationName", "OperationName")
+                        .WithMany("Operations")
+                        .HasForeignKey("OperationNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Machine");
+
+                    b.Navigation("OperationName");
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.OperationParameter", b =>
@@ -538,6 +567,11 @@ namespace MachineSimulation.DataAccess.Migrations
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>
                 {
                     b.Navigation("OperationParameters");
+                });
+
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.OperationName", b =>
+                {
+                    b.Navigation("Operations");
                 });
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Parameter", b =>

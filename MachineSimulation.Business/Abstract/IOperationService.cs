@@ -9,7 +9,9 @@ namespace MachineSimulation.Business.Abstract
 {
     public interface IOperationService
     {
-        Task<Operation> GetOperationIdByName(string name);
-        Task<int?> GetOperationModbusIdAsync(int machineId,string operationName);
+        Task AddOperationAsync(Operation operation);
+        Task<Operation> GetOperationIdByName(int name);
+        Task<int?> GetOperationModbusIdAsync(int machineId,int operationNameId);
+        Task<IEnumerable<Operation>> GetAllOperationsAsync();
     }
 }

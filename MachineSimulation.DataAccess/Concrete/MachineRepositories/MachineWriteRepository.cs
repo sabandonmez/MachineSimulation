@@ -21,5 +21,7 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
             await _context.Machines.AddAsync(machine);
             await _context.SaveChangesAsync();
         }
-    }
+
+	
+	}
 }

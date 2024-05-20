@@ -1,6 +1,7 @@
 ﻿using MachineSimulation.Core.EntitiesLayer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,10 @@ namespace MachineSimulation.Entities.Concrete
             Stopages=new HashSet<Stoppage>();
         }
         private string? imageUrl;
+        [Required (ErrorMessage ="MachineName is required!")]
         public string MachineName { get; set; }
-
-        public int ModbusId { get; set; } 
+		[Required(ErrorMessage = "ModbusId is required!")]
+		public int ModbusId { get; set; } 
         public string? ImageUrl
         {
             get => imageUrl ?? $"{MachineName.Replace(" ", "")}.jpg";

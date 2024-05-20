@@ -22,40 +22,40 @@ namespace MachineSimulation.App.Controllers
             _operationService = operationService;
         }
 
-        public Task<ActionResult> StartPreparation(int machineId, string operationName)
+        public Task<ActionResult> StartPreparation(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, false,operationName);
+            return WriteModbusRegister(machineId, false, operationNameId);
         }
 
-        public Task<ActionResult> StopPreparation(int machineId, string operationName)
+        public Task<ActionResult> StopPreparation(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, true, operationName);
+            return WriteModbusRegister(machineId, true, operationNameId);
         }
 
-        public Task<ActionResult> StartBasedOnSpecificReason(int machineId, string operationName)
+        public Task<ActionResult> StartBasedOnSpecificReason(int machineId, int operationNameId)
+        {
+            return WriteModbusRegister(machineId, false, operationNameId);
+        }
+
+        public Task<ActionResult> StopBasedOnSpecificReason(int machineId, int operationNameId)
+        {
+            return WriteModbusRegister(machineId, true, operationNameId);
+        }
+
+        public Task<ActionResult> StartProduction(int machineId, int operationNameId)
+        {
+            return WriteModbusRegister(machineId, true, operationNameId);
+        }
+
+
+        public Task<ActionResult> StopProduction(int machineId, int operationName)
         {
             return WriteModbusRegister(machineId, false, operationName);
         }
 
-        public Task<ActionResult> StopBasedOnSpecificReason(int machineId, string operationName)
+        public Task<ActionResult> StopAutomaticProduction(int machineId,int registerİntValue, int operationNameId)
         {
-            return WriteModbusRegister(machineId, true, operationName);
-        }
-
-        public Task<ActionResult> StartProduction(int machineId, string operationName)
-        {
-            return WriteModbusRegister(machineId, true, operationName);
-        }
-
-
-        public Task<ActionResult> StopProduction(int machineId, string operationName)
-        {
-            return WriteModbusRegister(machineId, false, operationName);
-        }
-
-        public Task<ActionResult> StopAutomaticProduction(int machineId,int registerİntValue, string operationName)
-        {
-            return WriteModbusRegister(machineId, registerİntValue, operationName);
+            return WriteModbusRegister(machineId, registerİntValue, operationNameId);
         }
         
 
@@ -106,11 +106,11 @@ namespace MachineSimulation.App.Controllers
 
 
         [NonAction]
-        private async Task<ActionResult> WriteModbusRegister(int machineId, bool registerValue , string operationName)
+        private async Task<ActionResult> WriteModbusRegister(int machineId, bool registerValue , int operationNameId)
         {
             try
             {
-                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId,operationName);
+                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId,operationNameId);
                 if (!modbusId.HasValue)
                 {
                     return Json(new { success = false, message = "Modbus ID not found." });
@@ -128,7 +128,7 @@ namespace MachineSimulation.App.Controllers
         }
 
         [NonAction]
-        private async Task<ActionResult> WriteModbusRegister(int machineId, int registerİntValue, string operationName)
+        private async Task<ActionResult> WriteModbusRegister(int machineId, int registerİntValue, int operationName)
         {
             try
             {

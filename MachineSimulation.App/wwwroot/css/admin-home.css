@@ -7,10 +7,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color:white;
-    border-radius:16px;
-    border:solid 1px;
-    
+    background-color: white;
+    border-radius: 16px;
+    border: solid 1px;
+    overflow-x: auto; /* Gerektiðinde yatay kaydýrma çubuðunu göster */
 }
 
 table {
@@ -19,9 +19,8 @@ table {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 20px;
-    border: solid 1px;  
-    padding:20px;
-   
+    border: solid 1px;
+    padding: 20px;
 }
 
 th, td {
@@ -39,13 +38,63 @@ tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.thead-all{
-    background-color:orange;
-    color:white;
+.thead-all {
+    background-color: slategrey;
+    color: white;
 }
 
 h1 {
-
     margin-top: 3rem;
     margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 16px;
+    }
+
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3) {
+        display: none;
+    }
+
+    .btn-group a {
+        padding: 5px;
+    }
+
+        .btn-group a.btn-warning {
+            display: inline-block;
+        }
+
+            .btn-group a.btn-warning i {
+                display: inline;
+            }
+
+            .btn-group a.btn-warning span {
+                display: none;
+            }
+
+        .btn-group a.btn-danger {
+            display: inline-block;
+        }
+
+            .btn-group a.btn-danger i {
+                display: inline;
+            }
+
+            .btn-group a.btn-danger span {
+                display: none;
+            }
+
+        .btn-group a.btn-info {
+            display: inline-block;
+        }
+
+            .btn-group a.btn-info i {
+                display: inline;
+            }
+
+            .btn-group a.btn-info span {
+                display: none;
+            }
 }

@@ -44,7 +44,7 @@ namespace MachineSimulation.DataAccess.Concrete.OperationLogRepositories
                     {
                         Id = log.Id,
                         MachineId = log.MachineId,
-                        OperationName = operation.OperationName, 
+                        OperationNameId = operation.OperationNameId, 
                         Timestamp = log.Timestamp
                     })
                 .ToList();

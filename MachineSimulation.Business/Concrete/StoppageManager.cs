@@ -1,5 +1,7 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.DataAccess.Abstract.StoppageRepositories;
+using MachineSimulation.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,12 @@ namespace MachineSimulation.Business.Concrete
             _stoppageWriteRepository = stoppageWriteRepository;
         }
 
-        
+        public async Task<IEnumerable<Stoppage>> GetAllStoppageAsync()
+        {
+            return await _stoppageReadRepository.GetAll(false).
+                Include(p => p.Machine)
+               .OrderBy(p => p.Machine.MachineName)  // Burada sıralama ekleniyor
+               .ToListAsync();
+        }
     }
 }

@@ -404,14 +404,14 @@ namespace MachineSimulation.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            MachineId = 1,
-                            ParameterName = "Sıcaklık"
+                            MachineId = 2,
+                            ParameterName = "Hız"
                         },
                         new
                         {
                             Id = 3,
-                            MachineId = 2,
-                            ParameterName = "Hız"
+                            MachineId = 1,
+                            ParameterName = "Sıcaklık"
                         },
                         new
                         {

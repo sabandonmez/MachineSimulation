@@ -1,4 +1,6 @@
 ﻿using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
+using MachineSimulation.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,14 @@ namespace MachineSimulation.Business.Concrete
             _parameterWriteRepository = parameterWriteRepository;
         }
 
+        public async Task<IEnumerable<Parameter>> GetAllParameterAsync()
+        {
+            return await _parameterReadRepository.GetAll(false)
+                .Include(p => p.Machine)
+                .OrderBy(p => p.Machine.MachineName)  // Burada sıralama ekleniyor
+                .ThenBy(p => p.ParameterName) // Ekstra bir sıralama ölçütü eklenebilir
+                .ToListAsync();
 
+        }
     }
 }

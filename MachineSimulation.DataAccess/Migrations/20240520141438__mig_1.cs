@@ -358,12 +358,12 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Parameters",
                 columns: new[] { "Id", "MachineId", "ParameterName" },
-                values: new object[] { 2, 1, "Sıcaklık" });
+                values: new object[] { 2, 2, "Hız" });
 
             migrationBuilder.InsertData(
                 table: "Parameters",
                 columns: new[] { "Id", "MachineId", "ParameterName" },
-                values: new object[] { 3, 2, "Hız" });
+                values: new object[] { 3, 1, "Sıcaklık" });
 
             migrationBuilder.InsertData(
                 table: "Parameters",

@@ -1,3 +1,41 @@
-﻿<h3>
-	STOPPAGE PAGE
-</h3>
+﻿@model IEnumerable<Stoppage>
+<link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
+
+<div class="display-6 text-center">
+    <h1>Parametreler</h1>
+
+    <div class="d-flex justify-content-end my-3">
+        <a asp-action="Create" class="btn btn-outline-success">
+            <i class="fa fa-plus"></i>
+            Oluştur
+        </a>
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped table-hover">
+            <thead class="thead-all">
+                <tr>
+                    <th>Makine</th>
+                    <th>Duruş Nedeni</th>
+                    <th>Duruş Nedeni Değeri</th>
+                    <th>Değişiklikler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Stoppage stop in Model)
+                {
+                    <tr>
+                        <td>@stop.Machine.MachineName</td>
+                        <td>@stop.ReasonStoppageName</td>
+                        <td>@stop.ReasonStoppageValue</td>
+                        <td>
+                            <div class="btn-group">
+                                .
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

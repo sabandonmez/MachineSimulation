@@ -89,8 +89,8 @@ namespace MachineSimulation.DataAccess.Concrete
 			modelBuilder.Entity<Parameter>()
                .HasData(
                   new Parameter { Id = 1, MachineId = 1, ParameterName = "Hız" },
-                  new Parameter { Id = 2, MachineId = 1, ParameterName = "Sıcaklık" },
-                  new Parameter { Id = 3, MachineId = 2, ParameterName = "Hız" },
+                   new Parameter { Id = 2, MachineId = 2, ParameterName = "Hız" },
+                  new Parameter { Id = 3, MachineId = 1, ParameterName = "Sıcaklık" },
                   new Parameter { Id = 4, MachineId = 2, ParameterName = "Sıcaklık" },
                   new Parameter { Id = 5, MachineId = 3, ParameterName = "Cnc Ilerleme Hizi" },
                   new Parameter { Id = 6, MachineId = 3, ParameterName = "Ariza Alarm Sayisi" }

@@ -17,6 +17,7 @@ namespace MachineSimulation.Business.Abstract
         MachineDetailsDto GetMachineDetails(int machineId);
         List<ParameterDto> GetParameters(int machineId);
         List<StoppageDto> GetStoppages(int machineId);
-		Task DeleteOneMachine(int id);
-	}
+        Task<bool> DeleteOneMachine(int id);
+
+    }
 }

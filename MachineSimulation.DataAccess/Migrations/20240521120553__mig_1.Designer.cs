@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240520141438__mig_1")]
+    [Migration("20240521120553__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -441,7 +441,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("MachineId")
+                    b.Property<int>("MachineId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ReasonStoppageName")
@@ -552,7 +552,9 @@ namespace MachineSimulation.DataAccess.Migrations
                 {
                     b.HasOne("MachineSimulation.Entities.Concrete.Machine", "Machine")
                         .WithMany("Stopages")
-                        .HasForeignKey("MachineId");
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Machine");
                 });

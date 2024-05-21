@@ -439,7 +439,7 @@ namespace MachineSimulation.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("MachineId")
+                    b.Property<int>("MachineId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ReasonStoppageName")
@@ -550,7 +550,9 @@ namespace MachineSimulation.DataAccess.Migrations
                 {
                     b.HasOne("MachineSimulation.Entities.Concrete.Machine", "Machine")
                         .WithMany("Stopages")
-                        .HasForeignKey("MachineId");
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Machine");
                 });

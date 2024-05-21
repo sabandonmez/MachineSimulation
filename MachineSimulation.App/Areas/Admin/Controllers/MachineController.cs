@@ -146,8 +146,14 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
         public async Task<IActionResult> Delete([FromRoute(Name = "id")] int id)
         {
             var existingMachine = await _machineService.GetByIdMachineAsync(id);
-            var deleteOperation =  _machineService.DeleteOneMachine(id);
-            if (deleteOperation.IsCompleted)
+            if (existingMachine == null)
+            {
+                return NotFound();
+            }
+
+            var deleteOperation = await _machineService.DeleteOneMachine(id); // Metodu await ile çağır
+
+            if (deleteOperation)
             {
                 var oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "machines", existingMachine.ImageUrl);
                 if (System.IO.File.Exists(oldFilePath))
@@ -158,6 +164,9 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+
 
     }
 }

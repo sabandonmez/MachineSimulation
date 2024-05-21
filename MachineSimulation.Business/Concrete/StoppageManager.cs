@@ -20,12 +20,46 @@ namespace MachineSimulation.Business.Concrete
             _stoppageWriteRepository = stoppageWriteRepository;
         }
 
+        public async Task AddStoppageAsync(Stoppage stoppage)
+        {
+           await _stoppageWriteRepository.AddAsync(stoppage);
+           await _stoppageWriteRepository.SaveAsync();
+        }
+
+        public async Task<bool> DeleteOneStoppage(int id)
+        {
+            var resp = await  _stoppageWriteRepository.RemoveAsync(id);
+            if (resp==true)
+            {
+                await _stoppageWriteRepository.SaveAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<IEnumerable<Stoppage>> GetAllStoppageAsync()
         {
             return await _stoppageReadRepository.GetAll(false).
                 Include(p => p.Machine)
                .OrderBy(p => p.Machine.MachineName)  // Burada sıralama ekleniyor
                .ToListAsync();
+        }
+
+        public async Task<Stoppage> GetByIdStoppageAsync(int id)
+        {
+           return await _stoppageReadRepository.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Stoppage>> GetStoppagesByMachineIdAsync(int machineId)
+        {
+            return await _stoppageReadRepository.GetStoppagesByMachineIdAsync(machineId);
+        }
+
+
+        public async Task UpdateStoppage(Stoppage stoppage)
+        {
+            _stoppageWriteRepository.Update(stoppage);
+            await _stoppageWriteRepository.SaveAsync();
         }
     }
 }

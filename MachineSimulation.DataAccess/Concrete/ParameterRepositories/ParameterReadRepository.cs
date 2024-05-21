@@ -18,6 +18,14 @@ namespace MachineSimulation.DataAccess.Concrete.ParameterRepositories
             _context = context;
         }
 
+        public async Task<IEnumerable<Parameter>> GetParametersByMachineIdAsync(int machineId)
+        {
+            return await Table
+                .Include(p => p.Machine) // Machine entity'sini dahil ediyoruz
+                .Where(p => p.MachineId == machineId)
+                .ToListAsync();
+        }
+
         public IEnumerable<Parameter> GetParametersForMachine(int machineId)
         {
             return _context.Parameters

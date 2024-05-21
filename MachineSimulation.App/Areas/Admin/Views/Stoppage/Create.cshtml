@@ -1,4 +1,4 @@
-﻿@model Machine
+﻿@model Stoppage
 
 <div class="text-center">
     <div class="display-6">
@@ -6,26 +6,26 @@
     </div>
 </div>
 
-
 <div class="form-style">
     <form asp-action="Create" method="post" enctype="multipart/form-data">
 
         <div class="text-danger" asp-validation-summary="All"></div>
 
+        <div class="form-group">
+            <label asp-for="MachineId">Makine</label>
+            <select asp-for="MachineId" class="form-control" asp-items="ViewBag.Machines"></select>
+        </div>
 
         <div class="form-group">
-            <label asp-for="MachineName"></label>
-            <input asp-for="MachineName" class="form-control" />
+            <label asp-for="ReasonStoppageName">Duruş Nedeni</label>
+            <input asp-for="ReasonStoppageName" class="form-control" />
         </div>
+
         <div class="form-group">
-            <label asp-for="ModbusId">Modbus Adres</label>
-            <input asp-for="ModbusId" class="form-control" />
+            <label asp-for="ReasonStoppageValue">Duruş Süresi</label>
+            <input asp-for="ReasonStoppageValue" class="form-control" />
         </div>
-        
-        <div class="form-group">
-            <label asp-for="ImageUrl">Resim Seçiniz</label>
-            <input type="file" name="ImageFile" class="form-control" />
-        </div>
+
 
         <div class="form-group my-3">
             <button class="btn btn-primary" type="submit">
@@ -35,7 +35,7 @@
 
             <a asp-action="Index" class="btn btn-warning">
                 <i class="fa fa-list"></i>
-                Makineler
+                Duruşlar
             </a>
         </div>
     </form>

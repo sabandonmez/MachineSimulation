@@ -15,6 +15,7 @@ namespace MachineSimulation.Business.Abstract
         Task<IEnumerable<Operation>> GetAllOperationsAsync();
         Task UpdateOperation(Operation operation);
         Task<Operation> GetByIdOperationAsync(int id);
-        
+        Task<IEnumerable<Operation>> GetOperationsByMachineIdAsync(int machineId);
+
     }
 }

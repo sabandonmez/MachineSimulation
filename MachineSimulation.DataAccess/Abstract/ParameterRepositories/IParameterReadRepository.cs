@@ -11,6 +11,7 @@ namespace MachineSimulation.DataAccess.Abstract.ParameterRepositories
     public interface IParameterReadRepository : IReadRepository<Parameter>
     {
         IEnumerable<Parameter> GetParametersForMachine(int machineId);
+        Task<IEnumerable<Parameter>> GetParametersByMachineIdAsync(int machineId);
         int GetCountParameterByMachineIdAsync(int machineId);
     }
 }

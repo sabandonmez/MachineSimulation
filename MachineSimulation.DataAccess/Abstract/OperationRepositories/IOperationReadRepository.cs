@@ -16,5 +16,6 @@ namespace MachineSimulation.DataAccess.Abstract.OperationRepositories
         public Task<Operation> GetOperationByIdAsync(int id);
 
         public  Task<int?> GetOperationModbusIdAsync(int machineId,int operationName);
+        Task<IEnumerable<Operation>> GetOperationsByMachineIdAsync(int machineId);
     }
 }

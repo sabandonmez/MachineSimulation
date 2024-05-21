@@ -107,7 +107,7 @@ namespace MachineSimulation.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    MachineId = table.Column<int>(type: "INTEGER", nullable: true),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false),
                     ReasonStoppageName = table.Column<string>(type: "TEXT", nullable: true),
                     ReasonStoppageValue = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -118,7 +118,8 @@ namespace MachineSimulation.DataAccess.Migrations
                         name: "FK_Stoppages_Machines_MachineId",
                         column: x => x.MachineId,
                         principalTable: "Machines",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

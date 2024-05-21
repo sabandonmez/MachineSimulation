@@ -1,5 +1,6 @@
 ﻿using MachineSimulation.DataAccess.Abstract.ParameterRepositories;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,24 @@ namespace MachineSimulation.Business.Concrete
             _parameterWriteRepository = parameterWriteRepository;
         }
 
+        public async Task AddParameterAsync(Parameter parameter)
+        {
+            await _parameterWriteRepository.AddAsync(parameter);
+            await _parameterWriteRepository.SaveAsync();
+        }
+
+        public async Task<bool> DeleteOneParameter(int id)
+        {
+         var resp=  await _parameterWriteRepository.RemoveAsync(id);
+
+            if (resp == true)
+            {
+                await _parameterWriteRepository.SaveAsync();
+                return true;
+            }
+            return false;             
+        }
+
         public async Task<IEnumerable<Parameter>> GetAllParameterAsync()
         {
             return await _parameterReadRepository.GetAll(false)
@@ -28,5 +47,22 @@ namespace MachineSimulation.Business.Concrete
                 .ToListAsync();
 
         }
+
+        public async Task<Parameter> GetByIdParameterAsync(int id)
+        {
+            return await _parameterReadRepository.GetByIdAsync(id, false);
+        }
+
+        public async Task<IEnumerable<Parameter>> GetParametersByMachineIdAsync(int machineId)
+        {
+            return await _parameterReadRepository.GetParametersByMachineIdAsync(machineId);
+        }
+
+        public async Task UpdateParameter(Parameter parameter)
+        {
+            _parameterWriteRepository.Update(parameter);
+            await _parameterWriteRepository.SaveAsync();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MachineSimulation.DataAccess.Abstract.StoppageRepositories;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace MachineSimulation.DataAccess.Concrete.StoppageRepositories
         public StoppageReadRepository(MachineSimulationContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<Stoppage>> GetStoppagesByMachineIdAsync(int machineId)
+        {
+            return await Table
+                .Include(s => s.Machine)
+                .Where(s => s.MachineId == machineId)
+                .ToListAsync();
         }
     }
 }

@@ -53,6 +53,11 @@ namespace MachineSimulation.Business.Concrete
 
         }
 
+        public async Task<IEnumerable<Operation>> GetOperationsByMachineIdAsync(int machineId)
+        {
+            return await _operationReadRepository.GetOperationsByMachineIdAsync(machineId);
+        }
+
         public async Task UpdateOperation(Operation operation)
         {
             _operationWriteRepository.Update(operation);

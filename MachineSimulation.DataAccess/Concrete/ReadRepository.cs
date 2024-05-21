@@ -62,5 +62,14 @@ namespace MachineSimulation.DataAccess.Concrete
             return await query.FirstOrDefaultAsync(data => data.Id == id);
         }
 
+        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        {
+            var query = Table.Where(method);
+            if (!tracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return await query.ToListAsync();
+        }
     }
 }

@@ -12,22 +12,28 @@ namespace MachineSimulation.Entities.Concrete
     {
         public Machine()
         {
-            Stopages=new HashSet<Stoppage>();
+            Parameters = new HashSet<Parameter>();
+            Stopages = new HashSet<Stoppage>();
+            Operations = new HashSet<Operation>();
         }
+
         private string? imageUrl;
-        [Required (ErrorMessage ="MachineName is required!")]
+
+        [Required(ErrorMessage = "MachineName is required!")]
         public string MachineName { get; set; }
-		[Required(ErrorMessage = "ModbusId is required!")]
-		public int ModbusId { get; set; } 
+
+        [Required(ErrorMessage = "ModbusId is required!")]
+        public int ModbusId { get; set; }
+
         public string? ImageUrl
         {
             get => imageUrl ?? $"{MachineName.Replace(" ", "")}.jpg";
             set => imageUrl = value;
         }
-     
-        public virtual ICollection<Parameter> Parameters { get; set; } // Bir makinenin birden çok parametresi olabilir.
-        public virtual ICollection<Operation> Operations { get; set; } // Bir makinenin birden çok operasyonu olabilir.
-        public virtual ICollection<Stoppage> Stopages { get; set; }  // Bir makinenin birden çok Durdurma Sebebi olabilir.
 
+        public virtual ICollection<Parameter> Parameters { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
+        public virtual ICollection<Stoppage> Stopages { get; set; }
     }
+
 }

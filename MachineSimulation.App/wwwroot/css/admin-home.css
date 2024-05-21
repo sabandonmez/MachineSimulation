@@ -3,9 +3,7 @@ body {
 }
 
 .table-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
     padding: 20px;
     background-color: white;
     border-radius: 16px;
@@ -50,51 +48,57 @@ h1 {
 
 @media screen and (max-width: 768px) {
     table {
-        font-size: 16px;
+        font-size: 25px;
     }
 
-    th:nth-child(2), td:nth-child(2),
-    th:nth-child(3), td:nth-child(3) {
+    th:not(:first-child):not(:last-child),
+    td:not(:first-child):not(:last-child) {
         display: none;
     }
 
     .btn-group a {
-        padding: 5px;
+        padding: 15px; /* Butonlarýn boyutlarýný artýrmak için padding deðeri artýrýldý */
+        font-size: 18px; /* Butonlardaki ikonlarýn boyutlarýný artýrmak için font-size artýrýldý */
     }
 
-        .btn-group a.btn-warning {
-            display: inline-block;
-        }
-
-            .btn-group a.btn-warning i {
-                display: inline;
-            }
-
-            .btn-group a.btn-warning span {
-                display: none;
-            }
-
-        .btn-group a.btn-danger {
-            display: inline-block;
-        }
-
-            .btn-group a.btn-danger i {
-                display: inline;
-            }
-
-            .btn-group a.btn-danger span {
-                display: none;
-            }
-
+        .btn-group a.btn-warning,
+        .btn-group a.btn-danger,
         .btn-group a.btn-info {
             display: inline-block;
         }
 
+            .btn-group a.btn-warning i,
+            .btn-group a.btn-danger i,
             .btn-group a.btn-info i {
                 display: inline;
             }
 
+            .btn-group a.btn-warning span,
+            .btn-group a.btn-danger span,
             .btn-group a.btn-info span {
                 display: none;
             }
 }
+
+@media screen and (max-width: 386px) {
+    table {
+        font-size: 20px;
+    }
+    
+    .btn-group a {
+        padding: 10px; /* Butonlarýn boyutlarýný artýrmak için padding deðeri artýrýldý */
+        font-size: 18px; /* Butonlardaki ikonlarýn boyutlarýný artýrmak için font-size artýrýldý */
+    }
+
+}
+@media screen and (max-width: 315px) {
+    table {
+        font-size: 20px;
+    }
+
+    .btn-group a {
+        padding: 10px; /* Butonlarýn boyutlarýný artýrmak için padding deðeri artýrýldý */
+        font-size: 13px; /* Butonlardaki ikonlarýn boyutlarýný artýrmak için font-size artýrýldý */
+    }
+}
+

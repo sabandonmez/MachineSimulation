@@ -48,7 +48,13 @@ namespace MachineSimulation.DataAccess.Concrete.OperationRepositories
             return operation?.ModbusIp;
         }
 
-
-
+        public async Task<IEnumerable<Operation>> GetOperationsByMachineIdAsync(int machineId)
+        {
+            return await Table
+                .Include(o => o.Machine)
+                .Include(o => o.OperationName)
+                .Where(o => o.MachineId == machineId)
+                .ToListAsync();
+        }
     }
 }

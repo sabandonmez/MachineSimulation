@@ -1,6 +1,7 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection.PortableExecutable;
 
 namespace MachineSimulation.App.Areas.Admin.Controllers
@@ -9,16 +10,28 @@ namespace MachineSimulation.App.Areas.Admin.Controllers
     public class OperationController : Controller
     {
         private readonly IOperationService _operationService;
-
-        public OperationController(IOperationService operationService)
+        private readonly IMachineService _machineService;
+        public OperationController(IOperationService operationService, IMachineService machineService)
         {
             _operationService = operationService;
+            _machineService = machineService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? machineId)
         {
-            var model = await _operationService.GetAllOperationsAsync();
-            return View(model);
+            var machines = await _machineService.GetAllMachinesAsync();
+            ViewBag.Machines = new SelectList(machines, "Id", "MachineName");
+
+            if (machineId.HasValue && machineId > 0)
+            {
+                var filteredOperations = await _operationService.GetOperationsByMachineIdAsync(machineId.Value);
+                return View(filteredOperations);
+            }
+            else
+            {
+                var model = await _operationService.GetAllOperationsAsync();
+                return View(model);
+            }
         }
 
         [HttpGet]

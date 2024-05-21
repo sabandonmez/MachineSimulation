@@ -10,6 +10,6 @@ namespace MachineSimulation.DataAccess.Abstract.StoppageRepositories
 {
     public interface IStoppageReadRepository:IReadRepository<Stoppage>
     {
-
+        Task<IEnumerable<Stoppage>> GetStoppagesByMachineIdAsync(int machineId);
     }
 }

@@ -27,6 +27,24 @@ namespace MachineSimulation.DataAccess.Concrete
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Parameter>()
+            .HasOne(p => p.Machine)
+            .WithMany(m => m.Parameters)
+            .HasForeignKey(p => p.MachineId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Stoppage>()
+                .HasOne(s => s.Machine)
+                .WithMany(m => m.Stopages)
+                .HasForeignKey(s => s.MachineId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Operation>()
+                .HasOne(o => o.Machine)
+                .WithMany(m => m.Operations)
+                .HasForeignKey(o => o.MachineId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<OperationParameter>()
                 .HasOne(op => op.Operation)
                 .WithMany(o => o.OperationParameters)

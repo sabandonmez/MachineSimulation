@@ -28,14 +28,13 @@ namespace MachineSimulation.Services.Concrete
             await _machineWriteRepository.SaveAsync();
         }
 
-		public async Task DeleteOneMachine(int id)
-		{
-			_machineWriteRepository.DeleteOneMachine(id);
-			await _machineWriteRepository.SaveAsync();
+        public async Task<bool> DeleteOneMachine(int id)
+        {
+            return await _machineWriteRepository.DeleteOneMachine(id);
+        }
 
-		}
 
-		public async Task<IEnumerable<Machine>> GetAllMachinesAsync()
+        public async Task<IEnumerable<Machine>> GetAllMachinesAsync()
         {
             return await _machineReadRepository.GetAll(false).ToListAsync();
         }

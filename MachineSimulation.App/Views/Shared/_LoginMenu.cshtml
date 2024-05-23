@@ -1,0 +1,35 @@
+﻿@using MachineSimulation.App.Infrastructe.Extensions
+
+<style>
+    .admin-login-settings{
+        display:flex;
+        align-items:center;
+        gap:0.5rem;
+    }
+</style>
+
+
+<div class="admin-login-settings">
+
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) 
+    {
+        <a class="nav-link " asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a>
+
+    }
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="user-logout-icon nav-link" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Context.Request.PathAndQuery()">
+            <i class="fa-solid fa-user"></i>
+            Çıkış Yap
+        </a>
+    }
+    else
+    {
+        <a class="user-icon nav-link" asp-area="" asp-controller="Account" asp-action="Login" >
+            <i class="fa-solid fa-user"></i>
+            Giriş Yap
+        </a>
+    }
+</div>
+

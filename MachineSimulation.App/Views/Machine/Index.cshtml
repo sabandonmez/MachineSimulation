@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Machine>
-
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+
 <div class="container">
-    <div class="mt-5">
+    <div class="mt-5 header-container">
         <h3 class="header-style">Makine Seçiniz</h3>
+        <partial name="_LoginMenu" ></partial>
     </div>
-    <!-- Kartların her biri için ayrı bir "col-md-4" div'i ekleyerek düzenleyin. -->
     <div class="row my-3 justify-content-center">
         @foreach (Machine mchn in Model)
         {

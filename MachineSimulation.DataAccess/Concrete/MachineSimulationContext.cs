@@ -1,14 +1,17 @@
 ﻿using MachineSimulation.Entities.Concrete;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MachineSimulation.DataAccess.Concrete
 {
-    public class MachineSimulationContext : DbContext
+    public class MachineSimulationContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Operation> Operations { get; set; }
@@ -16,7 +19,6 @@ namespace MachineSimulation.DataAccess.Concrete
         public DbSet<OperationParameter> OperationParameters { get; set; }
         public DbSet<MachineLog> MachineLogs { get; set; }
         public DbSet<OperationLog> OperationLogs { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Stoppage> Stoppages { get; set; }
         public DbSet<OperationName> OperationNames { get; set; }
         public MachineSimulationContext(DbContextOptions options) : base(options)
@@ -26,6 +28,8 @@ namespace MachineSimulation.DataAccess.Concrete
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.Entity<Parameter>()
             .HasOne(p => p.Machine)

@@ -3,6 +3,7 @@ using System;
 using MachineSimulation.DataAccess.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    partial class MachineSimulationContextModelSnapshot : ModelSnapshot
+    [Migration("20240523062402_IdentityRoleSeedData")]
+    partial class IdentityRoleSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -506,8 +508,8 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8d97af8-7649-4226-9264-f868c7360d69",
-                            ConcurrencyStamp = "47fa33bf-3670-43e9-8160-0aee023afe23",
+                            Id = "c1a48f6f-63f6-4bc1-86fd-3fcb5c609fac",
+                            ConcurrencyStamp = "85865092-6af8-47dd-8ed3-bd1ff50e1a2a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

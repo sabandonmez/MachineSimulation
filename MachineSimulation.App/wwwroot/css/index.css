@@ -17,6 +17,64 @@ body{
     width: 100%; /* Mobil cihazlarda kartlar tam geniþlikte olacak */
     margin: 0.5rem; /* Kartlarýn etrafýnda küçük bir boþluk saðlar */
 }
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+.user-icon {
+    display: flex;
+    align-items: center;
+    border: 2px solid #AD1457;
+    background-color: #AD1457;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+    .user-icon i {
+        margin-right: 0.5em;
+    }
+
+    .user-icon:hover {
+        background-color: #E91E63;
+        border-color: #E91E63;
+        color:white;
+    }
+
+
+
+.user-logout-icon {
+    display: flex;
+    align-items: center;
+    border: 2px solid #14ad2c;
+    background-color: #14ad2c;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+    .user-logout-icon i {
+        margin-right: 0.5em;
+    }
+
+    .user-logout-icon:hover {
+        background-color: #1bcc37;
+        border-color: #1bcc37;
+        color: white;
+    }
+
 @media (min-width: 576px) {
     .card {
         width: 18rem; /* Ýki kartýn yan yana sýðmasý için */
@@ -56,3 +114,11 @@ body{
     }
 }
 
+@media (min-width: 1400px) {
+    .user-icon {
+        margin-right:3rem;
+    }
+    .user-logout-icon {
+        margin-right: 3rem;
+    }
+}

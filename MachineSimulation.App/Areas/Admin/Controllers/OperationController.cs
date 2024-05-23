@@ -1,5 +1,6 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection.PortableExecutable;
@@ -7,6 +8,7 @@ using System.Reflection.PortableExecutable;
 namespace MachineSimulation.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class OperationController : Controller
     {
         private readonly IOperationService _operationService;

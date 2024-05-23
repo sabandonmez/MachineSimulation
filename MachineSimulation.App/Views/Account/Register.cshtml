@@ -1,48 +1,49 @@
-﻿@model MachineSimulation.App.Models.LoginModel
+﻿@model RegisterDto
 <link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
 
 
-<div class="display-6 text-center mt-5" >
-    <h1>Giriş Yap</h1>
+<div class="display-6 text-center mt-5">
+    <h1>Kayıt Ol</h1>
 </div>
 <div class="d-flex justify-content-center">
-    <div class="card p-4 mt-3 " style="width: 50rem;">
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <form method="post" asp-action="Login">
-            <input type="hidden" asp-for="ReturnUrl">
-
+    <div class="card p-4 " style="width: 50rem;">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <form method="post" asp-action="Register">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group my-3">
-                        <label asp-for="Name" class="form-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span class="text-danger" asp-validation-for="Name"></span>
+                        <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                        <input asp-for="UserName" class="form-control" />
+                    </div>
+
+                    <div class="form-group my-3">
+                        <label asp-for="Email" class="form-label">E-Mail</label>
+                        <input asp-for="Email" class="form-control" />
                     </div>
 
                     <div class="form-group my-3 position-relative">
-                        <label asp-for="Password" class="form-label"></label>
+                        <label asp-for="Password" class="form-label">Şifre</label>
                         <input type="password" asp-for="Password" class="form-control" id="password" />
                         <span class="position-absolute top-50 end-0 translate-middle-y me-3" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')" style="cursor: pointer; transform: translateY(-50%);">
                             <i id="togglePasswordIcon" class="fa fa-eye visible-eye"></i>
                         </span>
-                        <span class="text-danger" asp-validation-for="Password"></span>
                     </div>
 
                     <div class="form-group my-3 d-flex justify-content-between">
-                        <a asp-controller="Machine" asp-action="Index" class="btn btn-outline-primary">
-                            <i class="fa fa-home fa-arrow-left"></i>
-                            Anasayfa
+                        <a asp-action="Login" class="btn btn-outline-primary">
+                            <i class="fa fa-solid fa-arrow-left"></i>
+                            Geri
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            Giriş Yap
+                        <button type="submit" class="btn btn-primary rounded-0">
+                            <i class="fa-solid fa-user-plus"></i>
+                            Kayıt Ol
                         </button>
                     </div>
                 </div>
             </div>
         </form>
         <div class="d-flex justify-content-center">
-            <p>Eğer bir hesabınız yoksa <a asp-action="Register" asp-controller="Account">Kayıt Ol Sayfasına</a> tıklayınız.</p>
+            <p>Eğer bir hesabınız varsa, <a asp-action="Login" asp-controller="Account">Giriş Yap Sayfasına</a> tıklayınız.</p>
         </div>
     </div>
 </div>

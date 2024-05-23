@@ -37,6 +37,17 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Stoppage" asp-action="Index">Duruşlar</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Yönetim
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" asp-controller="Role" asp-action="Index">Roller</a></li>
+                        <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Kullanıcılar</a></li>
+                        <li><a class="dropdown-item" asp-controller="User" asp-action="Create">Kullanıcı Oluştur</a></li>
+                    </ul>
+                </li>
+
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">

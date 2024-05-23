@@ -7,7 +7,7 @@ namespace MachineSimulation.App.Infrastructe.Extensions
         public static async Task ConfigureDefaultAdminUser(this IApplicationBuilder app)
         {
             const string adminUser = "Admin";
-            const string adminPassword = "Admin+123456";
+            const string adminPassword = "admin.123";
 
             using var scope = app.ApplicationServices.CreateAsyncScope();
             var serviceProvider = scope.ServiceProvider;

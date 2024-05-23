@@ -1,0 +1,54 @@
+﻿@model UserDtoForUpdate
+<link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
+
+<div class="display-6 text-center">
+    <h1>Kullanıcı Güncelle - @Model.UserName</h1>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="card p-4" style="width: 50rem;">
+        <form method="post" asp-action="Update">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group my-3">
+                        <label asp-for="UserName" class="form-label"></label>
+                        <input asp-for="UserName" class="form-control" readonly />
+                    </div>
+                    <div class="form-group my-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                     
+                </div>
+                <div class="col-md-6">
+                    <div class="lead p-2 mt-2">
+                        <h5>Roller</h5>
+                        @foreach (var role in Model.Roles)
+                        {
+                            <div class="form-check my-2">
+                                <input type="checkbox"
+                                       name="Roles"
+                                       value="@role"
+                                       checked="@(Model.UserRoles.Contains(role))"
+                                       class="form-check-input" />
+                                <label class="form-check-label">@role</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="text-muted">
+                        Lütfen kullanıcı için roller seçiniz.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group my-3 d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-primary">
+                    <i class="fa fa-solid fa-arrow-left"></i>
+                    Geri
+                </a>
+                <input type="submit" class="btn btn-primary" value="Güncelle" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

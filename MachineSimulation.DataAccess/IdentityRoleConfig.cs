@@ -14,6 +14,7 @@ namespace MachineSimulation.DataAccess
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
             builder.HasData(
+                new IdentityRole() { Name = "Editor", NormalizedName = "EDITOR" },
                 new IdentityRole() { Name="Admin" , NormalizedName="ADMIN"}
                 );
         }

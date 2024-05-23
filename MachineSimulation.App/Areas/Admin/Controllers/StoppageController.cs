@@ -1,12 +1,14 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.Business.Concrete;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MachineSimulation.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class StoppageController : Controller
     {
         private readonly IStoppageService _stoppageService;

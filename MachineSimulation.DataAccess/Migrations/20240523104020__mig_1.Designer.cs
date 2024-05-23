@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240523064208_IdentityRoleSeedData2")]
-    partial class IdentityRoleSeedData2
+    [Migration("20240523104020__mig_1")]
+    partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -508,8 +508,15 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "43503319-8dec-405d-9425-a28f080bb5ad",
-                            ConcurrencyStamp = "dd7d4460-d233-49f5-94be-0be281574772",
+                            Id = "5a7d51b1-3fcf-4891-85e2-4e11ef55412d",
+                            ConcurrencyStamp = "20e27af1-1861-4c24-8002-e0d5917c120f",
+                            Name = "Editor",
+                            NormalizedName = "EDITOR"
+                        },
+                        new
+                        {
+                            Id = "33911f39-fa54-4ebf-b0ac-f2bd173e135e",
+                            ConcurrencyStamp = "d616e946-9b32-454d-8426-e11647c446c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

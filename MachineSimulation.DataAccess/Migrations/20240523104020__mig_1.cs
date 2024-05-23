@@ -308,6 +308,16 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "33911f39-fa54-4ebf-b0ac-f2bd173e135e", "d616e946-9b32-454d-8426-e11647c446c3", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "5a7d51b1-3fcf-4891-85e2-4e11ef55412d", "20e27af1-1861-4c24-8002-e0d5917c120f", "Editor", "EDITOR" });
+
+            migrationBuilder.InsertData(
                 table: "Machines",
                 columns: new[] { "Id", "ImageUrl", "MachineName", "ModbusId" },
                 values: new object[] { 1, "PlastikEnjeksiyon.jpg", "Plastik Enjeksiyon", 4096 });

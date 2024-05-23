@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MachineSimulation.Entities.Concrete;
 using MachineSimulation.Entities.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 namespace MachineSimulation.App.Infrastructe.Mappers
 {
@@ -17,6 +18,8 @@ namespace MachineSimulation.App.Infrastructe.Mappers
             CreateMap<Stoppage, StoppageDto>();
             CreateMap<StoppageDto, Stoppage>();
 
+            CreateMap<UserDtoForCreation, IdentityUser>();
+            CreateMap<UserDtoForUpdate, IdentityUser>().ReverseMap();
 
         }
     }

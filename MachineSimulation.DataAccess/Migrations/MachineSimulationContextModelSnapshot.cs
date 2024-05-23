@@ -506,8 +506,15 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8d97af8-7649-4226-9264-f868c7360d69",
-                            ConcurrencyStamp = "47fa33bf-3670-43e9-8160-0aee023afe23",
+                            Id = "5a7d51b1-3fcf-4891-85e2-4e11ef55412d",
+                            ConcurrencyStamp = "20e27af1-1861-4c24-8002-e0d5917c120f",
+                            Name = "Editor",
+                            NormalizedName = "EDITOR"
+                        },
+                        new
+                        {
+                            Id = "33911f39-fa54-4ebf-b0ac-f2bd173e135e",
+                            ConcurrencyStamp = "d616e946-9b32-454d-8426-e11647c446c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

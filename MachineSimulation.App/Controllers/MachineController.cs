@@ -5,10 +5,12 @@ using MachineSimulation.Business.Concrete;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
 using MachineSimulation.Entities.Concrete;
 using MachineSimulation.Entities.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MachineSimulation.App.Controllers
 {
+
     public class MachineController : Controller
 	{
 		private readonly IMachineService _machineService;
@@ -34,6 +36,7 @@ namespace MachineSimulation.App.Controllers
 			return View(model);
 		}
 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public async Task<IActionResult> ModbusConnect(int machineId)
         {
@@ -71,6 +74,7 @@ namespace MachineSimulation.App.Controllers
             return Ok(success);
         }
 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public async Task<IActionResult> ModbusDisconnect(int machineId)
         {
@@ -105,7 +109,7 @@ namespace MachineSimulation.App.Controllers
             return Ok(success);
         }
 
-
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public IActionResult Get([FromRoute(Name = "id")] int id)
         {

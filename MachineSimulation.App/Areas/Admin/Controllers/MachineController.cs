@@ -1,10 +1,12 @@
 ﻿using MachineSimulation.Business.Abstract;
 using MachineSimulation.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MachineSimulation.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MachineController : Controller
     {
 		private readonly IWebHostEnvironment _hostingEnvironment;

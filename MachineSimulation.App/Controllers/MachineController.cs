@@ -152,9 +152,9 @@ namespace MachineSimulation.App.Controllers
             }
 
             await _operationLogService.AddOperationLogAsync(operationLog);
-
             return Ok(new { message = "Log recorded successfully." });
         }
+
 
     }
 }

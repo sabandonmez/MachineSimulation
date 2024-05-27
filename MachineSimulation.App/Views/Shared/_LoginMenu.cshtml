@@ -1,22 +1,43 @@
 ﻿@using MachineSimulation.App.Infrastructe.Extensions
 
 <style>
-    .admin-login-settings{
+    .admin-login-settings {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .admin-button {
         display:flex;
         align-items:center;
+        background-color: #AD1457;
+        border: 2px solid #AD1457;
+        color: white;
+        font-size: 1rem;
+        padding: 0.5em 1em;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
         gap:0.5rem;
     }
+
+        .admin-button:hover {
+            background-color: #C2185B;
+            border-color: #C2185B;
+            color:white!important;
+            text-decoration: none;
+        }
 </style>
 
-
 <div class="admin-login-settings">
-
-    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) 
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
-        <a class="nav-link " asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a>
+        <a class="admin-button nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
 
+            <i class="fa-solid fa-unlock"></i>
+            Admin Panel</a>
     }
-    
+
     @if (User.Identity.IsAuthenticated)
     {
         <a class="user-logout-icon nav-link" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Context.Request.PathAndQuery()">
@@ -26,10 +47,9 @@
     }
     else
     {
-        <a class="user-icon nav-link" asp-area="" asp-controller="Account" asp-action="Login" >
+        <a class="user-icon nav-link" asp-area="" asp-controller="Account" asp-action="Login">
             <i class="fa-solid fa-user"></i>
             Giriş Yap
         </a>
     }
 </div>
-

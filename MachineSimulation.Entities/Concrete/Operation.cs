@@ -15,5 +15,6 @@ namespace MachineSimulation.Entities.Concrete
         public virtual Machine Machine { get; set; }
         public virtual OperationName OperationName { get; set; }
         public virtual ICollection<OperationParameter> OperationParameters { get; set; }
+        public string ModbusIpType { get; set; } = "bool";
     }
 }

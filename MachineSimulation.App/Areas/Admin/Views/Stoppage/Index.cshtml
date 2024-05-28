@@ -35,14 +35,14 @@
             <h5>
                 <i class="fa-solid fa-filter"></i>
             </h5>
-            <select class="form-control" id="machineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
+            <select class="form-control" id="stoppageMachineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
                 <option value="">Makina Seçiniz</option>
                 @foreach (var machine in ViewBag.Machines)
                 {
                     <option value="@machine.Value">@machine.Text</option>
                 }
             </select>
-            <button type="button" class="btn btn-secondary" id="noFilterButton" style="margin-left: 10px;">
+            <button type="button" class="btn btn-secondary" id="stoppageNoFilterButton" style="margin-left: 10px;">
                 <i class="fa-solid fa-filter-circle-xmark"></i>
                 Filtreyi Kaldır
             </button>
@@ -85,17 +85,26 @@
 
 @section Scripts {
     <script>
-        document.getElementById('machineFilter').addEventListener('change', function () {
-            var selectedMachineId = this.value;
-            var url = '@Url.Action("Index", "Stoppage", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
-            window.location.href = url;
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var machineFilter = document.getElementById('stoppageMachineFilter');
+            var selectedMachineId = localStorage.getItem('selectedStoppageMachineId');
+            if (selectedMachineId) {
+                machineFilter.value = selectedMachineId;
+            }
 
-        document.getElementById('noFilterButton').addEventListener('click', function () {
-            window.location.href = '@Url.Action("Index", "Stoppage", new { area = "Admin" })';
+            machineFilter.addEventListener('change', function () {
+                var selectedMachineId = this.value;
+                localStorage.setItem('selectedStoppageMachineId', selectedMachineId);
+                var url = '@Url.Action("Index", "Stoppage", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
+                window.location.href = url;
+            });
+
+            document.getElementById('stoppageNoFilterButton').addEventListener('click', function () {
+                localStorage.removeItem('selectedStoppageMachineId');
+                window.location.href = '@Url.Action("Index", "Stoppage", new { area = "Admin" })';
+            });
         });
     </script>
 }
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

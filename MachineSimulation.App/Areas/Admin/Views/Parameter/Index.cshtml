@@ -1,4 +1,4 @@
-﻿ @model IEnumerable<Parameter>
+﻿@model IEnumerable<Parameter>
 <link rel="stylesheet" href="~/css/admin-home.css" asp-append-version="true" />
 <style>
     .form-group {
@@ -36,14 +36,14 @@
             <h5>
                 <i class="fa-solid fa-filter"></i>
             </h5>
-            <select class="form-control" id="machineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
+            <select class="form-control" id="parameterMachineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
                 <option value="">Makine Seçiniz</option>
                 @foreach (var machine in ViewBag.Machines)
                 {
                     <option value="@machine.Value">@machine.Text</option>
                 }
             </select>
-            <button type="button" class="btn btn-secondary" id="noFilterButton" style="margin-left: 10px;">
+            <button type="button" class="btn btn-secondary" id="parameterNoFilterButton" style="margin-left: 10px;">
                 <i class="fa-solid fa-filter-circle-xmark"></i>
                 Filtreyi Kaldır
             </button>
@@ -84,14 +84,24 @@
 
 @section Scripts {
     <script>
-        document.getElementById('machineFilter').addEventListener('change', function () {
-            var selectedMachineId = this.value;
-            var url = '@Url.Action("Index", "Parameter", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
-            window.location.href = url;
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var machineFilter = document.getElementById('parameterMachineFilter');
+            var selectedMachineId = localStorage.getItem('selectedParameterMachineId');
+            if (selectedMachineId) {
+                machineFilter.value = selectedMachineId;
+            }
 
-        document.getElementById('noFilterButton').addEventListener('click', function () {
-            window.location.href = '@Url.Action("Index", "Parameter", new { area = "Admin" })';
+            machineFilter.addEventListener('change', function () {
+                var selectedMachineId = this.value;
+                localStorage.setItem('selectedParameterMachineId', selectedMachineId);
+                var url = '@Url.Action("Index", "Parameter", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
+                window.location.href = url;
+            });
+
+            document.getElementById('parameterNoFilterButton').addEventListener('click', function () {
+                localStorage.removeItem('selectedParameterMachineId');
+                window.location.href = '@Url.Action("Index", "Parameter", new { area = "Admin" })';
+            });
         });
     </script>
 }

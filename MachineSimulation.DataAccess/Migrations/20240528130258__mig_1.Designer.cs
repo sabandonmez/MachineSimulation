@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240523104020__mig_1")]
+    [Migration("20240528130258__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,10 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<int?>("ModbusIp")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ModbusIpType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("OperationNameId")
                         .HasColumnType("INTEGER");
 
@@ -113,6 +117,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 1,
                             MachineId = 1,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 1
                         },
                         new
@@ -120,6 +125,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 2,
                             MachineId = 1,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 2
                         },
                         new
@@ -127,6 +133,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 3,
                             MachineId = 1,
                             ModbusIp = 2273,
+                            ModbusIpType = "bool",
                             OperationNameId = 3
                         },
                         new
@@ -134,12 +141,14 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 4,
                             MachineId = 1,
                             ModbusIp = 2273,
+                            ModbusIpType = "bool",
                             OperationNameId = 4
                         },
                         new
                         {
                             Id = 13,
                             MachineId = 1,
+                            ModbusIpType = "bool",
                             OperationNameId = 5
                         },
                         new
@@ -147,6 +156,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 14,
                             MachineId = 1,
                             ModbusIp = 4206,
+                            ModbusIpType = "bool",
                             OperationNameId = 6
                         },
                         new
@@ -154,6 +164,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 15,
                             MachineId = 1,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 7
                         },
                         new
@@ -161,6 +172,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 16,
                             MachineId = 1,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 8
                         },
                         new
@@ -168,6 +180,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 5,
                             MachineId = 2,
                             ModbusIp = 2281,
+                            ModbusIpType = "bool",
                             OperationNameId = 1
                         },
                         new
@@ -175,6 +188,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 6,
                             MachineId = 2,
                             ModbusIp = 2281,
+                            ModbusIpType = "bool",
                             OperationNameId = 2
                         },
                         new
@@ -182,6 +196,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 7,
                             MachineId = 2,
                             ModbusIp = 2274,
+                            ModbusIpType = "bool",
                             OperationNameId = 3
                         },
                         new
@@ -189,12 +204,14 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 8,
                             MachineId = 2,
                             ModbusIp = 2274,
+                            ModbusIpType = "bool",
                             OperationNameId = 4
                         },
                         new
                         {
                             Id = 17,
                             MachineId = 2,
+                            ModbusIpType = "bool",
                             OperationNameId = 5
                         },
                         new
@@ -202,6 +219,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 18,
                             MachineId = 2,
                             ModbusIp = 4206,
+                            ModbusIpType = "bool",
                             OperationNameId = 6
                         },
                         new
@@ -209,6 +227,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 19,
                             MachineId = 2,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 7
                         },
                         new
@@ -216,6 +235,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 20,
                             MachineId = 2,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 8
                         },
                         new
@@ -223,6 +243,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 9,
                             MachineId = 3,
                             ModbusIp = 2282,
+                            ModbusIpType = "bool",
                             OperationNameId = 1
                         },
                         new
@@ -230,6 +251,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 10,
                             MachineId = 3,
                             ModbusIp = 2282,
+                            ModbusIpType = "bool",
                             OperationNameId = 2
                         },
                         new
@@ -237,6 +259,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 11,
                             MachineId = 3,
                             ModbusIp = 2275,
+                            ModbusIpType = "bool",
                             OperationNameId = 3
                         },
                         new
@@ -244,12 +267,14 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 12,
                             MachineId = 3,
                             ModbusIp = 2275,
+                            ModbusIpType = "bool",
                             OperationNameId = 4
                         },
                         new
                         {
                             Id = 21,
                             MachineId = 3,
+                            ModbusIpType = "bool",
                             OperationNameId = 5
                         },
                         new
@@ -257,6 +282,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 22,
                             MachineId = 3,
                             ModbusIp = 4206,
+                            ModbusIpType = "bool",
                             OperationNameId = 6
                         },
                         new
@@ -264,6 +290,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 23,
                             MachineId = 3,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 7
                         },
                         new
@@ -271,6 +298,7 @@ namespace MachineSimulation.DataAccess.Migrations
                             Id = 24,
                             MachineId = 3,
                             ModbusIp = 2280,
+                            ModbusIpType = "bool",
                             OperationNameId = 8
                         });
                 });
@@ -508,15 +536,15 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5a7d51b1-3fcf-4891-85e2-4e11ef55412d",
-                            ConcurrencyStamp = "20e27af1-1861-4c24-8002-e0d5917c120f",
+                            Id = "d562f889-e004-4350-8acf-f1b0c2ede27c",
+                            ConcurrencyStamp = "b721b8fa-ae49-4d21-b390-2120745c3a63",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "33911f39-fa54-4ebf-b0ac-f2bd173e135e",
-                            ConcurrencyStamp = "d616e946-9b32-454d-8426-e11647c446c3",
+                            Id = "f816bcc4-7603-476f-b9cc-1b6255719006",
+                            ConcurrencyStamp = "740a6306-e970-4cb1-a5da-b30cfc15c9c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

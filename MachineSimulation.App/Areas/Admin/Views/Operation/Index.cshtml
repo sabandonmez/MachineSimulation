@@ -29,14 +29,14 @@
             <h5>
                 <i class="fa-solid fa-filter"></i>
             </h5>
-            <select class="form-control" id="machineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
+            <select class="form-control" id="operationMachineFilter" name="machineFilter" style="width: auto; margin-left: 10px;">
                 <option value="">Makine Seçiniz</option>
                 @foreach (var machine in ViewBag.Machines)
                 {
                     <option value="@machine.Value">@machine.Text</option>
                 }
             </select>
-            <button type="button" class="btn btn-secondary" id="noFilterButton" style="margin-left: 10px;">
+            <button type="button" class="btn btn-secondary" id="operationNoFilterButton" style="margin-left: 10px;">
                 <i class="fa-solid fa-filter-circle-xmark"></i>
                 Filtreyi Kaldır
             </button>
@@ -48,7 +48,9 @@
                     <th>Makine</th>
                     <th>Operasyon Adı</th>
                     <th>Modbus Adres</th>
+                    <th>Modbus Adres Türü</th>
                     <th>Değişiklikler</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +60,7 @@
                         <td>@(oprt.Machine != null ? oprt.Machine.MachineName : "Makine Yok")</td>
                         <td>@oprt.OperationName.Name</td>
                         <td>@oprt.ModbusIp</td>
+                        <td>@oprt.ModbusIpType</td>
                         <td>
                             <a class="btn btn-warning" asp-action="Update" asp-controller="Operation" asp-route-id="@oprt.Id">
                                 <i class="fa fa-edit"></i>
@@ -73,14 +76,24 @@
 
 @section Scripts {
     <script>
-        document.getElementById('machineFilter').addEventListener('change', function () {
-            var selectedMachineId = this.value;
-            var url = '@Url.Action("Index", "Operation", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
-            window.location.href = url;
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var machineFilter = document.getElementById('operationMachineFilter');
+            var selectedMachineId = localStorage.getItem('selectedOperationMachineId');
+            if (selectedMachineId) {
+                machineFilter.value = selectedMachineId;
+            }
 
-        document.getElementById('noFilterButton').addEventListener('click', function () {
-            window.location.href = '@Url.Action("Index", "Operation", new { area = "Admin" })';
+            machineFilter.addEventListener('change', function () {
+                var selectedMachineId = this.value;
+                localStorage.setItem('selectedOperationMachineId', selectedMachineId);
+                var url = '@Url.Action("Index", "Operation", new { area = "Admin" })' + '?machineId=' + selectedMachineId;
+                window.location.href = url;
+            });
+
+            document.getElementById('operationNoFilterButton').addEventListener('click', function () {
+                localStorage.removeItem('selectedOperationMachineId');
+                window.location.href = '@Url.Action("Index", "Operation", new { area = "Admin" })';
+            });
         });
     </script>
 }

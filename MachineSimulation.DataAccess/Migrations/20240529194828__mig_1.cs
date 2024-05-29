@@ -79,6 +79,19 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModbusAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Address = table.Column<ushort>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModbusAddresses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OperationLogs",
                 columns: table => new
                 {
@@ -311,12 +324,12 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d562f889-e004-4350-8acf-f1b0c2ede27c", "b721b8fa-ae49-4d21-b390-2120745c3a63", "Editor", "EDITOR" });
+                values: new object[] { "18fed630-2828-4b0e-a430-83b5dc07e3e7", "32690b99-b85a-44c8-b751-41b5236c535c", "Editor", "EDITOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f816bcc4-7603-476f-b9cc-1b6255719006", "740a6306-e970-4cb1-a5da-b30cfc15c9c3", "Admin", "ADMIN" });
+                values: new object[] { "a2c44fd8-0121-49db-872e-b29747365575", "b43578da-d878-4da2-92d4-e1dc0ac28f40", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "Machines",
@@ -625,6 +638,9 @@ namespace MachineSimulation.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "MachineLogs");
+
+            migrationBuilder.DropTable(
+                name: "ModbusAddresses");
 
             migrationBuilder.DropTable(
                 name: "OperationLogs");

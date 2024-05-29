@@ -21,6 +21,7 @@ namespace MachineSimulation.DataAccess.Concrete
         public DbSet<OperationLog> OperationLogs { get; set; }
         public DbSet<Stoppage> Stoppages { get; set; }
         public DbSet<OperationName> OperationNames { get; set; }
+        public DbSet<ModbusAddress> ModbusAddresses { get; set; }
         public MachineSimulationContext(DbContextOptions options) : base(options)
         {
 

@@ -1,6 +1,7 @@
 ﻿using MachineSimulation.DataAccess.Abstract;
 using MachineSimulation.DataAccess.Abstract.MachineLogRepositories;
 using MachineSimulation.DataAccess.Abstract.MachineRepositories;
+using MachineSimulation.DataAccess.Abstract.ModbusAddressRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationLogRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Abstract.OperationRepositories;
@@ -9,6 +10,7 @@ using MachineSimulation.DataAccess.Abstract.StoppageRepositories;
 using MachineSimulation.DataAccess.Concrete;
 using MachineSimulation.DataAccess.Concrete.MachineLogRepositories;
 using MachineSimulation.DataAccess.Concrete.MachineRepositories;
+using MachineSimulation.DataAccess.Concrete.ModbusAddressRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationLogRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationParameterRepositories;
 using MachineSimulation.DataAccess.Concrete.OperationRepositories;
@@ -46,6 +48,9 @@ namespace MachineSimulation.DataAccess
 
             services.AddScoped<IStoppageReadRepository,StoppageReadRepository>();
             services.AddScoped<IStoppageWriteRepository,StoppageWriteRepository>();
+
+            services.AddScoped<IModbusAddressReadRepository, ModbusAddressReadRepository>();
+            services.AddScoped<IModbusAddressWriteRepository, ModbusAddressWriteRepository>();
         }
     }
 }

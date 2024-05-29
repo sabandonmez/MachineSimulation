@@ -82,6 +82,20 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.ToTable("MachineLogs");
                 });
 
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.ModbusAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ushort>("Address")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModbusAddresses");
+                });
+
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>
                 {
                     b.Property<int>("Id")
@@ -534,15 +548,15 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d562f889-e004-4350-8acf-f1b0c2ede27c",
-                            ConcurrencyStamp = "b721b8fa-ae49-4d21-b390-2120745c3a63",
+                            Id = "18fed630-2828-4b0e-a430-83b5dc07e3e7",
+                            ConcurrencyStamp = "32690b99-b85a-44c8-b751-41b5236c535c",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "f816bcc4-7603-476f-b9cc-1b6255719006",
-                            ConcurrencyStamp = "740a6306-e970-4cb1-a5da-b30cfc15c9c3",
+                            Id = "a2c44fd8-0121-49db-872e-b29747365575",
+                            ConcurrencyStamp = "b43578da-d878-4da2-92d4-e1dc0ac28f40",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

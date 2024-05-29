@@ -10,16 +10,18 @@ namespace MachineSimulation.App.Controllers
     {
         private readonly IOperationService _operationService;
         private readonly IModbusConnectionService _modbusConnectionService;
+        private readonly IModbusAddressService _modbusAddressService;
 
         // Sabit Modbus bağlantı parametreleri
         private readonly string ipAddress = "192.168.0.231";
         private readonly int port = 502;
         private readonly byte slaveId = 1;
 
-        public ModbusController(IModbusConnectionService modbusConnectionService, IOperationService operationService)
+        public ModbusController(IModbusConnectionService modbusConnectionService, IOperationService operationService, IModbusAddressService modbusAddressService)
         {
             _modbusConnectionService = modbusConnectionService;
             _operationService = operationService;
+            _modbusAddressService = modbusAddressService;
         }
 
         public Task<ActionResult> StartPreparation(int machineId, int operationNameId)
@@ -62,7 +64,7 @@ namespace MachineSimulation.App.Controllers
 
         [HttpPost]
         [Route("/modbus/writestrings")]
-        public ActionResult WriteStringsToModbus([FromBody] WriteStringsModel model)
+        public async Task<ActionResult> WriteStringsToModbus([FromBody] WriteStringsModel model)
         {
             if (model == null)
             {
@@ -74,10 +76,13 @@ namespace MachineSimulation.App.Controllers
                 return BadRequest("Strings are required.");
             }
 
-            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(model.MachineId, ipAddress, port, slaveId);
+            var addresses = await _modbusAddressService.GetAllAddressesAsync();
+            if (addresses.Count < model.Strings.Count)
+            {
+                return BadRequest("Not enough addresses configured.");
+            }
 
-            // Her string için bir adres listesi
-            ushort[] addresses = new ushort[] { 4196,4198,4200,4202,4204,4206 };  // Adresleri buraya eklemeye devam edebilirsin.
+            var modbusClient = _modbusConnectionService.GetOrCreateModbusClient(model.MachineId, ipAddress, port, slaveId);
 
             for (int i = 0; i < model.Strings.Count; i++)
             {
@@ -85,13 +90,13 @@ namespace MachineSimulation.App.Controllers
                 if (ushort.TryParse(str, out ushort value))
                 {
                     // ushort değeri olarak yaz
-                    modbusClient.WriteSingleRegister(addresses[i], value);
+                    modbusClient.WriteSingleRegister(addresses[i].Address, value);
                 }
                 else if (str == "0" || str == "1")
                 {
                     // Bit değeri olarak yaz (coil olarak)
                     bool bitValue = str == "1";
-                    modbusClient.WriteSingleCoil(addresses[i], bitValue);
+                    modbusClient.WriteSingleCoil(addresses[i].Address, bitValue);
                 }
                 else
                 {

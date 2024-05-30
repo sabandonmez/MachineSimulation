@@ -15,6 +15,7 @@ namespace MachineSimulation.Entities.Concrete
             Parameters = new HashSet<Parameter>();
             Stopages = new HashSet<Stoppage>();
             Operations = new HashSet<Operation>();
+            ModbusAddresses = new HashSet<ModbusAddress>();
         }
 
         private string? imageUrl;
@@ -34,6 +35,7 @@ namespace MachineSimulation.Entities.Concrete
         public virtual ICollection<Parameter> Parameters { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
         public virtual ICollection<Stoppage> Stopages { get; set; }
+        public virtual ICollection<ModbusAddress> ModbusAddresses { get; set; }
     }
 
 }

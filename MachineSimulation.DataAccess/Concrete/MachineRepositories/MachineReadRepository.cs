@@ -19,6 +19,11 @@ namespace MachineSimulation.DataAccess.Concrete.MachineRepositories
             _context = context;
         }
 
+        public IQueryable<Machine> GetAllMachineList()
+        {
+            return _context.Machines;
+        }
+
         public MachineDetailsDto GetMachineDetails(int machineId)
         {
             var machine = _context.Machines.Include(m => m.Parameters).FirstOrDefault(m => m.Id == machineId);

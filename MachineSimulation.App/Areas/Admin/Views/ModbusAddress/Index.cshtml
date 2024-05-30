@@ -17,6 +17,7 @@
             <thead class="thead-all">
                 <tr>
                     <th>Adres</th>
+                    <th>Makine</th>
                     <th>Değişiklikler</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                 {
                     <tr>
                         <td>@address.Address</td>
+                        <td>@address.Machine.MachineName</td>
                         <td>
                             <div class="btn-group">
                                 <form method="post" asp-action="DeleteAddress" asp-route-id="@address.Id">

@@ -12,5 +12,6 @@ namespace MachineSimulation.Business.Abstract
         Task<List<ModbusAddress>> GetAllAddressesAsync();
         Task AddAddressAsync(ModbusAddress address);
         Task DeleteAddressAsync(int id);
+        Task<List<ModbusAddress>> GetAddressesByMachineIdAsync(int machineId);
     }
 }

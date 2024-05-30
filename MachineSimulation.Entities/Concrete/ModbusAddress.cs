@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace MachineSimulation.Entities.Concrete
 {
-    public class ModbusAddress :BaseEntity
+    public class ModbusAddress : BaseEntity
     {
         public ushort Address { get; set; }
+        public int MachineId { get; set; }
+        public virtual Machine Machine { get; set; }
     }
+
 
 }

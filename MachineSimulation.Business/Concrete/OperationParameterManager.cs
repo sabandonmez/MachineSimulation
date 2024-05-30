@@ -52,7 +52,7 @@ namespace MachineSimulation.Business.Concrete
                 }
 
                 // Yeni parametre değeri üretilir ve güncelleme listesine eklenir.
-                var newValue = new Random().Next(35, 65);
+                var newValue = new Random().Next(35, 65);  // KALİTE KRİTER İÇİN PARAMETRE DEĞERİ BELİRLENEN ARALIKTA RANDOM ÜRETİLİR.
                 updatedParameters.Add(parameter.ParameterName, newValue);
 
                 // OperationParameters tablosuna yeni değer eklenir.

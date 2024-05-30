@@ -13,6 +13,7 @@ namespace MachineSimulation.Business.Abstract
         Task AddMachineAsync(Machine machine);
         Task UpdateMachine(Machine machine);
         Task<IEnumerable<Machine>> GetAllMachinesAsync();
+        Task<List<Machine>> GetAllMachineListAsync();
         Task<Machine> GetByIdMachineAsync(int id);
         MachineDetailsDto GetMachineDetails(int machineId);
         List<ParameterDto> GetParameters(int machineId);

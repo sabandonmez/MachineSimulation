@@ -14,5 +14,7 @@ namespace MachineSimulation.DataAccess.Abstract.MachineRepositories
         public MachineDetailsDto GetMachineDetails(int machineId);
         public List<ParameterDto> GetParameters(int machineId);
         public List<StoppageDto> GetStoppages(int machineId);
+        public IQueryable<Machine> GetAllMachineList();
+        
     }
 }

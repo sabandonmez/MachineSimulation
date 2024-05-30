@@ -79,19 +79,6 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModbusAddresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Address = table.Column<ushort>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModbusAddresses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OperationLogs",
                 columns: table => new
                 {
@@ -226,6 +213,26 @@ namespace MachineSimulation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModbusAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Address = table.Column<ushort>(type: "INTEGER", nullable: false),
+                    MachineId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModbusAddresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModbusAddresses_Machines_MachineId",
+                        column: x => x.MachineId,
+                        principalTable: "Machines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Parameters",
                 columns: table => new
                 {
@@ -324,12 +331,12 @@ namespace MachineSimulation.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "18fed630-2828-4b0e-a430-83b5dc07e3e7", "32690b99-b85a-44c8-b751-41b5236c535c", "Editor", "EDITOR" });
+                values: new object[] { "6e61da5a-2a4d-4f72-b397-6b6bd347e005", "f8ac851d-ccf3-4c4a-9052-3bb75cae924c", "Editor", "EDITOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a2c44fd8-0121-49db-872e-b29747365575", "b43578da-d878-4da2-92d4-e1dc0ac28f40", "Admin", "ADMIN" });
+                values: new object[] { "cc6fe0ac-a9b6-43c9-85fa-a9672df02294", "42f3e397-da74-43a1-83ab-d0439642894b", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "Machines",
@@ -587,6 +594,11 @@ namespace MachineSimulation.DataAccess.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModbusAddresses_MachineId",
+                table: "ModbusAddresses",
+                column: "MachineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OperationParameters_OperationId",

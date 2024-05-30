@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineSimulation.DataAccess.Migrations
 {
     [DbContext(typeof(MachineSimulationContext))]
-    [Migration("20240529194828__mig_1")]
+    [Migration("20240530133838__mig_1")]
     partial class _mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,7 +93,12 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.Property<ushort>("Address")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("MachineId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MachineId");
 
                     b.ToTable("ModbusAddresses");
                 });
@@ -550,15 +555,15 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "18fed630-2828-4b0e-a430-83b5dc07e3e7",
-                            ConcurrencyStamp = "32690b99-b85a-44c8-b751-41b5236c535c",
+                            Id = "6e61da5a-2a4d-4f72-b397-6b6bd347e005",
+                            ConcurrencyStamp = "f8ac851d-ccf3-4c4a-9052-3bb75cae924c",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "a2c44fd8-0121-49db-872e-b29747365575",
-                            ConcurrencyStamp = "b43578da-d878-4da2-92d4-e1dc0ac28f40",
+                            Id = "cc6fe0ac-a9b6-43c9-85fa-a9672df02294",
+                            ConcurrencyStamp = "42f3e397-da74-43a1-83ab-d0439642894b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -730,6 +735,17 @@ namespace MachineSimulation.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MachineSimulation.Entities.Concrete.ModbusAddress", b =>
+                {
+                    b.HasOne("MachineSimulation.Entities.Concrete.Machine", "Machine")
+                        .WithMany("ModbusAddresses")
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Machine");
+                });
+
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Operation", b =>
                 {
                     b.HasOne("MachineSimulation.Entities.Concrete.Machine", "Machine")
@@ -843,6 +859,8 @@ namespace MachineSimulation.DataAccess.Migrations
 
             modelBuilder.Entity("MachineSimulation.Entities.Concrete.Machine", b =>
                 {
+                    b.Navigation("ModbusAddresses");
+
                     b.Navigation("Operations");
 
                     b.Navigation("Parameters");

@@ -10,5 +10,6 @@ namespace MachineSimulation.DataAccess.Abstract.ModbusAddressRepositories
 {
     public interface IModbusAddressReadRepository : IReadRepository<ModbusAddress>
     {
+        Task<List<ModbusAddress>> GetAddressesByMachineIdAsync(int machineId);
     }
 }

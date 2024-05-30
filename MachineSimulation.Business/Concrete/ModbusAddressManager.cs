@@ -26,6 +26,11 @@ namespace MachineSimulation.Business.Concrete
             return await _readRepository.GetAll().ToListAsync();
         }
 
+        public async Task<List<ModbusAddress>> GetAddressesByMachineIdAsync(int machineId)
+        {
+            return await _readRepository.GetAddressesByMachineIdAsync(machineId);
+        }
+
         public async Task AddAddressAsync(ModbusAddress address)
         {
             await _writeRepository.AddAsync(address);
@@ -42,5 +47,6 @@ namespace MachineSimulation.Business.Concrete
             }
         }
     }
+
 
 }

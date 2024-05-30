@@ -26,38 +26,38 @@ namespace MachineSimulation.App.Controllers
 
         public Task<ActionResult> StartPreparation(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, false, operationNameId);
+            return WriteModbusRegister(machineId, false, operationNameId); //Şuan hazırlık başlat'a basılınca 0 gönderir.
         }
 
         public Task<ActionResult> StopPreparation(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, true, operationNameId);
+            return WriteModbusRegister(machineId, true, operationNameId); //Şuan hazırlık bitir'e basılınca 1 gönderir.
         }
 
         public Task<ActionResult> StartBasedOnSpecificReason(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, false, operationNameId);
+            return WriteModbusRegister(machineId, false, operationNameId); //Şuan belirli duruş başlat'a basılınca 0 gönderir.
         }
 
         public Task<ActionResult> StopBasedOnSpecificReason(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, true, operationNameId);
+            return WriteModbusRegister(machineId, true, operationNameId); //Şuan belirli duruş bitir'e basılınca 1 gönderir.
         }
 
         public Task<ActionResult> StartProduction(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, true, operationNameId);
+            return WriteModbusRegister(machineId, true, operationNameId); //Şuan manuel üretim  başlat'a basılınca 1 gönderir.
         }
 
         [HttpPost]
         public Task<ActionResult> StopProduction(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, false, operationNameId);
+            return WriteModbusRegister(machineId, false, operationNameId); //Şuan manuel üretimi bitir'e basılınca 0 gönderir.
         }
 
         public Task<ActionResult> StopAutomaticProduction(int machineId,int registerİntValue, int operationNameId)
         {
-            return WriteModbusRegister(machineId, registerİntValue, operationNameId);
+            return WriteModbusRegister(machineId, registerİntValue, operationNameId); //otomatik üretimdeki adet bufferı,üretim bitir butonu
         }
         
 
@@ -76,7 +76,7 @@ namespace MachineSimulation.App.Controllers
                 return BadRequest("Strings are required.");
             }
 
-            var addresses = await _modbusAddressService.GetAllAddressesAsync();
+            var addresses = await _modbusAddressService.GetAddressesByMachineIdAsync(model.MachineId);
             if (addresses.Count < model.Strings.Count)
             {
                 return BadRequest("Not enough addresses configured.");
@@ -86,7 +86,7 @@ namespace MachineSimulation.App.Controllers
 
             for (int i = 0; i < model.Strings.Count; i++)
             {
-                var str = model.Strings[i];
+                var str = model.Strings[i];  //Kalite Kriter için adresler buraya gönderilir , burada listeye eklenir 
                 if (ushort.TryParse(str, out ushort value))
                 {
                     // ushort değeri olarak yaz
@@ -106,6 +106,7 @@ namespace MachineSimulation.App.Controllers
 
             return Json(new { success = true });
         }
+
 
 
 

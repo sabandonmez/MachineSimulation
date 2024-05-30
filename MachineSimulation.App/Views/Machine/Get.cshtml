@@ -615,6 +615,9 @@
                 });
             });
 
+          
+
+
             $('#uretimiDurdur').click(function () {
                 var machineId = getMachineIdFromUrl();
                 $.ajax({
@@ -623,11 +626,14 @@
                     data: { machineId: machineId, operationNameId: 4 },
                     success: function (response) {
                         if (response.success) {
-                            console.log('Üretim durduruldu.');
+                            console.log('üretim durduruldu.');
                         }
                     }
                 });
             });
+
+            
+
 
             /*  !** */
             $('#otomatikUretimBaslat').click(function () {
@@ -1085,6 +1091,8 @@
             
 
             });
+
+
 
           
 

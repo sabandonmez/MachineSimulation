@@ -49,10 +49,10 @@ namespace MachineSimulation.App.Controllers
             return WriteModbusRegister(machineId, true, operationNameId);
         }
 
-
-        public Task<ActionResult> StopProduction(int machineId, int operationName)
+        [HttpPost]
+        public Task<ActionResult> StopProduction(int machineId, int operationNameId)
         {
-            return WriteModbusRegister(machineId, false, operationName);
+            return WriteModbusRegister(machineId, false, operationNameId);
         }
 
         public Task<ActionResult> StopAutomaticProduction(int machineId,int registerİntValue, int operationNameId)
@@ -115,7 +115,7 @@ namespace MachineSimulation.App.Controllers
         {
             try
             {
-                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId,operationNameId);
+                var modbusId = await _operationService.GetOperationModbusIdAsync(machineId, operationNameId);
                 if (!modbusId.HasValue)
                 {
                     return Json(new { success = false, message = "Modbus ID not found." });
